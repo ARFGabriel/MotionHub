@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Get-Process | Where-Object { $_.ProcessName -match 'electron|app-builder|7z|node' } | Select-Object Id, ProcessName, StartTime | Format-Table -AutoSize)",
+      "PowerShell($p = \"E:\\\\Projets Perso\\\\Motion_Helper\\\\dist\"; $ok=$false; for \\($i=0; $i -lt 10; $i++\\) { try { Remove-Item -Recurse -Force $p -ErrorAction Stop; $ok=$true; break } catch { Start-Sleep -Seconds 3 } }; if \\($ok -or -not \\(Test-Path $p\\)\\) { \"dist removed\" } else { \"still locked after retries\" })",
+      "Bash(npx electron-builder *)"
+    ]
+  }
+}

@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MotionHub — Assistant de production</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="sidebar">
+        <div class="logo"><i class="fas fa-layer-group"></i> MotionHub</div>
+
+        <div class="nav-category">Général</div>
+        <button class="nav-btn" data-tool="dashboard"><i class="fas fa-gauge-high"></i> Accueil</button>
+        <button class="nav-btn" data-tool="projects"><i class="fas fa-clapperboard"></i> Projets</button>
+
+        <div class="nav-category">Production</div>
+        <button class="nav-btn" data-tool="media"><i class="fas fa-wand-magic-sparkles"></i> Média</button>
+        <button class="nav-btn" data-tool="code"><i class="fas fa-code"></i> Expressions &amp; Scripts</button>
+        <button class="nav-btn" data-tool="utils"><i class="fas fa-toolbox"></i> Utilitaires</button>
+
+        <div class="nav-category">Ressources</div>
+        <button class="nav-btn" data-tool="references"><i class="fas fa-book"></i> Références</button>
+        <button class="nav-btn" data-tool="automation-watch"><i class="fas fa-eye"></i> Automatisation</button>
+
+        <div class="nav-spacer"></div>
+        <button class="nav-btn nav-btn--muted" data-tool="settings"><i class="fas fa-gear"></i> Réglages</button>
+        <button class="nav-btn nav-btn--muted" id="open-cmdk"><i class="fas fa-magnifying-glass"></i> Commandes <kbd class="nav-kbd">Ctrl K</kbd></button>
+    </nav>
+
+    <main class="main-content">
+
+        <!-- ======================= ACCUEIL ======================= -->
+        <section id="dashboard" class="tool-section">
+            <div class="section-head">
+                <h2>Tableau de bord</h2>
+                <span class="muted" id="dash-greeting"></span>
+            </div>
+            <div class="dash-grid">
+                <div class="card dash-card" id="dash-projects">
+                    <h3><i class="fas fa-clapperboard"></i> Projets</h3>
+                    <div class="dash-body muted">…</div>
+                </div>
+                <div class="card dash-card" id="dash-deadlines">
+                    <h3><i class="fas fa-calendar-day"></i> Échéances</h3>
+                    <div class="dash-body muted">…</div>
+                </div>
+                <div class="card dash-card" id="dash-storage">
+                    <h3><i class="fas fa-hard-drive"></i> Stockage</h3>
+                    <div class="dash-body muted">…</div>
+                </div>
+                <div class="card dash-card" id="dash-watch">
+                    <h3><i class="fas fa-eye"></i> Surveillances</h3>
+                    <div class="dash-body muted">…</div>
+                </div>
+                <div class="card dash-card" id="dash-activity">
+                    <h3><i class="fas fa-clock-rotate-left"></i> Activité récente</h3>
+                    <div class="dash-body muted">…</div>
+                </div>
+                <div class="card dash-card dash-card--wide" id="dash-quick">
+                    <h3><i class="fas fa-bolt"></i> Accès rapides</h3>
+                    <div class="dash-quick-grid">
+                        <button class="quick-btn" data-quick="add-project"><i class="fas fa-folder-plus"></i> Ajouter un projet</button>
+                        <button class="quick-btn" data-quick="media"><i class="fas fa-compress"></i> Générer un proxy</button>
+                        <button class="quick-btn" data-quick="transcode"><i class="fas fa-right-left"></i> Transcoder</button>
+                        <button class="quick-btn" data-quick="watch"><i class="fas fa-eye"></i> Surveiller un dossier</button>
+                        <button class="quick-btn" data-quick="code"><i class="fas fa-code"></i> Expressions</button>
+                        <button class="quick-btn" data-quick="references"><i class="fas fa-keyboard"></i> Raccourcis</button>
+                    </div>
+                </div>
+                <div class="card dash-card" id="dash-tip">
+                    <h3><i class="fas fa-lightbulb"></i> Astuce du jour</h3>
+                    <div class="dash-body muted">…</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= PROJETS ======================= -->
+        <section id="projects" class="tool-section">
+            <div class="section-head">
+                <h2>Projets</h2>
+                <button class="action-btn action-btn--inline" id="add-project-btn"><i class="fas fa-plus"></i> Ajouter un projet</button>
+            </div>
+            <div id="projects-web-notice" class="card notice" hidden>
+                <h3><i class="fas fa-circle-info"></i> Mode navigateur</h3>
+                <p class="muted">La gestion persistante des projets multi-disques est disponible dans l'application desktop (MotionHub). Lance <code>npm start</code> pour l'ouvrir.</p>
+            </div>
+            <div class="proj-filters" id="proj-filters" hidden></div>
+            <div id="projects-empty" class="card notice" hidden>
+                <h3>Aucun projet pour l'instant</h3>
+                <p class="muted">Clique sur « Ajouter un projet » et sélectionne le dossier racine d'une production, où qu'il soit sur tes disques.</p>
+            </div>
+            <div id="projects-grid" class="project-grid"></div>
+        </section>
+
+        <!-- ======================= MÉDIA ======================= -->
+        <section id="media" class="tool-section">
+            <h2>Média</h2>
+            <p class="muted">Outils ffmpeg universels — proxys, transcodage, séquences, LUT… quel que soit ton logiciel.</p>
+
+            <div id="media-web-notice" class="card notice" hidden>
+                <h3><i class="fas fa-circle-info"></i> Mode navigateur</h3>
+                <p class="muted">Ces outils utilisent ffmpeg et ne sont disponibles que dans l'application desktop. Lance <code>npm start</code>.</p>
+            </div>
+
+            <div id="media-tools" class="card-grid" hidden>
+                <div class="card">
+                    <h3><i class="fas fa-compress"></i> Proxys</h3>
+                    <p class="card-hint">Générer de vrais proxys pour un montage fluide.</p>
+                    <div class="field-row">
+                        <div><label for="proxy-fmt">Format</label>
+                            <select id="proxy-fmt"><option value="prores">ProRes Proxy (.mov)</option><option value="h264">H.264 léger (.mp4)</option></select>
+                        </div>
+                        <div><label for="proxy-scale">Échelle</label>
+                            <select id="proxy-scale"><option value="0.5">Demi (1/2)</option><option value="0.25">Quart (1/4)</option></select>
+                        </div>
+                    </div>
+                    <button class="action-btn" id="proxy-pick-btn">Choisir des vidéos</button>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-right-left"></i> Transcodeur</h3>
+                    <p class="card-hint">Convertir vers un format de livraison.</p>
+                    <label for="tc-preset">Préréglage</label>
+                    <select id="tc-preset"></select>
+                    <button class="action-btn" id="tc-pick-btn">Choisir des vidéos</button>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-images"></i> Séquence d'images → vidéo</h3>
+                    <p class="card-hint">PNG / EXR / JPG numérotés → vidéo (rendus 3D).</p>
+                    <div class="field-row">
+                        <div><label for="seq-fps">FPS</label>
+                            <select id="seq-fps"><option>24</option><option selected>25</option><option>30</option><option>60</option></select>
+                        </div>
+                        <div><label for="seq-fmt">Format</label>
+                            <select id="seq-fmt"><option value="h264">H.264 (.mp4)</option><option value="prores">ProRes (.mov)</option></select>
+                        </div>
+                    </div>
+                    <button class="action-btn" id="seq-pick-btn">Choisir la 1re image</button>
+                    <div id="seq-info" class="media-info" hidden></div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-film"></i> Extraire des frames</h3>
+                    <p class="card-hint">Exporter des images d'une vidéo (stills, planches).</p>
+                    <label for="fr-every">Une image toutes les (secondes)</label>
+                    <input type="number" id="fr-every" value="5" min="0.1" step="0.1">
+                    <button class="action-btn" id="fr-pick-btn">Choisir une vidéo</button>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-palette"></i> LUTs</h3>
+                    <p class="card-hint">Bibliothèque d'étalonnages — applique un <code>.cube</code> à une vidéo.</p>
+                    <div id="lut-list" class="lut-list"></div>
+                    <button class="action-btn action-btn--ghost" id="lut-add-btn"><i class="fas fa-plus"></i> Ajouter une LUT</button>
+                    <button class="action-btn" id="lut-apply-btn" disabled>Appliquer à une vidéo</button>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-circle-info"></i> Media Info</h3>
+                    <p class="card-hint">Codec, résolution, fps, débit, durée d'un fichier.</p>
+                    <button class="action-btn" id="mi-pick-btn">Analyser un fichier</button>
+                    <div id="mi-result" class="media-info" hidden></div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-weight-hanging"></i> Estimateur de poids</h3>
+                    <p class="card-hint">Estimer la taille d'un export.</p>
+                    <div class="field-row">
+                        <div><label for="fs-min">Durée (min)</label><input type="number" id="fs-min" placeholder="1"></div>
+                        <div>
+                            <label for="fs-bitrate">Bitrate</label>
+                            <select id="fs-bitrate">
+                                <option value="15">15 Mb/s (Web)</option>
+                                <option value="45">45 Mb/s (ProRes Proxy)</option>
+                                <option value="147">147 Mb/s (ProRes 422)</option>
+                                <option value="500">500+ Mb/s (RAW)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="action-btn" id="fs-calc-btn">Estimer</button>
+                    <h3 id="fs-result" class="result-line">Estimation : 0 Go</h3>
+                </div>
+            </div>
+
+            <div id="media-jobs" class="proxy-jobs"></div>
+        </section>
+
+        <!-- ================ EXPRESSIONS & SCRIPTS ================ -->
+        <section id="code" class="tool-section">
+            <h2>Expressions &amp; Scripts</h2>
+            <div class="subtabs">
+                <button class="subtab active" data-subtab="code-expressions"><i class="fas fa-bolt"></i> Expressions</button>
+                <button class="subtab" data-subtab="code-snippets"><i class="fas fa-terminal"></i> Snippets</button>
+                <button class="subtab" data-subtab="code-scripts"><i class="fas fa-robot"></i> Scripts AE</button>
+            </div>
+
+            <div class="subpanel active" id="code-expressions">
+                <p class="muted">Clique sur une expression pour voir le détail, les réglages et copier le code.</p>
+                <div class="exp-toolbar">
+                    <input type="text" id="exp-search" class="exp-search" placeholder="🔍 Rechercher (nom, effet, propriété…)">
+                    <div class="exp-filters" id="exp-filters"></div>
+                </div>
+                <div class="card-grid" id="expression-grid"></div>
+                <p class="muted exp-empty" id="exp-empty" hidden>Aucune expression ne correspond.</p>
+            </div>
+
+            <div class="subpanel" id="code-snippets">
+                <p class="muted">Extraits de scripting pour Blender, DaVinci Resolve, Cinema 4D. Clique pour le détail.</p>
+                <div class="exp-toolbar">
+                    <div class="exp-filters" id="snip-filters"></div>
+                </div>
+                <div class="card-grid" id="snippet-grid"></div>
+            </div>
+
+            <div class="subpanel" id="code-scripts">
+                <p class="muted">Générateurs de scripts <code>.jsx</code> pour After Effects.</p>
+                <div class="card-grid">
+                    <div class="card">
+                        <h3><i class="fas fa-film"></i> Auto-Proxies (AE)</h3>
+                        <p class="card-hint">Ajoute la sélection à la file de rendu en proxy.</p>
+                        <label for="proxy-format">Format</label>
+                        <select id="proxy-format">
+                            <option value="QuickTime">QuickTime (ProRes)</option>
+                            <option value="H.264">H.264 (Léger)</option>
+                        </select>
+                        <label for="proxy-res">Résolution</label>
+                        <select id="proxy-res">
+                            <option value="0.5">Demi (1/2)</option>
+                            <option value="0.25">Quart (1/4)</option>
+                        </select>
+                        <button class="action-btn" data-script="proxy">💾 Script Proxy</button>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-folder"></i> Organiser le projet</h3>
+                        <p class="card-hint">Créer dossier Assets, Precomps, etc.</p>
+                        <button class="action-btn" data-script="structure">💾 Script Structure</button>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-map-marker-alt"></i> Exporter marqueurs</h3>
+                        <p class="card-hint">Export CSV pour YouTube / clients.</p>
+                        <button class="action-btn" data-script="markers">💾 Script Marqueurs</button>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-bezier-curve"></i> Instant Easing</h3>
+                        <p class="card-hint">Lissage doux (75%) sur les clés sélectionnées.</p>
+                        <button class="action-btn" data-script="easing">⚡ Script Lissage</button>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-layer-group"></i> Layer Sequencer</h3>
+                        <p class="card-hint">Décale les calques en cascade.</p>
+                        <button class="action-btn" data-script="sequencer">⚡ Script Cascade</button>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-trash-alt"></i> Project Cleaner</h3>
+                        <p class="card-hint">Supprime les éléments non utilisés.</p>
+                        <button class="action-btn action-btn--danger" data-script="cleaner">🗑️ Script Nettoyage</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= UTILITAIRES ======================= -->
+        <section id="utils" class="tool-section">
+            <h2>Utilitaires</h2>
+            <div class="subtabs">
+                <button class="subtab active" data-subtab="utils-naming"><i class="fas fa-tag"></i> Nomenclature</button>
+                <button class="subtab" data-subtab="utils-checklist"><i class="fas fa-list-check"></i> Checklist</button>
+                <button class="subtab" data-subtab="utils-calc"><i class="fas fa-calculator"></i> Frames / Temps</button>
+                <button class="subtab" data-subtab="utils-palette"><i class="fas fa-eye-dropper"></i> Palette</button>
+                <button class="subtab" data-subtab="utils-easing"><i class="fas fa-bezier-curve"></i> Easing</button>
+            </div>
+
+            <div class="subpanel active" id="utils-naming">
+                <div class="card">
+                    <div class="filename-preview" id="final-name">DATE_CLI_Projet_v01.mp4</div>
+                    <label for="name-template">Modèle <span class="muted">(jetons : {date} {client} {projet} {version} {ext})</span></label>
+                    <input type="text" id="name-template" placeholder="{date}_{client}_{projet}_{version}.{ext}">
+                    <div class="card-grid">
+                        <div><label for="name-date">Date</label><input type="text" id="name-date"></div>
+                        <div><label for="name-client">Client</label><input type="text" id="name-client" maxlength="3" class="uppercase" placeholder="CLI"></div>
+                        <div><label for="name-project">Projet</label><input type="text" id="name-project" placeholder="NomDuProjet"></div>
+                        <div>
+                            <label for="name-version">Version</label>
+                            <select id="name-version">
+                                <option value="v01">v01</option>
+                                <option value="v02">v02</option>
+                                <option value="vFinal">vFinal</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="action-btn" id="copy-name-btn">Copier le nom</button>
+                </div>
+            </div>
+
+            <div class="subpanel" id="utils-checklist">
+                <div class="card">
+                    <div class="checklist-item"><input type="checkbox"> Motion Blur activé ?</div>
+                    <div class="checklist-item"><input type="checkbox"> Calques masqués vérifiés ?</div>
+                    <div class="checklist-item"><input type="checkbox"> Résolution Full ?</div>
+                    <div class="checklist-item"><input type="checkbox"> Audio activé ?</div>
+                    <div class="checklist-item"><input type="checkbox"> Cache vidé ?</div>
+                    <button class="action-btn action-btn--ghost" id="checklist-reset">Tout décocher</button>
+                </div>
+            </div>
+
+            <div class="subpanel" id="utils-calc">
+                <div class="card">
+                    <label for="calc-fps">FPS</label>
+                    <select id="calc-fps">
+                        <option value="24">24</option>
+                        <option value="25" selected>25</option>
+                        <option value="30">30</option>
+                        <option value="60">60</option>
+                    </select>
+                    <div class="field-row">
+                        <div><label for="calc-frames">Frames</label><input type="number" id="calc-frames"></div>
+                        <div><label for="calc-seconds">Secondes</label><input type="number" id="calc-seconds"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subpanel" id="utils-palette">
+                <div class="card">
+                    <p class="card-hint">Extrais les couleurs dominantes d'une image (ou d'une frame vidéo). Clique une pastille pour copier son code.</p>
+                    <input type="file" id="pal-file" accept="image/*" hidden>
+                    <div class="field-row">
+                        <div><button class="action-btn" id="pal-image-btn"><i class="fas fa-image"></i> Choisir une image</button></div>
+                        <div><button class="action-btn action-btn--ghost" id="pal-video-btn" hidden><i class="fas fa-film"></i> Depuis une vidéo</button></div>
+                    </div>
+                    <div id="pal-preview" class="palette-preview" hidden></div>
+                    <div id="pal-swatches" class="palette-swatches"></div>
+                    <canvas id="pal-canvas" width="120" height="120" hidden></canvas>
+                </div>
+            </div>
+
+            <div class="subpanel" id="utils-easing">
+                <div class="card easing-card">
+                    <div class="exp-filters" id="ease-presets"></div>
+                    <div class="easing-main">
+                        <svg id="ease-svg" viewBox="0 0 220 220" class="easing-svg">
+                            <line x1="20" y1="200" x2="200" y2="200" class="ease-axis"></line>
+                            <line x1="20" y1="200" x2="20" y2="20" class="ease-axis"></line>
+                            <path id="ease-curve" class="ease-curve"></path>
+                            <line id="ease-l1" class="ease-handle-line"></line>
+                            <line id="ease-l2" class="ease-handle-line"></line>
+                            <circle id="ease-p1" r="7" class="ease-handle" data-p="1"></circle>
+                            <circle id="ease-p2" r="7" class="ease-handle" data-p="2"></circle>
+                        </svg>
+                        <div class="easing-side">
+                            <div class="easing-value">cubic-bezier(<span id="ease-vals">0.25, 0.1, 0.25, 1</span>)</div>
+                            <button class="mini-btn" id="ease-copy-css"><i class="fas fa-copy"></i> Copier CSS</button>
+                            <div class="easing-demo-track"><div id="ease-ball" class="easing-ball"></div></div>
+                            <button class="mini-btn" id="ease-play"><i class="fas fa-play"></i> Aperçu</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= RÉFÉRENCES ======================= -->
+        <section id="references" class="tool-section">
+            <h2>Références</h2>
+            <div class="subtabs">
+                <button class="subtab active" data-subtab="ref-shortcuts"><i class="fas fa-keyboard"></i> Raccourcis</button>
+                <button class="subtab" data-subtab="ref-specs"><i class="fas fa-table"></i> Specs &amp; Codecs</button>
+            </div>
+
+            <div class="subpanel active" id="ref-shortcuts">
+                <p class="muted">Configurations par défaut. Change de logiciel et filtre par la recherche.</p>
+                <div class="exp-toolbar">
+                    <input type="text" id="sc-search" class="exp-search" placeholder="🔍 Rechercher une action…">
+                    <div class="exp-filters" id="sc-apps"></div>
+                </div>
+                <div id="sc-list" class="shortcut-list"></div>
+            </div>
+
+            <div class="subpanel" id="ref-specs">
+                <div class="spec-block">
+                    <h3><i class="fas fa-truck-fast"></i> Formats de livraison</h3>
+                    <div class="table-wrap"><table id="spec-delivery"></table></div>
+                </div>
+                <div class="spec-block">
+                    <h3><i class="fas fa-file-video"></i> Codecs</h3>
+                    <div class="table-wrap"><table id="spec-codecs"></table></div>
+                </div>
+                <div class="spec-grid">
+                    <div class="spec-block">
+                        <h3><i class="fas fa-palette"></i> Espaces colorimétriques</h3>
+                        <div class="table-wrap"><table id="spec-colors"></table></div>
+                    </div>
+                    <div class="spec-block">
+                        <h3><i class="fas fa-expand"></i> Résolutions</h3>
+                        <div class="table-wrap"><table id="spec-res"></table></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ======================= AUTOMATISATION ======================= -->
+        <section id="automation-watch" class="tool-section">
+            <div class="section-head">
+                <h2>Automatisation</h2>
+                <button class="action-btn action-btn--inline" id="watch-add-btn"><i class="fas fa-plus"></i> Surveiller un dossier</button>
+            </div>
+            <div id="watch-web-notice" class="card notice" hidden>
+                <h3><i class="fas fa-circle-info"></i> Mode navigateur</h3>
+                <p class="muted">La surveillance de dossiers nécessite l'application desktop. Lance <code>npm start</code>.</p>
+            </div>
+            <div class="card" id="watch-config" hidden>
+                <div class="field-row">
+                    <div>
+                        <label for="watch-mode">Action à la détection</label>
+                        <select id="watch-mode">
+                            <option value="notify">Me notifier (moniteur de rendu)</option>
+                            <option value="proxy">Générer un proxy automatiquement</option>
+                            <option value="transcode">Transcoder automatiquement</option>
+                        </select>
+                    </div>
+                    <div id="watch-scale-wrap" hidden>
+                        <label for="watch-scale">Échelle du proxy</label>
+                        <select id="watch-scale"><option value="0.5">Demi (1/2)</option><option value="0.25">Quart (1/4)</option></select>
+                    </div>
+                    <div id="watch-tc-wrap" hidden>
+                        <label for="watch-tc-preset">Préréglage</label>
+                        <select id="watch-tc-preset"></select>
+                    </div>
+                </div>
+                <p class="muted card-hint">Dépose une vidéo dans le dossier surveillé : MotionHub réagit automatiquement. Les surveillances sont conservées au redémarrage.</p>
+            </div>
+            <div id="watch-list" class="watch-list"></div>
+            <div class="card" id="watch-log-card" hidden>
+                <h3><i class="fas fa-clock-rotate-left"></i> Journal</h3>
+                <div id="watch-log" class="watch-log"></div>
+            </div>
+        </section>
+
+        <!-- ======================= RÉGLAGES ======================= -->
+        <section id="settings" class="tool-section">
+            <h2>Réglages</h2>
+            <div class="card settings-card">
+                <label>Thème</label>
+                <div class="seg" id="set-theme">
+                    <button class="seg-btn" data-theme="dark"><i class="fas fa-moon"></i> Sombre</button>
+                    <button class="seg-btn" data-theme="light"><i class="fas fa-sun"></i> Clair</button>
+                </div>
+
+                <label for="set-fps">FPS par défaut</label>
+                <select id="set-fps">
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="30">30</option>
+                    <option value="60">60</option>
+                </select>
+
+                <label for="set-proxy-scale">Échelle de proxy par défaut</label>
+                <select id="set-proxy-scale">
+                    <option value="0.5">Demi (1/2)</option>
+                    <option value="0.25">Quart (1/4)</option>
+                </select>
+
+                <p class="muted mini">Astuce : ouvre la palette de commandes avec <kbd>Ctrl</kbd> + <kbd>K</kbd>.</p>
+            </div>
+
+            <div class="card settings-card" id="update-card">
+                <h3><i class="fas fa-rotate"></i> Mises à jour</h3>
+                <p class="card-hint">Version installée : <strong id="update-version">—</strong></p>
+                <div id="update-status" class="update-status muted">—</div>
+                <div class="progress" id="update-progress" hidden><div class="progress__bar" style="width:0%"></div></div>
+                <div class="field-row">
+                    <div><button class="action-btn" id="update-check-btn">Vérifier les mises à jour</button></div>
+                    <div><button class="action-btn" id="update-install-btn" hidden><i class="fas fa-power-off"></i> Redémarrer &amp; installer</button></div>
+                </div>
+            </div>
+
+            <div class="card settings-card">
+                <h3><i class="fas fa-sliders"></i> Presets de transcodage personnalisés</h3>
+                <p class="card-hint">Crée tes propres formats, disponibles dans l'onglet Média.</p>
+                <div id="preset-list" class="preset-list"></div>
+                <div class="preset-form">
+                    <label for="preset-name">Nom</label>
+                    <input type="text" id="preset-name" placeholder="Ex : Insta 1080 léger">
+                    <div class="field-row">
+                        <div><label for="preset-codec">Codec</label>
+                            <select id="preset-codec">
+                                <option value="h264">H.264</option>
+                                <option value="h265">H.265 (HEVC)</option>
+                                <option value="prores">ProRes</option>
+                                <option value="dnxhr">DNxHR</option>
+                            </select>
+                        </div>
+                        <div><label for="preset-scale">Échelle</label>
+                            <select id="preset-scale"><option value="1">100 %</option><option value="0.5">50 %</option><option value="0.25">25 %</option></select>
+                        </div>
+                    </div>
+                    <div class="field-row">
+                        <div><label for="preset-quality">Qualité</label>
+                            <select id="preset-quality"><option value="high">Haute</option><option value="medium" selected>Moyenne</option><option value="low">Basse</option></select>
+                        </div>
+                        <div><label for="preset-audio">Audio</label>
+                            <select id="preset-audio"><option value="keep">Conserver</option><option value="aac">AAC</option><option value="none">Aucun</option></select>
+                        </div>
+                    </div>
+                    <button class="action-btn" id="preset-add"><i class="fas fa-plus"></i> Ajouter le preset</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="modal-overlay" class="modal-overlay">
+        <div class="modal-content">
+            <button class="close-modal" aria-label="Fermer"><i class="fas fa-times"></i></button>
+            <h3 id="modal-title">Titre</h3>
+            <div class="modal-tags"><span id="modal-context" class="tag-context">Catégorie</span></div>
+            <p id="modal-desc" class="modal-desc">Description…</p>
+
+            <div class="modal-field" id="modal-where-wrap">
+                <div class="modal-field__label"><i class="fas fa-location-dot"></i> Où l'utiliser</div>
+                <p id="modal-where" class="modal-field__value">—</p>
+            </div>
+            <div class="modal-field" id="modal-how-wrap">
+                <div class="modal-field__label"><i class="fas fa-circle-play"></i> Comment</div>
+                <p id="modal-how" class="modal-field__value">—</p>
+            </div>
+            <div class="modal-field" id="modal-params-wrap">
+                <div class="modal-field__label"><i class="fas fa-sliders"></i> Paramètres modifiables</div>
+                <ul id="modal-params" class="modal-params"></ul>
+            </div>
+
+            <div class="modal-field__label code-label"><i class="fas fa-code"></i> Code</div>
+            <div class="code-block-wrapper">
+                <pre><code id="modal-code">…</code></pre>
+                <button class="copy-modal-btn"><i class="fas fa-copy"></i> Copier</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/settings.js"></script>
+    <script src="js/activity.js"></script>
+    <script src="js/presets.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/refdata.js"></script>
+    <script src="js/projects.js"></script>
+    <script src="js/proxy.js"></script>
+    <script src="js/mediatools.js"></script>
+    <script src="js/luts.js"></script>
+    <script src="js/references.js"></script>
+    <script src="js/automation.js"></script>
+    <script src="js/palette.js"></script>
+    <script src="js/easing.js"></script>
+    <script src="js/commandpalette.js"></script>
+    <script src="js/updater.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

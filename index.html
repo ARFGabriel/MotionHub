@@ -18,6 +18,7 @@
         <button class="nav-btn" data-tool="projects"><i class="fas fa-clapperboard"></i> Projets</button>
 
         <div class="nav-category">Production</div>
+        <button class="nav-btn" data-tool="shoot"><i class="fas fa-video"></i> Tournage</button>
         <button class="nav-btn" data-tool="media"><i class="fas fa-wand-magic-sparkles"></i> Média</button>
         <button class="nav-btn" data-tool="code"><i class="fas fa-code"></i> Expressions &amp; Scripts</button>
         <button class="nav-btn" data-tool="utils"><i class="fas fa-toolbox"></i> Utilitaires</button>
@@ -95,6 +96,155 @@
                 <p class="muted">Clique sur « Ajouter un projet » et sélectionne le dossier racine d'une production, où qu'il soit sur tes disques.</p>
             </div>
             <div id="projects-grid" class="project-grid"></div>
+        </section>
+
+        <!-- ======================= TOURNAGE ======================= -->
+        <section id="shoot" class="tool-section">
+            <h2>Tournage</h2>
+            <div class="subtabs">
+                <button class="subtab active" data-subtab="shoot-shotlist"><i class="fas fa-list-ol"></i> Shot list</button>
+                <button class="subtab" data-subtab="shoot-gear"><i class="fas fa-suitcase"></i> Matériel</button>
+                <button class="subtab" data-subtab="shoot-calc"><i class="fas fa-calculator"></i> Calculatrices</button>
+                <button class="subtab" data-subtab="shoot-camera"><i class="fas fa-camera"></i> Caméra</button>
+                <button class="subtab" data-subtab="shoot-slate"><i class="fas fa-clapperboard"></i> Clap</button>
+            </div>
+
+            <!-- Shot list -->
+            <div class="subpanel active" id="shoot-shotlist">
+                <div class="card">
+                    <p class="card-hint">Liste des plans à tourner. Coche-les au fur et à mesure.</p>
+                    <div class="field-row">
+                        <div style="flex:2"><label for="shot-desc">Description du plan</label><input type="text" id="shot-desc" placeholder="Ex : Plan large de l'entrée"></div>
+                        <div><label for="shot-frame">Cadre</label>
+                            <select id="shot-frame"><option>Très large</option><option>Large</option><option>Plan moyen</option><option>Rapproché</option><option>Gros plan</option><option>Très gros plan</option><option>Insert</option></select>
+                        </div>
+                    </div>
+                    <div class="field-row">
+                        <div><label for="shot-move">Mouvement</label>
+                            <select id="shot-move"><option>Fixe</option><option>Panoramique</option><option>Tilt</option><option>Travelling</option><option>Zoom</option><option>Gimbal / Steadicam</option><option>Épaule</option></select>
+                        </div>
+                        <div><label for="shot-lens">Focale</label><input type="text" id="shot-lens" placeholder="Ex : 35 mm"></div>
+                        <div style="display:flex;align-items:flex-end"><button class="action-btn" id="shot-add"><i class="fas fa-plus"></i> Ajouter</button></div>
+                    </div>
+                </div>
+                <div id="shotlist-items" class="shotlist"></div>
+            </div>
+
+            <!-- Matériel -->
+            <div class="subpanel" id="shoot-gear">
+                <div class="section-head">
+                    <p class="card-hint" style="margin:0">Checklist matériel — coche avant de partir. Réinitialisable.</p>
+                    <button class="action-btn action-btn--ghost action-btn--inline" id="gear-reset"><i class="fas fa-rotate-left"></i> Tout décocher</button>
+                </div>
+                <div id="gear-container"></div>
+                <div class="card">
+                    <label>Ajouter un élément</label>
+                    <div class="field-row">
+                        <div style="flex:2"><input type="text" id="gear-new" placeholder="Nouvel élément"></div>
+                        <div><select id="gear-cat"></select></div>
+                        <div style="display:flex;align-items:flex-end"><button class="action-btn" id="gear-add"><i class="fas fa-plus"></i></button></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calculatrices -->
+            <div class="subpanel" id="shoot-calc">
+                <div class="card-grid">
+                    <div class="card">
+                        <h3><i class="fas fa-circle-notch"></i> Profondeur de champ</h3>
+                        <p class="card-hint">Plein format (FX3).</p>
+                        <div class="field-row">
+                            <div><label for="dof-focal">Focale (mm)</label><input type="number" id="dof-focal" value="50"></div>
+                            <div><label for="dof-aperture">Ouverture f/</label><input type="number" id="dof-aperture" value="2.8" step="0.1"></div>
+                        </div>
+                        <label for="dof-distance">Distance de mise au point (m)</label>
+                        <input type="number" id="dof-distance" value="3" step="0.1">
+                        <div id="dof-result" class="media-info"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3><i class="fas fa-expand"></i> Angle de champ</h3>
+                        <p class="card-hint">Selon la focale (plein format).</p>
+                        <label for="aov-focal">Focale (mm)</label>
+                        <input type="number" id="aov-focal" value="35">
+                        <div id="aov-result" class="media-info"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3><i class="fas fa-stopwatch"></i> Règle du 180°</h3>
+                        <p class="card-hint">Vitesse d'obturation ciné.</p>
+                        <label for="sh-fps">Framerate</label>
+                        <select id="sh-fps"><option>24</option><option selected>25</option><option>30</option><option>50</option><option>60</option><option>120</option></select>
+                        <div id="sh-result" class="media-info"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3><i class="fas fa-circle-half-stroke"></i> Filtre ND</h3>
+                        <p class="card-hint">Pour garder l'obturation ciné.</p>
+                        <div class="field-row">
+                            <div><label for="nd-light">Lumière</label><select id="nd-light"></select></div>
+                            <div><label for="nd-fps">FPS</label><select id="nd-fps"><option>24</option><option selected>25</option><option>30</option><option>50</option></select></div>
+                        </div>
+                        <div class="field-row">
+                            <div><label for="nd-aperture">Ouverture f/</label><input type="number" id="nd-aperture" value="2.8" step="0.1"></div>
+                            <div><label for="nd-iso">ISO</label><input type="number" id="nd-iso" value="800"></div>
+                        </div>
+                        <div id="nd-result" class="media-info"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3><i class="fas fa-sd-card"></i> Autonomie carte</h3>
+                        <p class="card-hint">Durée d'enregistrement.</p>
+                        <div class="field-row">
+                            <div><label for="card-size">Carte (Go)</label><input type="number" id="card-size" value="128"></div>
+                        </div>
+                        <label for="card-mode">Mode d'enregistrement</label>
+                        <select id="card-mode"></select>
+                        <div id="card-result" class="media-info"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3><i class="fas fa-sun"></i> Golden hour</h3>
+                        <p class="card-hint">Lever/coucher du soleil par lieu.</p>
+                        <div class="field-row">
+                            <div><label for="sun-lat">Latitude</label><input type="number" id="sun-lat" value="48.8566" step="0.0001"></div>
+                            <div><label for="sun-lng">Longitude</label><input type="number" id="sun-lng" value="2.3522" step="0.0001"></div>
+                        </div>
+                        <label for="sun-date">Date</label>
+                        <input type="date" id="sun-date">
+                        <button class="action-btn" id="sun-calc">Calculer</button>
+                        <div id="sun-result" class="media-info"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Caméra -->
+            <div class="subpanel" id="shoot-camera">
+                <div class="card" id="camera-spec"></div>
+                <h3 class="shoot-subhead"><i class="fas fa-sliders"></i> Presets de réglages par situation</h3>
+                <div class="card-grid" id="camera-presets"></div>
+            </div>
+
+            <!-- Clap -->
+            <div class="subpanel" id="shoot-slate">
+                <div class="slate" id="slate">
+                    <div class="slate-stripes"></div>
+                    <div class="slate-grid">
+                        <div class="slate-field slate-field--wide"><span>PRODUCTION</span><input type="text" id="slate-prod" placeholder="Projet"></div>
+                        <div class="slate-field"><span>DATE</span><input type="text" id="slate-date"></div>
+                        <div class="slate-field"><span>SCÈNE</span><input type="text" id="slate-scene" value="1"></div>
+                        <div class="slate-field"><span>PLAN</span><input type="text" id="slate-shot" value="1"></div>
+                        <div class="slate-field slate-take"><span>PRISE</span><input type="text" id="slate-take" value="1"></div>
+                        <div class="slate-field"><span>RÉAL.</span><input type="text" id="slate-dir" placeholder="Nom"></div>
+                        <div class="slate-field"><span>FPS</span><input type="text" id="slate-fps" value="25"></div>
+                    </div>
+                    <div class="slate-actions">
+                        <button class="mini-btn" id="slate-take-plus"><i class="fas fa-plus"></i> Prise suivante</button>
+                        <button class="mini-btn" id="slate-shot-plus"><i class="fas fa-forward"></i> Plan suivant</button>
+                        <button class="mini-btn" id="slate-scene-plus"><i class="fas fa-forward-step"></i> Scène suivante</button>
+                    </div>
+                </div>
+            </div>
         </section>
 
         <!-- ======================= MÉDIA ======================= -->
@@ -563,12 +713,14 @@
     <script src="js/data.js"></script>
     <script src="js/refdata.js"></script>
     <script src="js/learndata.js"></script>
+    <script src="js/shootdata.js"></script>
     <script src="js/projects.js"></script>
     <script src="js/proxy.js"></script>
     <script src="js/mediatools.js"></script>
     <script src="js/luts.js"></script>
     <script src="js/references.js"></script>
     <script src="js/learn.js"></script>
+    <script src="js/shoot.js"></script>
     <script src="js/automation.js"></script>
     <script src="js/palette.js"></script>
     <script src="js/easing.js"></script>

@@ -1009,6 +1009,55 @@ td:first-child { color: var(--text-main); font-weight: 600; }
 }
 .learn-tip i { color: var(--warn); margin-right: 6px; }
 
+/* --- 22. TOURNAGE --- */
+.shoot-subhead { margin: 30px 0 6px; display: flex; align-items: center; gap: 10px; }
+.spec-sub { font-size: 0.95rem; color: var(--secondary); margin: 16px 0 6px; }
+
+/* Shot list */
+.shotlist { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+.shotlist-head { margin-bottom: 4px; font-size: 0.85rem; }
+.shot-row { display: flex; align-items: center; gap: 14px; padding: 14px 18px; }
+.shot-row input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); flex-shrink: 0; }
+.shot-num { font-family: 'Consolas', monospace; color: var(--text-dim); font-weight: 700; flex-shrink: 0; }
+.shot-main { flex: 1; overflow: hidden; }
+.shot-desc { font-weight: 600; margin-bottom: 4px; }
+.shot-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.shot-tags span { font-size: 0.72rem; background: rgba(0, 210, 255, 0.1); border: 1px solid rgba(0, 210, 255, 0.25); color: var(--secondary); padding: 2px 8px; border-radius: 20px; }
+.shot-row--done .shot-desc { text-decoration: line-through; color: var(--text-dim); }
+.shot-del { background: none; border: none; color: var(--text-dim); cursor: pointer; padding: 4px; border-radius: 6px; flex-shrink: 0; }
+.shot-del:hover { color: var(--danger); }
+
+/* Matériel */
+#gear-container { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; margin: 20px 0; }
+.gear-group h3 { font-size: 1rem; margin: 0 0 12px; }
+.gear-item { display: flex; align-items: center; gap: 10px; padding: 7px 0; cursor: pointer; font-size: 0.9rem; }
+.gear-item input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--primary); }
+.gear-item.checked span { color: var(--text-dim); text-decoration: line-through; }
+.gear-item span { flex: 1; }
+.gear-del { background: none; border: none; color: var(--text-dim); cursor: pointer; padding: 2px 4px; }
+.gear-del:hover { color: var(--danger); }
+
+/* Clap / slate */
+.slate {
+    max-width: 640px; margin-top: 10px; background: #111; border: 2px solid #333;
+    border-radius: 12px; overflow: hidden; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+.slate-stripes {
+    height: 34px;
+    background: repeating-linear-gradient(-63deg, #f2f2f2 0 26px, #111 26px 52px);
+}
+.slate-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #333; }
+.slate-field { background: #141414; padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+.slate-field--wide { grid-column: span 2; }
+.slate-field span { font-size: 0.68rem; letter-spacing: 1px; color: #888; font-weight: 700; }
+.slate-field input {
+    background: transparent; border: none; border-bottom: 1px solid #333; border-radius: 0;
+    color: #fff; font-family: 'Courier New', monospace; font-size: 1.3rem; padding: 4px 0; margin: 0; width: 100%;
+}
+.slate-field input:focus { outline: none; box-shadow: none; border-bottom-color: var(--secondary); background: transparent; }
+.slate-take input { color: var(--warn); font-size: 1.8rem; font-weight: 700; }
+.slate-actions { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px; background: #141414; border-top: 1px solid #333; }
+
 /* --- 17. THÈME CLAIR --- */
 :root[data-theme="light"] {
     --bg-dark: #eef1f6;

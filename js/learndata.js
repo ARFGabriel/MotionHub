@@ -719,5 +719,387 @@
         { tip: "L'outil de sauvegarde de Slate copie un projet vers un autre disque en un clic — pratique pour la copie hors site." },
       ],
     },
+
+    /* ============ ENRICHISSEMENT — PHOTO ============ */
+    {
+      id: "photo-modes",
+      category: "photo",
+      title: "Les modes de prise de vue (P/A/S/M)",
+      summary: "Comprendre les modes du boîtier pour reprendre le contrôle.",
+      body: [
+        { ul: [
+          "P (Programme) : l'appareil choisit ouverture et vitesse, tu gardes la main sur ISO et corrections. Pratique en dépannage.",
+          "A / Av (priorité ouverture) : tu fixes l'ouverture (donc la profondeur de champ), l'appareil ajuste la vitesse. Le plus utile en photo.",
+          "S / Tv (priorité vitesse) : tu fixes la vitesse (figer/filer le mouvement), l'appareil ajuste l'ouverture. Sport, action.",
+          "M (manuel) : tu contrôles tout. Indispensable en vidéo et en lumière constante (studio).",
+        ] },
+        { tip: "En vidéo, travaille quasi toujours en M : la vitesse est imposée par la règle du 180°, et l'auto-exposition qui pompe est disgracieuse." },
+      ],
+    },
+    {
+      id: "photo-mesure",
+      category: "photo",
+      title: "Les modes de mesure de la lumière",
+      summary: "Comment l'appareil évalue l'exposition, et quand le corriger.",
+      body: [
+        { ul: [
+          "Matricielle / évaluative : analyse toute la scène. Polyvalente, par défaut.",
+          "Pondérée centrale : privilégie le centre du cadre.",
+          "Spot : mesure une toute petite zone — idéale pour exposer précisément un visage à contre-jour.",
+        ] },
+        { h: "Correction d'exposition" },
+        { p: "En modes semi-auto (P/A/S), la molette de correction (+/- IL) force l'image plus claire ou plus sombre quand la mesure se trompe (neige = sous-exposée par défaut, il faut +1 IL)." },
+        { tip: "Fie-toi à l'histogramme plutôt qu'à la cellule : la mesure vise un gris moyen qui n'est pas toujours pertinent." },
+      ],
+    },
+    {
+      id: "photo-map",
+      category: "photo",
+      title: "La mise au point",
+      summary: "AF, mise au point manuelle et hyperfocale.",
+      body: [
+        { h: "Autofocus" },
+        { ul: ["AF ponctuel (AF-S) : sujet immobile.", "AF continu (AF-C) : sujet en mouvement.", "Détection œil/visage : redoutable en portrait et interview."] },
+        { h: "Mise au point manuelle" },
+        { p: "Indispensable en vidéo pour les points de netteté (focus pull). Utilise le focus peaking (surbrillance des contours nets) et le zoom de contrôle." },
+        { h: "Hyperfocale" },
+        { p: "Distance de mise au point qui rend net de la moitié de cette distance jusqu'à l'infini — précieux en paysage. Le calculateur de profondeur de champ de Slate la donne." },
+      ],
+    },
+    {
+      id: "photo-filtres",
+      category: "photo",
+      title: "Les filtres (polarisant, ND, dégradé)",
+      summary: "Des effets impossibles à recréer en post.",
+      body: [
+        { ul: [
+          "Polarisant (CPL) : supprime les reflets (eau, vitres), assombrit et sature le ciel. Effet non reproductible en post.",
+          "ND (densité neutre) : réduit la lumière sans changer les couleurs — garder une grande ouverture ou l'obturation ciné en plein jour.",
+          "ND dégradé : sombre en haut, clair en bas — équilibrer un ciel trop lumineux par rapport au sol.",
+          "ND variable : deux polarisants, densité réglable — pratique en vidéo run & gun (attention à la croix noire aux fortes densités).",
+        ] },
+        { tip: "Pour la vidéo à la FX3 en extérieur, un ND (fixe ou variable) est quasi obligatoire pour tenir le 1/50 à grande ouverture." },
+      ],
+    },
+
+    /* ============ ENRICHISSEMENT — VIDÉO ============ */
+    {
+      id: "tour-valeurs",
+      category: "tournage",
+      title: "Les valeurs de plan (échelle des plans)",
+      summary: "Nommer les cadrages pour raconter et varier.",
+      body: [
+        { ul: [
+          "Très gros plan (insert) : un détail (œil, main, objet).",
+          "Gros plan : le visage. Émotion, intimité.",
+          "Plan rapproché : buste (taille/poitrine).",
+          "Plan moyen / américain : à mi-cuisse ou en pied. Dialogue, action.",
+          "Plan large : le sujet dans son décor.",
+          "Très large (plan d'ensemble) : situe le lieu, ouvre ou ferme une séquence.",
+        ] },
+        { tip: "Varie les valeurs pour donner du rythme et pour pouvoir monter : tourne au moins un large, un moyen et un gros plan de chaque action." },
+      ],
+    },
+    {
+      id: "tour-mouvements",
+      category: "tournage",
+      title: "Les mouvements de caméra",
+      summary: "Chaque mouvement porte un sens — à utiliser à bon escient.",
+      body: [
+        { ul: [
+          "Panoramique / tilt : rotation horizontale / verticale sur pied. Suivre, révéler.",
+          "Travelling : la caméra se déplace (rail, dolly, slider). Accompagne, immerge.",
+          "Travelling avant/arrière : rapproche de l'émotion / prend du recul.",
+          "Gimbal / Steadicam : mouvement fluide et libre, plans-séquences.",
+          "Caméra épaule : énergie, urgence, documentaire.",
+          "Zoom : change la focale (à distinguer du travelling, qui change la perspective).",
+        ] },
+        { tip: "Un mouvement doit être motivé (par une action, un regard). Un mouvement gratuit distrait plus qu'il ne sert." },
+      ],
+    },
+    {
+      id: "tour-sync",
+      category: "tournage",
+      title: "Synchronisation son & timecode",
+      summary: "Recaler proprement le son enregistré à part.",
+      body: [
+        { p: "Quand le son est capté sur un enregistreur séparé (meilleure qualité), il faut le resynchroniser avec l'image au montage." },
+        { h: "Méthodes" },
+        { ul: [
+          "Le clap : le « tac » visible et audible sert de point de calage manuel (ou automatique).",
+          "Synchro par forme d'onde : les logiciels alignent l'audio caméra et l'audio HQ automatiquement (PluralEyes, Resolve, Premiere).",
+          "Timecode : caméras et enregistreurs partagent le même code temporel (via boîtier Tentacle par ex.) — synchro instantanée sur gros tournages.",
+        ] },
+        { tip: "Même avec un enregistreur externe, garde le son de la caméra : il sert de référence pour la synchro par forme d'onde." },
+      ],
+    },
+
+    /* ============ ENRICHISSEMENT — LUMIÈRE ============ */
+    {
+      id: "lum-naturelle",
+      category: "lumiere",
+      title: "Lumière naturelle & motivée",
+      summary: "Travailler avec le soleil et les sources existantes.",
+      body: [
+        { h: "Lumière naturelle" },
+        { p: "Le soleil direct est dur ; le ciel couvert est une immense softbox. Une fenêtre donne une belle lumière douce et directionnelle — un grand classique du portrait." },
+        { h: "Lumière motivée" },
+        { p: "En fiction, l'éclairage artificiel imite une source visible à l'écran (fenêtre, lampe, néon) pour rester crédible. On renforce ou remplace la source réelle tout en gardant sa logique." },
+        { tip: "En intérieur jour, place ton sujet près d'une fenêtre à 45°, un réflecteur de l'autre côté : lumière gratuite et flatteuse." },
+      ],
+    },
+    {
+      id: "lum-modificateurs",
+      category: "lumiere",
+      title: "Modeler la lumière",
+      summary: "Diffuseurs, drapeaux, réflecteurs, gels : sculpter au lieu de juste éclairer.",
+      body: [
+        { ul: [
+          "Diffuseur (softbox, soie) : agrandit et adoucit la source.",
+          "Drapeau (flag) : bloque la lumière, crée de l'ombre, évite les reflets parasites (flare).",
+          "Réflecteur : renvoie la lumière pour déboucher les ombres, sans ajouter de projecteur.",
+          "Nid d'abeille (grid) : concentre le faisceau, contrôle la dispersion.",
+          "Gels : colorent (effet, ambiance) ou corrigent la température (CTO/CTB).",
+        ] },
+        { tip: "Contrôler où la lumière NE VA PAS (avec des drapeaux) est aussi important que l'éclairer : c'est ce qui donne du relief." },
+      ],
+    },
+
+    /* ============ ENRICHISSEMENT — MONTAGE ============ */
+    {
+      id: "mont-musique",
+      category: "montage",
+      title: "Monter en rythme sur la musique",
+      summary: "Caler les coupes sur le tempo pour une énergie irrésistible.",
+      body: [
+        { p: "Repère les temps forts (les « beats ») et place tes coupes ou tes apparitions dessus. La plupart des logiciels permettent de poser des marqueurs au rythme de la musique (touche à chaque temps pendant la lecture)." },
+        { ul: [
+          "Coupe sur le beat : dynamique, clip, montage sportif.",
+          "Coupe en anticipation (juste avant le beat) : parfois plus naturel.",
+          "Varie : tout caler mécaniquement finit par lasser.",
+        ] },
+        { tip: "Choisis la musique AVANT de monter une séquence rythmée : elle dicte la structure et le tempo." },
+      ],
+    },
+    {
+      id: "mont-sound",
+      category: "montage",
+      title: "Sound design & mixage (bases)",
+      summary: "Le son fait la moitié de l'image.",
+      body: [
+        { h: "Les couches du son" },
+        { ul: [
+          "Dialogues : la priorité, toujours intelligibles.",
+          "Ambiances (room tone, extérieurs) : donnent vie et continuité.",
+          "Effets (foley, SFX) : renforcent les actions.",
+          "Musique : porte l'émotion, sans écraser les dialogues.",
+        ] },
+        { h: "Repères de mixage" },
+        { p: "Dialogues autour de -12 dB, musique en dessous pour ne pas masquer la voix. Vise une norme de loudness à la livraison (souvent -14 LUFS pour le web)." },
+        { tip: "Un léger fondu (2-4 images) sur chaque coupe audio évite les clics. Ne néglige jamais le room tone pour combler les silences." },
+      ],
+    },
+    {
+      id: "mont-multicam",
+      category: "montage",
+      title: "Le montage multicaméra",
+      summary: "Monter plusieurs angles synchronisés en direct.",
+      body: [
+        { p: "Le mode multicam synchronise plusieurs sources (par timecode, forme d'onde ou clap) et permet de « switcher » d'angle en temps réel pendant la lecture, comme une régie." },
+        { h: "Workflow" },
+        { ul: ["Synchronise les angles", "Crée un clip/timeline multicam", "Lis et coupe d'un angle à l'autre au clavier", "Affine les points de coupe ensuite"] },
+        { tip: "Idéal pour interviews multi-angles, concerts, événements. Garde un angle « sécurité » large qui marche toujours." },
+      ],
+    },
+
+    /* ============ ENRICHISSEMENT — ÉTALONNAGE ============ */
+    {
+      id: "eta-match",
+      category: "etalonnage",
+      title: "Faire correspondre les plans (shot matching)",
+      summary: "Rendre une séquence homogène d'un plan à l'autre.",
+      body: [
+        { p: "Des plans tournés à des moments/réglages différents doivent sembler appartenir à la même scène. On les équilibre entre eux avant de poser le look." },
+        { h: "Méthode" },
+        { ul: [
+          "Choisis un plan de référence réussi.",
+          "Aligne les autres dessus : niveau des noirs et blancs (waveform), balance des couleurs (parade), teinte de peau (vecteurscope).",
+          "Compare en basculant rapidement d'un plan à l'autre.",
+        ] },
+        { tip: "Resolve propose un « Shot Match » automatique : un bon point de départ à corriger ensuite à la main." },
+      ],
+    },
+    {
+      id: "eta-peau",
+      category: "etalonnage",
+      title: "Gérer les teintes de peau",
+      summary: "La peau est le juge de paix de tout étalonnage.",
+      body: [
+        { p: "L'œil est extrêmement sensible aux teintes de peau : si elles sont justes, l'image passe ; sinon, tout paraît faux." },
+        { h: "Repères" },
+        { ul: [
+          "Sur le vecteurscope, la peau se place le long de la « skin tone line » (I-line), quel que soit le teint.",
+          "Attention aux dominantes qui verdissent ou rougissent la peau.",
+          "En secondaire, isole la peau (qualifier HSL) pour l'ajuster sans toucher au reste.",
+        ] },
+        { tip: "Étalonne d'abord pour que la peau soit juste, puis construis le reste du look autour — pas l'inverse." },
+      ],
+    },
+    {
+      id: "eta-hdr",
+      category: "etalonnage",
+      title: "SDR vs HDR",
+      summary: "Comprendre la différence et ses implications.",
+      body: [
+        { ul: [
+          "SDR (Rec.709) : la norme actuelle, ~100 nits, la majorité des livraisons.",
+          "HDR (Rec.2020 / PQ ou HLG) : plage dynamique et luminosité bien supérieures (1000 nits et +), couleurs plus larges. Rendu spectaculaire sur écran compatible.",
+        ] },
+        { h: "En pratique" },
+        { p: "Le HDR demande un écran de mastering calibré, un color management rigoureux et une livraison spécifique. Beaucoup livrent en SDR et dérivent une version HDR si besoin." },
+        { tip: "Ne te lance en HDR que si toute la chaîne (écran, export, plateforme) le supporte : un HDR mal maîtrisé est pire qu'un bon SDR." },
+      ],
+    },
+
+    /* ============ ENRICHISSEMENT — VFX ============ */
+    {
+      id: "vfx-motionblur",
+      category: "vfx",
+      title: "Le motion blur en compositing",
+      summary: "Intégrer un élément animé de façon crédible.",
+      body: [
+        { p: "Un élément ajouté qui bouge sans flou de mouvement « colle » à l'écran et trahit le trucage. Il faut lui appliquer un motion blur cohérent avec le plan (lié à la règle du 180°)." },
+        { ul: [
+          "Active le motion blur sur les calques animés (After Effects).",
+          "Pour un rendu 3D, exporte des vecteurs de mouvement (motion vectors) pour l'appliquer en post.",
+          "Assortis l'intensité à celle du plan réel.",
+        ] },
+        { tip: "Motion blur, grain assorti et légère aberration/flou d'objectif sont les 3 ingrédients qui fondent un élément CGI dans une prise réelle." },
+      ],
+    },
+    {
+      id: "vfx-cleanup",
+      category: "vfx",
+      title: "Nettoyage / paint-out",
+      summary: "Effacer un élément indésirable d'un plan.",
+      body: [
+        { p: "Le cleanup consiste à supprimer perche son, marqueur de tracking, logo, passant, poussière capteur… en reconstituant l'arrière-plan." },
+        { h: "Techniques" },
+        { ul: [
+          "Plan fixe : cloner une zone propre d'une autre image (image « propre »).",
+          "Plan mobile : tracker la zone, patcher, puis re-tracker le patch.",
+          "Outils : Content-Aware Fill (After Effects), tampon, Resolve (Patch Replacer / Object Removal IA).",
+        ] },
+        { tip: "Le plus rapide reste d'éviter le problème au tournage : cache les marqueurs superflus et surveille les bords du cadre." },
+      ],
+    },
+
+    /* ============ ENRICHISSEMENT — MOTION ============ */
+    {
+      id: "mot-typo",
+      category: "motion",
+      title: "Typographie animée (kinetic type)",
+      summary: "Animer le texte avec impact et lisibilité.",
+      body: [
+        { ul: [
+          "Hiérarchie : un mot-clé domine, le reste soutient.",
+          "Timing : apparitions rythmées (souvent sur la voix ou la musique).",
+          "Easing : entrées en ease-out, léger overshoot pour du peps.",
+          "Lisibilité avant tout : laisse le temps de lire, contraste suffisant.",
+        ] },
+        { h: "Outils After Effects" },
+        { p: "Les animateurs de texte (Text Animators) permettent d'animer par caractère/mot/ligne (opacité, position, échelle) très efficacement." },
+        { tip: "Anime peu de propriétés à la fois : position + opacité suffisent souvent. Trop d'effets nuit à la lisibilité." },
+      ],
+    },
+    {
+      id: "mot-rig",
+      category: "motion",
+      title: "Rigging de personnage (bases)",
+      summary: "Préparer un personnage 2D pour l'animer facilement.",
+      body: [
+        { p: "Le rigging crée une « marionnette » : on relie les parties d'un personnage (via parentage, os, contraintes) pour l'animer sans tout redessiner." },
+        { ul: [
+          "Sépare les éléments en calques (bras, avant-bras, main…).",
+          "Outil Marionnette (Puppet) ou plugins (DUIK, Rubberhose) pour les membres.",
+          "Parentage pour la hiérarchie (la main suit l'avant-bras qui suit le bras).",
+          "Contrôleurs (Sliders/Null) pour piloter le rig simplement.",
+        ] },
+        { tip: "Un bon rig se pilote avec quelques contrôleurs : investis du temps sur le rig pour gagner un temps fou à l'animation." },
+      ],
+    },
+
+    /* ============ ENRICHISSEMENT — LOGICIELS ============ */
+    {
+      id: "sw-photoshop",
+      category: "logiciels",
+      title: "Photoshop",
+      summary: "La référence de l'image fixe et du photomontage.",
+      body: [
+        { p: "Photoshop édite les images matricielles (pixels) : retouche photo, compositing d'images, matte painting, textures, création graphique." },
+        { h: "Points forts" },
+        { ul: ["Retouche et détourage puissants", "Calques, masques, modes de fusion", "Camera Raw pour le développement", "Passerelle vers After Effects (calques importables)"] },
+        { tip: "Un PSD multicalque importé dans After Effects garde ses calques : idéal pour animer une illustration créée dans Photoshop." },
+      ],
+    },
+    {
+      id: "sw-lightroom",
+      category: "logiciels",
+      title: "Lightroom",
+      summary: "Développement et catalogage photo (RAW).",
+      body: [
+        { p: "Lightroom gère le flux photo : import, tri, développement RAW non destructif et export par lots. Pensé pour traiter de gros volumes efficacement." },
+        { h: "Points forts" },
+        { ul: ["Développement RAW (exposition, couleurs, courbes)", "Catalogage, mots-clés, collections", "Presets réutilisables et synchronisables", "Retouches localisées (masques IA)"] },
+        { tip: "Crée tes presets pour une identité photo cohérente et un traitement rapide de séries entières." },
+      ],
+    },
+    {
+      id: "sw-media-encoder",
+      category: "logiciels",
+      title: "Adobe Media Encoder",
+      summary: "L'encodeur et la file d'attente d'export d'Adobe.",
+      body: [
+        { p: "Media Encoder (AME) encode et transcode en file d'attente, en tâche de fond, pour Premiere et After Effects. Il centralise les exports et les presets." },
+        { h: "Usages" },
+        { ul: ["Exporter sans bloquer Premiere/AE", "Traiter des lots de fichiers", "Créer et partager des presets d'export", "Surveiller un dossier (watch folder) pour encoder automatiquement"] },
+        { tip: "Slate propose son propre transcodeur ffmpeg et un watch-folder — utile si tu n'as pas la suite Adobe ouverte." },
+      ],
+    },
+
+    /* ============ ENRICHISSEMENT — LIVRAISON ============ */
+    {
+      id: "liv-audio",
+      category: "livraison",
+      title: "Normalisation audio (LUFS)",
+      summary: "Livrer un son au bon volume pour chaque plateforme.",
+      body: [
+        { p: "Le LUFS (Loudness Units Full Scale) mesure le volume perçu. Les plateformes normalisent à une cible : livrer au bon niveau évite qu'elles rabaissent (ou montent) ton mix." },
+        { ul: [
+          "YouTube : ~ -14 LUFS",
+          "Instagram / TikTok : ~ -14 LUFS",
+          "Broadcast (EBU R128) : -23 LUFS",
+          "Cinéma : référence en dBFS, pas en LUFS.",
+        ] },
+        { h: "True Peak" },
+        { p: "Garde les pics sous -1 dBTP pour éviter la distorsion après ré-encodage." },
+        { tip: "Slate peut normaliser l'audio d'un export via ffmpeg. Mesure toujours le LUFS intégré de ta vidéo finale avant livraison." },
+      ],
+    },
+    {
+      id: "liv-soustitres",
+      category: "livraison",
+      title: "Les sous-titres",
+      summary: "Formats, incrustés vs fichiers, bonnes pratiques.",
+      body: [
+        { ul: [
+          "Ouverts (burned-in / incrustés) : gravés dans l'image, toujours visibles, non désactivables — pratique pour les réseaux (lecture sans son).",
+          "Fermés (fichier .srt / .vtt) : séparés, activables/désactivables, indexables par les plateformes (SEO, accessibilité).",
+        ] },
+        { h: "Bonnes pratiques" },
+        { ul: ["2 lignes maxi, ~42 caractères/ligne", "Durée lisible (au moins ~1 s)", "Contraste et fond léger pour la lisibilité", "Synchro précise avec la parole"] },
+        { tip: "Pour les réseaux, incruste des sous-titres stylés : la majorité regarde sans le son. Pour YouTube, fournis aussi un .srt pour l'accessibilité." },
+      ],
+    },
   ];
 })(window.MH = window.MH || {});

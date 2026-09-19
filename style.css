@@ -1,5 +1,5 @@
 /* =========================================================
-   MotionHub — Feuille de style
+   Slate — Feuille de style
    1. Variables      5. Cartes & grilles     9. Modal
    2. Base & fond    6. Inputs & boutons    10. Toast
    3. Sidebar        7. Inspecteur          11. Responsive
@@ -986,6 +986,28 @@ td:first-child { color: var(--text-main); font-weight: 600; }
 /* --- 20. MISES À JOUR --- */
 .update-status { margin: 6px 0 14px; font-size: 0.9rem; }
 #update-progress { margin-bottom: 14px; }
+
+/* --- 21. APPRENDRE (documentation) --- */
+.learn-card .exp-cat i { margin-right: 4px; }
+.learn-article { max-width: 780px; animation: cardEntrance 0.4s var(--ease-out-expo); }
+.learn-back { margin-bottom: 18px; }
+.learn-title { font-size: 1.8rem; margin: 10px 0 6px; letter-spacing: -0.5px; }
+.learn-summary { font-size: 1.02rem; margin-bottom: 24px; }
+.learn-body { font-size: 1rem; line-height: 1.7; }
+.learn-body h4 { font-size: 1.1rem; margin: 26px 0 8px; color: var(--secondary); }
+.learn-body p { margin: 0 0 14px; color: var(--text-main); }
+.learn-body ul { margin: 0 0 16px; padding-left: 22px; }
+.learn-body li { margin-bottom: 7px; }
+.learn-tip {
+    background: rgba(112, 0, 255, 0.1);
+    border-left: 3px solid var(--primary);
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 8px 0 18px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+.learn-tip i { color: var(--warn); margin-right: 6px; }
 
 /* --- 17. THÈME CLAIR --- */
 :root[data-theme="light"] {

@@ -6,3 +6,8 @@ release/
 
 # Artefacts de build (installateurs)
 *.exe
+
+# Fichiers sensibles (jamais versionner — contiennent des tokens/secrets)
+Commande_publish.txt
+*.token
+.env

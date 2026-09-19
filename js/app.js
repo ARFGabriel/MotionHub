@@ -1,5 +1,5 @@
 /* =========================================================
-   APPLICATION — MotionHub
+   APPLICATION — Slate
    Logique principale : navigation, inspecteur, expressions,
    nomenclature, checklist, calculatrices, génération de scripts.
    Aucun handler inline : tout est branché ici.
@@ -521,6 +521,7 @@
     if (MH.proxy && MH.proxy.init) MH.proxy.init();
     if (MH.mediatools && MH.mediatools.init) MH.mediatools.init();
     if (MH.references && MH.references.init) MH.references.init();
+    if (MH.learn && MH.learn.init) MH.learn.init();
     if (MH.automation && MH.automation.init) MH.automation.init();
     if (MH.luts && MH.luts.init) MH.luts.init();
     if (MH.palette && MH.palette.init) MH.palette.init();

@@ -1,7 +1,7 @@
 {
-  "name": "motionhub",
+  "name": "slate",
   "version": "0.2.0",
-  "description": "MotionHub — assistant de production vidéo (motion design / After Effects)",
+  "description": "Slate — studio de production photo & vidéo (tournage, montage, motion, étalonnage)",
   "author": "Gabriel",
   "license": "MIT",
   "main": "electron/main.js",
@@ -21,8 +21,8 @@
     "ffprobe-static": "^3.1.0"
   },
   "build": {
-    "appId": "com.motionhub.app",
-    "productName": "MotionHub",
+    "appId": "com.slate.app",
+    "productName": "Slate",
     "directories": {
       "output": "dist"
     },

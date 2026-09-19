@@ -1,7 +1,9 @@
-# MotionHub
+# Slate
 
-Assistant de production vidéo pour motion designer (workflow After Effects / Adobe).
+Studio de production photo & vidéo pour créateur solo : **tournage, montage, motion, étalonnage, livraison**.
 Application desktop **Electron** avec une interface web, réutilisable telle quelle dans un navigateur (mode dégradé).
+
+> Anciennement « MotionHub ». Le dépôt GitHub reste `ARFGabriel/MotionHub`.
 
 ## Fonctionnalités
 

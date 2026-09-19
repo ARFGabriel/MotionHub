@@ -28,7 +28,7 @@ function createWindow() {
     minWidth: 900,
     minHeight: 600,
     backgroundColor: "#0a0a0a",
-    title: "MotionHub",
+    title: "Slate",
     autoHideMenuBar: true,
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
@@ -401,16 +401,16 @@ function startWatcher(webContents, cfg) {
       emit({ type: "processing", file, name });
       media
         .generateProxy(file, { format: "prores", scale: (options && options.scale) || 0.5 }, null)
-        .then((res) => { notify("MotionHub — proxy créé", path.basename(res.output)); emit({ type: "done", file, name, message: "Proxy créé", output: res.output }); })
+        .then((res) => { notify("Slate — proxy créé", path.basename(res.output)); emit({ type: "done", file, name, message: "Proxy créé", output: res.output }); })
         .catch((err) => emit({ type: "error", file, name, message: err.message }));
     } else if (mode === "transcode") {
       emit({ type: "processing", file, name });
       media
         .transcode(file, (options && options.presetId) || "youtube", null)
-        .then((res) => { notify("MotionHub — export créé", path.basename(res.output)); emit({ type: "done", file, name, message: "Transcodé", output: res.output }); })
+        .then((res) => { notify("Slate — export créé", path.basename(res.output)); emit({ type: "done", file, name, message: "Transcodé", output: res.output }); })
         .catch((err) => emit({ type: "error", file, name, message: err.message }));
     } else {
-      notify("MotionHub — nouveau fichier", name);
+      notify("Slate — nouveau fichier", name);
       emit({ type: "done", file, name, message: "Détecté" });
     }
   };
@@ -443,13 +443,13 @@ function setupAutoUpdate() {
   autoUpdater.on("checking-for-update", () => send({ state: "checking" }));
   autoUpdater.on("update-available", (info) => {
     send({ state: "available", version: info.version });
-    notify("MotionHub", "Mise à jour " + info.version + " disponible — téléchargement…");
+    notify("Slate", "Mise à jour " + info.version + " disponible — téléchargement…");
   });
   autoUpdater.on("update-not-available", () => send({ state: "none" }));
   autoUpdater.on("download-progress", (p) => send({ state: "downloading", percent: Math.round(p.percent) }));
   autoUpdater.on("update-downloaded", (info) => {
     send({ state: "downloaded", version: info.version });
-    notify("MotionHub", "Mise à jour prête — redémarre pour l'installer.");
+    notify("Slate", "Mise à jour prête — redémarre pour l'installer.");
   });
   autoUpdater.on("error", (err) => send({ state: "error", message: String((err && err.message) || err) }));
 

@@ -743,6 +743,8 @@ summary i { color: var(--warn); margin-right: 4px; }
 .media-info__row strong { color: var(--text-main); font-weight: 600; text-align: right; word-break: break-all; }
 
 /* --- 12. RÉFÉRENCES (raccourcis, specs) --- */
+.sc-note { font-size: 0.85rem; line-height: 1.5; margin-bottom: 18px; border-left: 3px solid var(--secondary); }
+.sc-note i { color: var(--secondary); margin-right: 6px; }
 .shortcut-list { margin-top: 20px; display: flex; flex-direction: column; gap: 4px; }
 .shortcut-row {
     display: flex; align-items: center; justify-content: space-between; gap: 20px;

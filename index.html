@@ -25,7 +25,7 @@
 
         <div class="nav-category">Ressources</div>
         <button class="nav-btn" data-tool="learn"><i class="fas fa-graduation-cap"></i> Apprendre</button>
-        <button class="nav-btn" data-tool="references"><i class="fas fa-book"></i> Références</button>
+        <button class="nav-btn" data-tool="references"><i class="fas fa-keyboard"></i> Raccourcis</button>
         <button class="nav-btn" data-tool="automation-watch"><i class="fas fa-eye"></i> Automatisation</button>
 
         <div class="nav-spacer"></div>
@@ -530,14 +530,14 @@
 
         <!-- ======================= RÉFÉRENCES ======================= -->
         <section id="references" class="tool-section">
-            <h2>Références</h2>
+            <h2>Raccourcis</h2>
             <div class="subtabs">
-                <button class="subtab active" data-subtab="ref-shortcuts"><i class="fas fa-keyboard"></i> Raccourcis</button>
+                <button class="subtab active" data-subtab="ref-shortcuts"><i class="fas fa-keyboard"></i> Par logiciel</button>
                 <button class="subtab" data-subtab="ref-specs"><i class="fas fa-table"></i> Specs &amp; Codecs</button>
             </div>
 
             <div class="subpanel active" id="ref-shortcuts">
-                <p class="muted">Configurations par défaut. Change de logiciel et filtre par la recherche.</p>
+                <div class="card notice sc-note" id="sc-note"></div>
                 <div class="exp-toolbar">
                     <input type="text" id="sc-search" class="exp-search" placeholder="🔍 Rechercher une action…">
                     <div class="exp-filters" id="sc-apps"></div>

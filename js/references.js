@@ -23,6 +23,11 @@
     var search = utils.$("#sc-search");
     if (!appsBar || !list) return;
 
+    var noteEl = utils.$("#sc-note");
+    if (noteEl && MH.shortcutsNote) {
+      noteEl.innerHTML = '<i class="fas fa-keyboard"></i> ' + utils.escapeHtml(MH.shortcutsNote);
+    }
+
     var apps = Object.keys(MH.shortcuts);
     var current = apps[0];
     var query = "";

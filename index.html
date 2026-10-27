@@ -262,6 +262,26 @@
                         <input type="number" id="pw-proj" value="800">
                         <div id="pw-result" class="media-info"></div>
                     </div>
+
+                    <div class="card">
+                        <h3><i class="fas fa-ruler-combined"></i> Ratio / letterbox</h3>
+                        <p class="card-hint">Bandes noires pour un format cible.</p>
+                        <div class="field-row">
+                            <div><label for="rt-w">Largeur (px)</label><input type="number" id="rt-w" value="1920"></div>
+                            <div><label for="rt-h">Hauteur (px)</label><input type="number" id="rt-h" value="1080"></div>
+                        </div>
+                        <label for="rt-ratio">Ratio cible</label>
+                        <select id="rt-ratio">
+                            <option value="2.39">2.39 (scope)</option>
+                            <option value="2.35">2.35</option>
+                            <option value="1.85">1.85 (ciné US)</option>
+                            <option value="1.7777" selected>16/9</option>
+                            <option value="1.3333">4/3</option>
+                            <option value="1">Carré 1:1</option>
+                            <option value="0.5625">Vertical 9/16</option>
+                        </select>
+                        <div id="rt-result" class="media-info"></div>
+                    </div>
                 </div>
             </div>
 

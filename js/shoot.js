@@ -284,6 +284,30 @@
     utils.$("#pw-proj").addEventListener("input", power);
     power();
 
+    // --- Ratio / letterbox ---
+    function ratioCalc() {
+      var w = parseFloat(utils.$("#rt-w").value) || 1920;
+      var h = parseFloat(utils.$("#rt-h").value) || 1080;
+      var r = parseFloat(utils.$("#rt-ratio").value) || 1.7777;
+      var newH = w / r;
+      var out;
+      if (newH <= h) {
+        var bar = Math.round((h - newH) / 2);
+        out = row("Image utile", w + " × " + Math.round(newH)) +
+          row("Bandes noires", bar + " px (haut & bas)");
+      } else {
+        var newW = h * r;
+        var barX = Math.round((w - newW) / 2);
+        out = row("Image utile", Math.round(newW) + " × " + h) +
+          row("Bandes noires", barX + " px (gauche & droite)");
+      }
+      utils.$("#rt-result").innerHTML = out;
+    }
+    utils.$("#rt-w").addEventListener("input", ratioCalc);
+    utils.$("#rt-h").addEventListener("input", ratioCalc);
+    utils.$("#rt-ratio").addEventListener("change", ratioCalc);
+    ratioCalc();
+
     utils.$("#sun-calc").addEventListener("click", function () {
       var lat = parseFloat(utils.$("#sun-lat").value);
       var lng = parseFloat(utils.$("#sun-lng").value);

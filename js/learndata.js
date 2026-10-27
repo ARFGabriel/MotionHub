@@ -14,6 +14,7 @@
     { id: "son", label: "Son", icon: "fa-microphone" },
     { id: "lumiere", label: "Lumière", icon: "fa-lightbulb" },
     { id: "realisation", label: "Réalisation", icon: "fa-clapperboard" },
+    { id: "cadrage", label: "Cadrage", icon: "fa-crop-simple" },
     { id: "montage", label: "Montage", icon: "fa-scissors" },
     { id: "etalonnage", label: "Étalonnage", icon: "fa-palette" },
     { id: "vfx", label: "VFX & compositing", icon: "fa-wand-magic-sparkles" },
@@ -2021,6 +2022,135 @@
         { p: "Sans équipe à envoyer dans le monde, achète un plan d'archive (establishing shot) sur un site de banque d'images, place-le avant ton découpage classique, et veille à ce que rien dans TES plans ne trahisse le vrai décor (panneau, plaque, architecture par la fenêtre)." },
         { ul: ["Cherche en anglais (« establishing shot »).", "Sites : Pond5, Artgrid, Adobe Stock, Shutterstock, Getty, Dissolve, Filmsupply…", "Prix de ~5 € à plusieurs centaines selon le plan."] },
         { tip: "Ça marche aussi pour des éléments difficiles (hélicoptère, incendie) : un stock-shot + un décor accessoirisé + bruitage, et on y croit." },
+      ],
+    },
+
+    /* ============ CHAPITRE 6 — COMPOSER SON CADRE ============ */
+    {
+      id: "cad-point-de-vue",
+      category: "cadrage",
+      title: "Le point de vue (objectif, subjectif, omniscient)",
+      summary: "Où l'on place la caméra détermine ce que le spectateur ressent.",
+      body: [
+        { p: "La même scène filmée sous deux angles raconte deux choses différentes (les photos du G7 Merkel/Trump en sont l'exemple parfait). Le placement de la caméra, c'est le regard du réalisateur." },
+        { ul: [
+          "Objectif : cadres égaux en champ/contrechamp, caméra en recul, aucun parti pris — on observe sans s'identifier.",
+          "Subjectif : on adopte le regard d'un personnage, avec ses seules informations. Très utilisé en horreur (on a peur en même temps que lui).",
+          "Omniscient : le spectateur sait tout, souvent via une voix off (Desperate Housewives). Rare, car on s'identifie moins.",
+        ] },
+        { tip: "Choisis le point de vue selon qui tu veux que le spectateur « devienne » — ou pas — dans la scène." },
+      ],
+    },
+    {
+      id: "cad-vue-subjective",
+      category: "cadrage",
+      title: "La vue subjective (POV)",
+      summary: "Voir à travers les yeux d'un personnage ou d'un objet.",
+      body: [
+        { p: "Le plan POV se place entre un personnage qui regarde et sa réaction. Il implique fortement le spectateur." },
+        { ul: [
+          "À travers un viseur : image habillée de repères (jumelles, caméra) — ou le genre found footage (Blair Witch).",
+          "À travers une drogue : image déformée (Requiem for a Dream, Trainspotting).",
+          "À travers un personnage : on voit ce qu'il cherche/découvre (ouverture culte de Halloween).",
+          "À travers un objet : témoin muet (le lave-linge de Breaking Bad), ou suivre une balle (Lord of War).",
+          "À travers un danger : suggérer la menace sans la montrer — la vue subjective du requin des Dents de la mer, née d'un animatronique défaillant.",
+        ] },
+        { tip: "Bidouille petit budget : un monstre/zombie trop cher à montrer ? Filme sa vue subjective qui fonce sur l'acteur et coupe avant le contact." },
+      ],
+    },
+    {
+      id: "cad-ratio",
+      category: "cadrage",
+      title: "Le ratio (format d'image)",
+      summary: "Le rapport largeur/hauteur, à décider avant de tourner.",
+      body: [
+        { p: "Le ratio (largeur ÷ hauteur) conditionne toute ta composition. À choisir avant le tournage." },
+        { svg: '<svg viewBox="0 0 340 110" xmlns="http://www.w3.org/2000/svg" role="img"><g fill="none" stroke="var(--primary)" stroke-width="2"><rect x="10" y="30" width="48" height="36"/><rect x="74" y="30" width="64" height="36"/><rect x="154" y="30" width="85" height="36"/><rect x="255" y="30" width="36" height="36"/><rect x="305" y="18" width="24" height="42"/></g><g font-size="9" fill="var(--text-main)" text-anchor="middle"><text x="34" y="80">4/3</text><text x="106" y="80">16/9</text><text x="196" y="80">2.35</text><text x="273" y="80">1:1</text><text x="317" y="74">9/16</text></g></svg>', caption: "Les formats courants, à hauteur égale (la largeur = le ratio)." },
+        { ul: [
+          "2.35 (scope) : épique, cinéma, paysages (favori de David Fincher).",
+          "16/9 (~1.85 US, 1.66 EU) : standard, comédies et drames.",
+          "4/3 (1.33) : format académique ancien, ou effet d'enfermement (A Ghost Story).",
+          "Carré 1:1 / Vertical 9:16 : réseaux sociaux.",
+        ] },
+        { h: "Choisir son ratio" },
+        { p: "Par genre (scope pour l'aventure), par ressenti (le carré de Mommy enferme le personnage), par époque (The Artist en 4/3), ou par style (Scott Pilgrim bascule en 2.35 pendant les combats)." },
+        { tip: "Un ratio plus étroit (4/3, carré) resserre et oppresse ; un ratio large respire et impressionne." },
+      ],
+    },
+    {
+      id: "cad-2-35",
+      category: "cadrage",
+      title: "Tourner en 2.35",
+      summary: "Trois façons d'obtenir le look scope.",
+      body: [
+        { ul: [
+          "Objectifs anamorphiques : la vraie méthode, mais chère et peu pratique pour débuter.",
+          "Marqueurs : certaines caméras affichent des lignes de cadrage dans le viseur (non enregistrées) ; on recadre ensuite au montage.",
+          "La bidouille : colle un film protecteur sur ton moniteur et trace les lignes au marqueur (ou deux élastiques / du gaffer).",
+        ] },
+        { h: "Au montage" },
+        { p: "Deux options : poser deux bandes noires (PNG transparent au bon ratio) sur une séquence 16/9, ou changer les dimensions de la séquence. Formule : largeur = hauteur × ratio (ou hauteur = largeur ÷ ratio)." },
+        { tip: "Tourne toujours ton image complète (16/9) et cadre en gardant l'info importante dans la zone 2.35 : tu gardes de la marge au recadrage. (Calculateur Ratio/letterbox dans Tournage.)" },
+      ],
+    },
+    {
+      id: "cad-regle-tiers",
+      category: "cadrage",
+      title: "La règle des tiers",
+      summary: "Diviser le cadre en 9 pour placer et équilibrer.",
+      body: [
+        { p: "On divise le cadre en tiers (3×3). On place les éléments importants sur les lignes ou leurs intersections (« lignes de force »). Comme toute « règle » de cinéma, c'est une ligne directrice." },
+        { svg: '<svg viewBox="0 0 300 180" xmlns="http://www.w3.org/2000/svg" role="img"><rect x="8" y="8" width="284" height="164" fill="none" stroke="var(--text-dim)" stroke-width="2"/><g stroke="var(--primary)" stroke-width="1.2"><line x1="102.7" y1="8" x2="102.7" y2="172"/><line x1="197.3" y1="8" x2="197.3" y2="172"/><line x1="8" y1="62.7" x2="292" y2="62.7"/><line x1="8" y1="117.3" x2="292" y2="117.3"/></g><g fill="var(--secondary)"><circle cx="102.7" cy="62.7" r="5"/><circle cx="197.3" cy="62.7" r="5"/><circle cx="102.7" cy="117.3" r="5"/><circle cx="197.3" cy="117.3" r="5"/></g></svg>', caption: "Les 4 points de force : y placer le sujet attire l'œil." },
+        { ul: [
+          "Le regard : place les yeux sur la ligne haute ; laisse de l'air dans la direction du regard.",
+          "L'horizon : dans le tiers haut pour insister sur le sol, dans le tiers bas pour le ciel.",
+          "Le mouvement : un personnage qui va à droite se place à gauche (il « marche vers le centre »).",
+          "Le placement : deux personnages sur les lignes verticales = attention égale ; au centre = symétrie et domination (Full Metal Jacket).",
+        ] },
+        { tip: "Sur un plan serré, couper le haut du crâne ne choque pas — mais garde toujours le menton dans le cadre." },
+      ],
+    },
+    {
+      id: "cad-angles",
+      category: "cadrage",
+      title: "Les angles : plongée, contre-plongée, dutch",
+      summary: "La hauteur et l'inclinaison de la caméra manipulent le rapport de force.",
+      body: [
+        { svg: '<svg viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg" role="img"><circle cx="175" cy="52" r="15" fill="var(--glass-panel)" stroke="var(--text-dim)" stroke-width="2"/><rect x="163" y="68" width="24" height="86" rx="6" fill="var(--glass-panel)" stroke="var(--text-dim)" stroke-width="2"/><g fill="var(--primary)"><rect x="60" y="20" width="22" height="14" rx="2"/><rect x="48" y="96" width="22" height="14" rx="2"/><rect x="60" y="168" width="22" height="14" rx="2"/></g><g stroke="var(--primary)" stroke-width="1"><line x1="82" y1="30" x2="158" y2="52"/><line x1="70" y1="103" x2="158" y2="100"/><line x1="82" y1="172" x2="158" y2="150"/></g><g font-size="10" fill="var(--text-main)"><text x="58" y="16">Plongée</text><text x="18" y="92">Hauteur des yeux</text><text x="40" y="196">Contre-plongée</text></g></svg>', caption: "Trois hauteurs de caméra pour un même sujet." },
+        { ul: [
+          "Hauteur des yeux : neutre, familier, le plus courant (comédie).",
+          "Plongée (au-dessus, vers le bas) : écrase, affaiblit, soumet le personnage (Dobby dans Harry Potter).",
+          "Contre-plongée (en dessous, vers le haut) : agrandit, magnifie, donne de la puissance (super-héros).",
+          "Dutch angle (caméra inclinée) : malaise, perte de repères, tension. À ne pas abuser.",
+        ] },
+        { p: "En alternant plongée et contre-plongée, on installe un rapport de force (le duel Jon Snow / Ramsay dans la Bataille des Bâtards)." },
+        { tip: "Bidouille scène historique : filme tes plans larges en contre-plongée pour ne cadrer que le haut des bâtiments et cacher voitures, boutiques et éléments modernes au sol." },
+      ],
+    },
+    {
+      id: "cad-topshot",
+      category: "cadrage",
+      title: "Le topshot (caméra en douche)",
+      summary: "La plongée à 90° au-dessus du sol.",
+      body: [
+        { p: "Vue du dessus parfaitement perpendiculaire. Elle situe l'espace, suit un mouvement (trajet d'une voiture), ou exprime solitude, enfermement, mort, libération." },
+        { h: "La bidouille Google Earth" },
+        { p: "Pas besoin d'un drone coûteux : avec Google Earth (et Google Earth Studio), on crée un faux plan aérien en se déplaçant dans les vues satellites, avec des points clés animés — on peut même régler la position du soleil. Les frères Coen l'ont fait pour le générique de Burn After Reading." },
+        { tip: "Ajoute de faux nuages et des voitures détourées en mouvement sur la carte : l'effet de zoom depuis l'espace devient crédible." },
+      ],
+    },
+    {
+      id: "cad-conseils",
+      category: "cadrage",
+      title: "Conseils de cadrage",
+      summary: "Les réflexes pour une image léchée.",
+      body: [
+        { ul: [
+          "Ne sois pas flemmard : ne filme pas « en reportage » debout en pivotant. Baisse-toi, prends de la hauteur, cherche le meilleur angle.",
+          "Dirige l'attention : compose pour guider l'œil et éliminer les distractions autour du sujet (crucial pour des plans courts/web lisibles vite).",
+          "Fais la bulle : vérifie le niveau (bulle du trépied, niveau à bulle, appli boussole du téléphone) — sauf dutch angle voulu.",
+        ] },
+        { tip: "Un viseur de champ (ou l'appli Artemis sur smartphone) permet de prévisualiser un cadre selon la focale et le capteur, sans trimballer la caméra." },
       ],
     },
   ];

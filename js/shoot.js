@@ -234,6 +234,22 @@
     // --- Golden hour ---
     var dateInput = utils.$("#sun-date");
     dateInput.value = new Date().toISOString().slice(0, 10);
+    // --- Plage dynamique dB <-> EV ---
+    function dynRange() {
+      var v = parseFloat(utils.$("#dr-val").value) || 0;
+      var unit = utils.$("#dr-unit").value;
+      var ev, db;
+      if (unit === "db") { ev = v / 6; db = v; }
+      else { ev = v; db = v * 6; }
+      utils.$("#dr-result").innerHTML =
+        row("Plage dynamique", ev.toFixed(1) + " EV (stops)") +
+        row("Équivalent", db.toFixed(0) + " dB") +
+        row("Repère", ev >= 14 ? "Excellent (haut de gamme)" : ev >= 12 ? "Bon (caméra moderne)" : ev >= 10 ? "Correct" : "Limité");
+    }
+    utils.$("#dr-val").addEventListener("input", dynRange);
+    utils.$("#dr-unit").addEventListener("change", dynRange);
+    dynRange();
+
     utils.$("#sun-calc").addEventListener("click", function () {
       var lat = parseFloat(utils.$("#sun-lat").value);
       var lng = parseFloat(utils.$("#sun-lng").value);

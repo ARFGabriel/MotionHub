@@ -38,6 +38,7 @@
         id: "s" + Date.now(),
         desc: desc,
         frame: utils.$("#shot-frame").value,
+        angle: utils.$("#shot-angle").value,
         move: utils.$("#shot-move").value,
         lens: utils.$("#shot-lens").value.trim(),
         done: false,
@@ -60,7 +61,9 @@
           '<input type="checkbox"' + (s.done ? " checked" : "") + ">" +
           '<span class="shot-num">#' + (i + 1) + "</span>" +
           '<div class="shot-main"><div class="shot-desc">' + utils.escapeHtml(s.desc) + "</div>" +
-          '<div class="shot-tags"><span>' + utils.escapeHtml(s.frame) + "</span><span>" + utils.escapeHtml(s.move) + "</span>" +
+          '<div class="shot-tags"><span>' + utils.escapeHtml(s.frame) + "</span>" +
+          (s.angle ? "<span>" + utils.escapeHtml(s.angle) + "</span>" : "") +
+          "<span>" + utils.escapeHtml(s.move) + "</span>" +
           (s.lens ? "<span>" + utils.escapeHtml(s.lens) + "</span>" : "") + "</div></div>" +
           '<button class="shot-del" title="Supprimer"><i class="fas fa-xmark"></i></button>';
         row.querySelector("input").addEventListener("change", function (e) {

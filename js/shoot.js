@@ -265,6 +265,22 @@
     utils.$("#crop-sensor").addEventListener("change", crop);
     crop();
 
+    // --- Puissance éclairage / disjoncteur ---
+    function power() {
+      var a = parseFloat(utils.$("#pw-amp").value) || 16;
+      var v = parseFloat(utils.$("#pw-volt").value) || 220;
+      var pr = parseFloat(utils.$("#pw-proj").value) || 0;
+      var max = a * v;
+      var n = pr > 0 ? Math.floor(max / pr) : 0;
+      utils.$("#pw-result").innerHTML =
+        row("Puissance max", max + " W") +
+        row("Projecteurs de " + (pr || 0) + " W", pr <= 0 ? "—" : n > 0 ? n + " max" : "trop puissant");
+    }
+    utils.$("#pw-amp").addEventListener("change", power);
+    utils.$("#pw-volt").addEventListener("input", power);
+    utils.$("#pw-proj").addEventListener("input", power);
+    power();
+
     utils.$("#sun-calc").addEventListener("click", function () {
       var lat = parseFloat(utils.$("#sun-lat").value);
       var lng = parseFloat(utils.$("#sun-lng").value);

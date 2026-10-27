@@ -106,6 +106,7 @@
         if (b.p) return "<p>" + utils.escapeHtml(b.p) + "</p>";
         if (b.ul) return "<ul>" + b.ul.map(function (i) { return "<li>" + utils.escapeHtml(i) + "</li>"; }).join("") + "</ul>";
         if (b.tip) return '<div class="learn-tip"><i class="fas fa-lightbulb"></i> ' + utils.escapeHtml(b.tip) + "</div>";
+        if (b.svg) return '<figure class="learn-svg">' + b.svg + (b.caption ? "<figcaption>" + utils.escapeHtml(b.caption) + "</figcaption>" : "") + "</figure>";
         return "";
       })
       .join("");

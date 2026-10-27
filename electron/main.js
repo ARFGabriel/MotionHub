@@ -333,6 +333,34 @@ function registerIpc() {
     return media.transcodeCustom(input, spec, sendMediaProgress(evt, jobId));
   });
 
+  // Export PDF d'un scénario (rendu HTML -> PDF via Chromium).
+  ipcMain.handle("screenplay:exportPdf", async (_evt, { html, name }) => {
+    const res = await dialog.showSaveDialog({
+      title: "Exporter le scénario en PDF",
+      defaultPath: (name || "scenario") + ".pdf",
+      filters: [{ name: "PDF", extensions: ["pdf"] }],
+    });
+    if (res.canceled) return { canceled: true };
+
+    const tmp = path.join(app.getPath("temp"), "slate_sp_" + Date.now() + ".html");
+    fs.writeFileSync(tmp, html, "utf-8");
+    const win = new BrowserWindow({ show: false, webPreferences: { javascript: false } });
+    try {
+      await win.loadFile(tmp);
+      const pdf = await win.webContents.printToPDF({
+        pageSize: "Letter",
+        printBackground: true,
+        preferCSSPageSize: true,
+        margins: { top: 0, bottom: 0, left: 0, right: 0 },
+      });
+      fs.writeFileSync(res.filePath, pdf);
+      return { canceled: false, path: res.filePath };
+    } finally {
+      win.destroy();
+      try { fs.unlinkSync(tmp); } catch (e) {}
+    }
+  });
+
   ipcMain.handle("dialog:pickLut", async () => {
     const res = await dialog.showOpenDialog({
       title: "Choisir une LUT",

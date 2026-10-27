@@ -18,6 +18,7 @@
         <button class="nav-btn" data-tool="projects"><i class="fas fa-clapperboard"></i> Projets</button>
 
         <div class="nav-category">Production</div>
+        <button class="nav-btn" data-tool="screenplay"><i class="fas fa-feather-pointed"></i> Scénario</button>
         <button class="nav-btn" data-tool="shoot"><i class="fas fa-video"></i> Tournage</button>
         <button class="nav-btn" data-tool="media"><i class="fas fa-wand-magic-sparkles"></i> Média</button>
         <button class="nav-btn" data-tool="code"><i class="fas fa-code"></i> Expressions &amp; Scripts</button>
@@ -96,6 +97,51 @@
                 <p class="muted">Clique sur « Ajouter un projet » et sélectionne le dossier racine d'une production, où qu'il soit sur tes disques.</p>
             </div>
             <div id="projects-grid" class="project-grid"></div>
+        </section>
+
+        <!-- ======================= SCÉNARIO ======================= -->
+        <section id="screenplay" class="tool-section">
+            <div class="section-head">
+                <h2>Scénario</h2>
+                <div class="sp-toolbar-top">
+                    <button class="mini-btn" id="sp-context-toggle"><i class="fas fa-circle-info"></i> Contexte</button>
+                    <button class="mini-btn" id="sp-import"><i class="fas fa-file-import"></i> Importer</button>
+                    <input type="file" id="sp-file" accept=".fountain,.txt,.spmd,.fdx" hidden>
+                    <button class="mini-btn" id="sp-exp-fountain"><i class="fas fa-code"></i> .fountain</button>
+                    <button class="mini-btn" id="sp-exp-pdf"><i class="fas fa-file-pdf"></i> PDF</button>
+                    <button class="mini-btn" id="sp-exp-word"><i class="fas fa-file-word"></i> Word</button>
+                </div>
+            </div>
+
+            <input type="text" id="sp-title" class="sp-title-input" placeholder="Titre du scénario">
+
+            <div class="card sp-context-card" id="sp-context" hidden>
+                <div class="field-row">
+                    <div><label for="sp-author">Auteur</label><input type="text" id="sp-author" placeholder="Ton nom"></div>
+                    <div><label for="sp-genre">Format / genre</label><input type="text" id="sp-genre" placeholder="Court-métrage, comédie…"></div>
+                </div>
+                <label for="sp-logline">Logline / pitch</label>
+                <textarea id="sp-logline" rows="2" placeholder="Le pitch en une à deux phrases."></textarea>
+                <label for="sp-notes">Notes de contexte</label>
+                <textarea id="sp-notes" rows="3" placeholder="Ton, références, intentions, personnages…"></textarea>
+            </div>
+
+            <div class="sp-toolbar">
+                <p class="muted sp-hint"><code>INT./EXT. LIEU - JOUR</code> = séquence · LIGNE EN MAJUSCULES = personnage · <code>(…)</code> = didascalie · <code>CUT TO:</code> = transition · le reste = action.</p>
+                <div class="sp-inserts">
+                    <button class="chip-btn" data-ins="scene">+ Séquence</button>
+                    <button class="chip-btn" data-ins="action">+ Action</button>
+                    <button class="chip-btn" data-ins="character">+ Personnage</button>
+                    <button class="chip-btn" data-ins="paren">+ Didascalie</button>
+                    <button class="chip-btn" data-ins="transition">+ Transition</button>
+                </div>
+            </div>
+
+            <div class="sp-editor">
+                <textarea id="sp-text" class="sp-text" spellcheck="true" placeholder="1. EXT. CHAMP DE BATAILLE - JOUR&#10;&#10;C'est la guerre. Un soldat court, il porte un camarade blessé.&#10;&#10;JAKE&#10;(paniqué)&#10;C'est rien, ça va aller, tu m'entends ?!&#10;&#10;CUT TO:"></textarea>
+                <div id="sp-preview" class="sp-preview screenplay"></div>
+            </div>
+            <div class="sp-stats muted" id="sp-stats"></div>
         </section>
 
         <!-- ======================= TOURNAGE ======================= -->
@@ -792,6 +838,7 @@
     <script src="js/references.js"></script>
     <script src="js/learn.js"></script>
     <script src="js/shoot.js"></script>
+    <script src="js/screenplay.js"></script>
     <script src="js/automation.js"></script>
     <script src="js/palette.js"></script>
     <script src="js/easing.js"></script>

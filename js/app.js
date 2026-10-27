@@ -523,6 +523,7 @@
     if (MH.references && MH.references.init) MH.references.init();
     if (MH.learn && MH.learn.init) MH.learn.init();
     if (MH.shoot && MH.shoot.init) MH.shoot.init();
+    if (MH.screenplay && MH.screenplay.init) MH.screenplay.init();
     if (MH.automation && MH.automation.init) MH.automation.init();
     if (MH.luts && MH.luts.init) MH.luts.init();
     if (MH.palette && MH.palette.init) MH.palette.init();

@@ -250,6 +250,21 @@
     utils.$("#dr-unit").addEventListener("change", dynRange);
     dynRange();
 
+    // --- Équivalence de focale (crop factor) ---
+    function crop() {
+      var f = parseFloat(utils.$("#crop-focal").value) || 50;
+      var c = parseFloat(utils.$("#crop-sensor").value) || 1;
+      var fe = f * c;
+      var ang = deg(2 * Math.atan(36 / (2 * fe)));
+      utils.$("#crop-result").innerHTML =
+        row("Équivalent plein format", Math.round(fe) + " mm") +
+        row("Angle horizontal", ang.toFixed(1) + "°") +
+        row("Facteur de recadrage", "×" + c);
+    }
+    utils.$("#crop-focal").addEventListener("input", crop);
+    utils.$("#crop-sensor").addEventListener("change", crop);
+    crop();
+
     utils.$("#sun-calc").addEventListener("click", function () {
       var lat = parseFloat(utils.$("#sun-lat").value);
       var lng = parseFloat(utils.$("#sun-lng").value);

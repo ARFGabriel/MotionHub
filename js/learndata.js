@@ -1297,5 +1297,194 @@
         { tip: "Priorités quand on débute : un bon micro, un trépied stable et un filtre ND. Le reste viendra ensuite." },
       ],
     },
+
+    /* ============ CHAPITRE 2 — LES OBJECTIFS ============ */
+    {
+      id: "mat-camera-objectif",
+      category: "materiel",
+      title: "Caméra ou objectif : où investir ?",
+      summary: "Un bon objectif est un meilleur investissement que le boîtier.",
+      body: [
+        { p: "Un bon objectif coûte souvent plus cher que le boîtier — et c'est normal. Sur la durée, l'optique est le meilleur placement." },
+        { ul: [
+          "Les caméras se démodent vite (nouveaux capteurs, formats 4K/6K/8K…).",
+          "Le verre, lui, ne vieillit quasiment pas : des optiques vintage de 40 ans servent encore.",
+          "Un objectif s'adapte à plusieurs boîtiers (au besoin via une bague type Metabones).",
+          "Il se revend facilement en conservant sa valeur, contrairement au boîtier.",
+        ] },
+        { p: "Beaucoup de vidéastes louent la caméra mais achètent leurs objectifs." },
+        { tip: "Mieux vaut un boîtier modeste avec de bonnes optiques que l'inverse. Et fuis les packs « appareil + objectif » de grande surface (optiques médiocres)." },
+      ],
+    },
+    {
+      id: "mat-capteur-crop",
+      category: "materiel",
+      title: "Taille de capteur & crop factor",
+      summary: "Pourquoi une même focale ne cadre pas pareil selon le capteur.",
+      body: [
+        { p: "Le cadrage obtenu avec une focale dépend de la taille du capteur : un 50 mm ne donne pas le même angle sur un plein format et sur un capteur plus petit." },
+        { h: "Les tailles courantes" },
+        { ul: [
+          "Plein format : 24×36 mm (comme la pellicule 35 mm). Référence en vidéo.",
+          "APS-C : ~15×23 mm, crop ×1,5 (×1,6 chez Canon).",
+          "Micro 4/3 : crop ×2. 1 pouce, 1/2,3 (GoPro/drones), etc. : encore plus petits.",
+        ] },
+        { h: "Le crop factor" },
+        { p: "Un capteur plus petit ne capte que la partie centrale de l'image projetée → effet de « zoom ». Un 50 mm sur APS-C cadre comme un ~75-80 mm en plein format." },
+        { ul: [
+          "La focale reste la focale : la profondeur de champ d'un 50 mm ne change pas avec le capteur, seul le cadrage change.",
+          "Un objectif plein format fonctionne sur APS-C ; l'inverse n'est pas toujours vrai.",
+          "Beaucoup de boîtiers plein format ont un mode APS-C pour « zoomer » sans changer d'objectif.",
+        ] },
+        { tip: "Multiplie la focale par le crop factor pour l'équivalent plein format (calculateur dans Tournage → Calculatrices)." },
+      ],
+    },
+    {
+      id: "mat-zoom-fixe",
+      category: "materiel",
+      title: "Zoom ou focale fixe ?",
+      summary: "Les forces de chaque famille d'objectifs.",
+      body: [
+        { h: "Le zoom (focale variable)" },
+        { ul: [
+          "Polyvalent : change de cadrage sans bouger ni changer d'objectif.",
+          "Plus léger qu'une série de fixes (un 70-200 couvre 85, 100, 135, 200 mm).",
+          "Économique : un seul zoom remplace plusieurs fixes.",
+        ] },
+        { p: "Si tu n'en prends qu'un : un 24-70 f/2.8. Évite les zooms à ouverture variable (f/3.5-5.6) : pénibles à exposer — privilégie une ouverture constante." },
+        { h: "La focale fixe (prime)" },
+        { ul: [
+          "Grande ouverture abordable (f/1.8, f/1.4) : excellente en basse lumière.",
+          "Flou d'arrière-plan (bokeh) plus facile à obtenir.",
+          "Meilleure qualité optique : moins d'aberrations, plus de piqué.",
+        ] },
+        { tip: "Le marché de l'occasion regorge d'optiques de qualité : comme les objectifs gardent leur valeur, c'est peu risqué." },
+      ],
+    },
+    {
+      id: "mat-optiques-cinema",
+      category: "materiel",
+      title: "Objectifs photo vs cinéma (T-stops)",
+      summary: "Ce qui distingue une optique ciné d'une optique photo.",
+      body: [
+        { ul: [
+          "Diaphragme en T : la valeur T mesure la lumière réelle qui passe (plus précise que le f/) et se règle en continu, sans à-coup d'exposition pendant la prise.",
+          "Bagues crantées : pour fixer un follow focus, avec une grande course de point et des butées physiques (vs les bagues sans fin des objectifs AF).",
+          "Fabrication standardisée : même diamètre, poids et design dans une série → changements d'objectif rapides et colorimétrie constante entre les plans.",
+        ] },
+        { tip: "Les optiques ciné sont chères ; en vidéaste, des focales fixes photo + un follow focus couvrent déjà beaucoup de besoins." },
+      ],
+    },
+    {
+      id: "mat-objectifs-speciaux",
+      category: "materiel",
+      title: "Objectifs spéciaux : fish-eye, macro, tilt-shift",
+      summary: "Trois optiques aux effets très particuliers.",
+      body: [
+        { ul: [
+          "Fish-eye : ultra grand-angle à distorsion extrême (image hémisphérique). Pour exprimer la désorientation d'un personnage ou une vue subjective.",
+          "Macro : grossissement jusqu'à 1:1 (le sujet se projette à sa taille réelle sur le capteur) et mise au point très rapprochée — détails, insectes, textures.",
+          "Tilt-shift : la bascule (tilt) permet un flou sélectif et l'effet « maquette » ; le décentrement (shift) corrige les perspectives (architecture).",
+        ] },
+        { tip: "Bidouille macro : retourne un 35-50 mm face au capteur (fixé au gaffer) ou place une simple loupe devant l'objectif." },
+      ],
+    },
+    {
+      id: "mat-anamorphique",
+      category: "materiel",
+      title: "Les objectifs anamorphiques",
+      summary: "Le secret du look « cinémascope » très large.",
+      body: [
+        { p: "Hérités du CinemaScope (années 1950), ils compressent l'image horizontalement (souvent ×2) au tournage ; on la ré-étire en post pour obtenir un format très large (2.35)." },
+        { h: "Leur signature visuelle" },
+        { ul: [
+          "Flare horizontal (traits bleutés) sur les sources lumineuses.",
+          "Bokeh de forme ovale.",
+          "Rendu plus « cinéma » : à cadrage égal, profondeur de champ plus marquée (on utilise une focale plus longue).",
+        ] },
+        { tip: "Bidouille du flare anamorphique : tends un bout de fil de pêche devant l'objectif (coloré au marqueur pour un flare teinté)." },
+      ],
+    },
+    {
+      id: "mat-filtres",
+      category: "materiel",
+      title: "Les filtres d'objectif (ND, polarisant, UV)",
+      summary: "Trois filtres qui changent vraiment l'image.",
+      body: [
+        { p: "Avant d'acheter, vérifie le diamètre de ton objectif (indiqué par le sigle ø). Une bague d'adaptation permet de monter un filtre plus grand sur un objectif plus petit, pas l'inverse." },
+        { ul: [
+          "ND (densité neutre) : réduit la lumière sans toucher au diaph, à l'obturateur ni à l'ISO — idéal pour garder une grande ouverture en plein jour. ND2 = 1 diaph, ND4 = 2 diaphs, etc. Les ND variables (deux bagues) sont rapides mais peuvent teinter l'image.",
+          "Polarisant : supprime les reflets (eau, verre, pare-brise) et assombrit le ciel. Coûte 1 à 2 diaphs : à éviter en basse lumière.",
+          "UV / neutre : incolore, sert surtout à protéger l'optique (rayures, poussière). On le laisse souvent vissé en permanence.",
+        ] },
+        { tip: "Les filtres vissants ne se superposent pas : pour empiler plusieurs filtres, il faut une matte box à porte-filtres." },
+      ],
+    },
+    {
+      id: "mat-sigles",
+      category: "materiel",
+      title: "Décoder les sigles d'objectifs",
+      summary: "Montures, autofocus, stabilisation, gammes pro.",
+      body: [
+        { h: "Montures (vérifie la compatibilité avec ton boîtier)" },
+        { ul: [
+          "Canon : EF (plein format) / EF-S (APS-C).",
+          "Nikon : FX (plein format) / DX (APS-C).",
+          "Sony : FE (plein format) / E (APS-C).",
+          "Sigma : DG / DC — Tamron : Di / Di-II.",
+        ] },
+        { h: "Autofocus (type de moteur)" },
+        { p: "USM / STM (Canon), AF-S/SWM (Nikon), HSM (Sigma), SSM (Sony), USD/PZD (Tamron)." },
+        { h: "Stabilisation optique" },
+        { p: "IS (Canon), VR (Nikon), OSS (Sony), OS (Sigma), VC (Tamron), OIS (Panasonic)." },
+        { h: "Gammes haut de gamme" },
+        { ul: ["Canon « L » (liseré rouge), Sony « G / GM », Sigma « Art », Nikon (liseré doré)."] },
+        { tip: "Une bague d'adaptation (type Metabones) peut monter une autre monture, mais l'autofocus ou le diaph électronique ne passent pas toujours." },
+      ],
+    },
+    {
+      id: "focale-emotion",
+      category: "photo",
+      title: "Choisir sa focale pour l'émotion",
+      summary: "La focale change l'impact psychologique, pas seulement le cadrage.",
+      body: [
+        { p: "Un gros plan au 24 mm ne raconte pas la même chose qu'au 135 mm. La focale est un outil de mise en scène." },
+        { h: "Grand-angle" },
+        { ul: [
+          "Agrandit l'espace : les sujets paraissent distants (ex. le face-à-face de Drive).",
+          "Exagère le mouvement : un objet grossit vite en approchant → sensation de vitesse.",
+          "Déforme les visages vus de près (nez proéminent) — utilisé pour la désorientation (Las Vegas Parano).",
+          "Caméra proche = spectateur plongé dans l'intimité de la scène.",
+        ] },
+        { h: "Téléobjectif" },
+        { ul: [
+          "Compresse la perspective : rapproche les personnages, crée l'intimité.",
+          "Donne une sensation de distance / de voyeurisme (comme si on espionnait).",
+        ] },
+        { tip: "À cadrage identique, le grand-angle inclut le spectateur dans la scène, le télé l'en fait sortir." },
+      ],
+    },
+    {
+      id: "effet-cinema",
+      category: "photo",
+      title: "L'effet cinéma (flou d'arrière-plan)",
+      summary: "Obtenir en pratique le fond flou qui détache le sujet.",
+      body: [
+        { p: "Le fond flou caractéristique du cinéma vient d'une faible profondeur de champ (à l'opposé de l'image nette partout, très « télé »)." },
+        { h: "Comment l'obtenir" },
+        { ul: [
+          "Grande ouverture (petit f/ : f/1.8–f/2.8) — le levier principal.",
+          "Longue focale : à cadrage égal, un téléobjectif floute plus qu'un grand-angle.",
+          "Sujet proche de la caméra et éloigné du fond.",
+          "Grand capteur.",
+        ] },
+        { h: "Garder une grande ouverture en plein jour" },
+        { ul: [
+          "Option médiocre : monter l'obturateur — on perd le flou de mouvement ciné, l'image devient très « télé ».",
+          "Bonne option : un filtre ND, qui réduit la lumière sans toucher à l'ouverture.",
+        ] },
+        { tip: "La « bidouille du zoom » (reculer + zoomer) compresse aussi le fond, mais déplace la caméra : joue plutôt sur le diaph et un ND." },
+      ],
+    },
   ];
 })(window.MH = window.MH || {});

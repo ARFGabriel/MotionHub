@@ -344,4 +344,13 @@
     { name: "4K DCI", dims: "4096 × 2160" },
     { name: "8K UHD", dims: "7680 × 4320" },
   ];
+
+  MH.audioSpecs = [
+    { usage: "Cinéma", taux: "48 kHz", bits: "24 bits", note: "Référence pro" },
+    { usage: "Vidéo / YouTube", taux: "48 kHz", bits: "16–24 bits", note: "Standard vidéo" },
+    { usage: "CD audio", taux: "44,1 kHz", bits: "16 bits", note: "Standard musique" },
+    { usage: "Niveau voix (prise)", taux: "pic -12 à -24 dBFS", bits: "moyenne -18 dBFS", note: "Jamais 0 dBFS (saturation)" },
+    { usage: "Format fichier", taux: "WAV (sans perte)", bits: "éviter le MP3", note: "Montage/mixage" },
+    { usage: "Loudness livraison", taux: "-14 LUFS (web)", bits: "-23 LUFS (broadcast)", note: "True peak < -1 dBTP" },
+  ];
 })(window.MH = window.MH || {});

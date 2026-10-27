@@ -155,6 +155,9 @@
 
     table("#spec-res", ["Nom", "Dimensions"], MH.resolutions,
       function (r) { return [r.name, r.dims]; });
+
+    table("#spec-audio", ["Usage", "Taux / niveau", "Bits", "Note"], MH.audioSpecs,
+      function (r) { return [r.usage, r.taux, r.bits, r.note]; });
   }
 
   function table(sel, headers, rows, mapFn) {

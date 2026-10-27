@@ -120,7 +120,7 @@
     { cat: "Caméra & optiques", items: ["Boîtier", "Objectif(s)", "Batteries chargées", "Filtres ND", "Pare-soleil", "Chiffon microfibre"] },
     { cat: "Stockage", items: ["Cartes mémoire (formatées)", "Lecteur de cartes", "Disque de sauvegarde"] },
     { cat: "Énergie", items: ["Chargeur", "Batteries de rechange", "Powerbank / secteur"] },
-    { cat: "Son", items: ["Micro (canon / cravate)", "Enregistreur", "Casque", "Bonnette anti-vent", "Piles micro"] },
+    { cat: "Son", items: ["Micro canon (perche)", "Micro-cravate / HF", "Perche", "Enregistreur", "Casque fermé", "Bonnette anti-vent", "Suspension", "Câbles XLR", "Piles / batteries micro", "Pastilles couleur (HF)"] },
     { cat: "Support & stabilisation", items: ["Trépied", "Gimbal (chargé)", "Rotule fluide", "Épaule / cage"] },
     { cat: "Lumière", items: ["Projecteur LED", "Réflecteur", "Diffuseur", "Pieds d'éclairage", "Gels"] },
     { cat: "Divers", items: ["Clap / ardoise", "Gaffer", "Multiprise / rallonge", "Sacs & protections", "Autorisations / repérages"] },

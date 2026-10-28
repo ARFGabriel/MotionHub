@@ -370,6 +370,18 @@ function registerIpc() {
     return media.transcodeCustom(input, spec, sendMediaProgress(evt, jobId));
   });
 
+  ipcMain.handle("media:makeGif", (evt, { jobId, input, options }) => {
+    return media.makeGif(input, options, sendMediaProgress(evt, jobId));
+  });
+
+  ipcMain.handle("media:trim", (evt, { jobId, input, options }) => {
+    return media.trimClip(input, options, sendMediaProgress(evt, jobId));
+  });
+
+  ipcMain.handle("media:compress", (evt, { jobId, input, options }) => {
+    return media.compressTarget(input, options, sendMediaProgress(evt, jobId));
+  });
+
   // Export PDF d'un scénario (rendu HTML -> PDF via Chromium).
   ipcMain.handle("screenplay:exportPdf", async (_evt, { html, name }) => {
     const res = await dialog.showSaveDialog({

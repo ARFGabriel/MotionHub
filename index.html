@@ -470,7 +470,7 @@
                     <p class="card-hint">Générer de vrais proxys pour un montage fluide.</p>
                     <div class="field-row">
                         <div><label for="proxy-fmt">Format</label>
-                            <select id="proxy-fmt"><option value="prores">ProRes Proxy (.mov)</option><option value="h264">H.264 léger (.mp4)</option></select>
+                            <select id="proxy-fmt"><option value="prores">ProRes Proxy (.mov)</option><option value="dnxhr_lb">DNxHR LB (.mov)</option><option value="h264">H.264 léger (.mp4)</option><option value="h265">H.265 (.mp4, + petit)</option></select>
                         </div>
                         <div><label for="proxy-scale">Échelle</label>
                             <select id="proxy-scale"><option value="0.5">Demi (1/2)</option><option value="0.25">Quart (1/4)</option></select>
@@ -523,6 +523,38 @@
                     <p class="card-hint">Codec, résolution, fps, débit, durée d'un fichier.</p>
                     <button class="action-btn" id="mi-pick-btn">Analyser un fichier</button>
                     <div id="mi-result" class="media-info" hidden></div>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-file-gif"></i> GIF animé</h3>
+                    <p class="card-hint">Convertir un extrait de vidéo en GIF optimisé.</p>
+                    <div class="field-row">
+                        <div><label for="gif-start">Début (s)</label><input type="number" id="gif-start" value="0" min="0" step="0.1"></div>
+                        <div><label for="gif-dur">Durée (s)</label><input type="number" id="gif-dur" value="3" min="0.1" step="0.1"></div>
+                    </div>
+                    <div class="field-row">
+                        <div><label for="gif-fps">FPS</label><input type="number" id="gif-fps" value="15" min="5" max="30"></div>
+                        <div><label for="gif-width">Largeur (px)</label><input type="number" id="gif-width" value="480" min="120" step="20"></div>
+                    </div>
+                    <button class="action-btn" id="gif-pick-btn">Choisir une vidéo</button>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-scissors"></i> Rogner un extrait</h3>
+                    <p class="card-hint">Découper rapidement un segment (sans ré-encodage).</p>
+                    <div class="field-row">
+                        <div><label for="trim-start">Début (s)</label><input type="number" id="trim-start" value="0" min="0" step="0.1"></div>
+                        <div><label for="trim-dur">Durée (s)</label><input type="number" id="trim-dur" value="10" min="0.1" step="0.1"></div>
+                    </div>
+                    <button class="action-btn" id="trim-pick-btn">Choisir une vidéo</button>
+                </div>
+
+                <div class="card">
+                    <h3><i class="fas fa-file-zipper"></i> Compresser à une taille</h3>
+                    <p class="card-hint">Viser un poids cible précis (pour l'envoi, WhatsApp, mail…).</p>
+                    <label for="cmp-size">Taille cible (Mo)</label>
+                    <input type="number" id="cmp-size" value="25" min="1" step="1">
+                    <button class="action-btn" id="cmp-pick-btn">Choisir une vidéo</button>
                 </div>
 
                 <div class="card">

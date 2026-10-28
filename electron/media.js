@@ -78,7 +78,7 @@ function generateProxy(input, opts, onProgress) {
     var dir = opts.outDir || path.join(path.dirname(input), "_PROXIES");
     fs.mkdirSync(dir, { recursive: true });
     var base = path.basename(input, path.extname(input));
-    var ext = format === "prores" ? ".mov" : ".mp4";
+    var ext = (format === "prores" || format === "dnxhr_lb") ? ".mov" : ".mp4";
     var output = path.join(dir, base + "_PROXY" + ext);
 
     var vf = "scale=trunc(iw*" + scale + "/2)*2:trunc(ih*" + scale + "/2)*2";
@@ -86,6 +86,10 @@ function generateProxy(input, opts, onProgress) {
 
     if (format === "prores") {
       args = args.concat(["-c:v", "prores_ks", "-profile:v", "0", "-c:a", "pcm_s16le"]);
+    } else if (format === "dnxhr_lb") {
+      args = args.concat(["-c:v", "dnxhd", "-profile:v", "dnxhr_lb", "-pix_fmt", "yuv422p", "-c:a", "pcm_s16le"]);
+    } else if (format === "h265") {
+      args = args.concat(["-c:v", "libx265", "-crf", "28", "-preset", "fast", "-tag:v", "hvc1", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "128k"]);
     } else {
       args = args.concat(["-c:v", "libx264", "-crf", "23", "-preset", "fast", "-c:a", "aac", "-b:a", "128k"]);
     }
@@ -408,6 +412,79 @@ function transcodeCustom(input, spec, onProgress) {
   });
 }
 
+/** Convertit un extrait de vidéo en GIF animé optimisé (palette en 1 passe).
+ *  opts : { start?, duration?, fps?, width? } */
+function makeGif(input, opts, onProgress) {
+  opts = opts || {};
+  return probe(input).then(function (meta) {
+    var dir = path.join(path.dirname(input), "_EXPORTS");
+    fs.mkdirSync(dir, { recursive: true });
+    var base = path.basename(input, path.extname(input));
+    var output = path.join(dir, base + ".gif");
+    var fps = opts.fps || 15;
+    var width = opts.width || 480;
+    var pre = [];
+    if (opts.start) pre.push("-ss", String(opts.start));
+    if (opts.duration) pre.push("-t", String(opts.duration));
+    var vf = "fps=" + fps + ",scale=" + width + ":-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse";
+    var args = ["-y"].concat(pre, ["-i", input, "-vf", vf, "-loop", "0", output]);
+    var dur = opts.duration || meta.duration || 0;
+    return runFfmpeg(args, dur, onProgress).then(function () {
+      var st = fs.statSync(output);
+      return { output: output, size: st.size };
+    });
+  });
+}
+
+/** Rogne un extrait (copie des flux, rapide). opts : { start?, duration? } en secondes. */
+function trimClip(input, opts, onProgress) {
+  opts = opts || {};
+  return probe(input).then(function (meta) {
+    var dir = path.join(path.dirname(input), "_EXPORTS");
+    fs.mkdirSync(dir, { recursive: true });
+    var base = path.basename(input, path.extname(input));
+    var ext = path.extname(input) || ".mp4";
+    var output = path.join(dir, base + "_cut" + ext);
+    var start = parseFloat(opts.start) || 0;
+    var args = ["-y", "-ss", String(start), "-i", input];
+    if (opts.duration) args = args.concat(["-t", String(parseFloat(opts.duration))]);
+    args = args.concat(["-c", "copy", "-avoid_negative_ts", "make_zero", output]);
+    var dur = parseFloat(opts.duration) || Math.max(0, (meta.duration || 0) - start);
+    return runFfmpeg(args, dur, onProgress).then(function () {
+      var st = fs.statSync(output);
+      return { output: output, size: st.size };
+    });
+  });
+}
+
+/** Compresse une vidéo pour viser une taille cible (en Mo). H.264, bitrate calculé. */
+function compressTarget(input, opts, onProgress) {
+  opts = opts || {};
+  return probe(input).then(function (meta) {
+    if (!meta.duration) return Promise.reject(new Error("Durée inconnue, compression impossible."));
+    var targetMB = Math.max(1, parseFloat(opts.targetMB) || 25);
+    var audioKbps = 128;
+    var totalKbps = (targetMB * 8192) / meta.duration; // Mo→kbit, /s
+    var videoKbps = Math.max(100, Math.round(totalKbps - audioKbps));
+    var dir = path.join(path.dirname(input), "_EXPORTS");
+    fs.mkdirSync(dir, { recursive: true });
+    var base = path.basename(input, path.extname(input));
+    var output = path.join(dir, base + "_" + targetMB + "Mo.mp4");
+    var args = [
+      "-y", "-i", input,
+      "-c:v", "libx264", "-b:v", videoKbps + "k",
+      "-maxrate", Math.round(videoKbps * 1.5) + "k", "-bufsize", Math.round(videoKbps * 2) + "k",
+      "-preset", "medium", "-pix_fmt", "yuv420p",
+      "-c:a", "aac", "-b:a", audioKbps + "k", "-movflags", "+faststart",
+      output,
+    ];
+    return runFfmpeg(args, meta.duration, onProgress).then(function () {
+      var st = fs.statSync(output);
+      return { output: output, size: st.size };
+    });
+  });
+}
+
 /** Applique une LUT (.cube) à une vidéo et exporte un aperçu H.264. */
 function applyLut(input, cubePath, onProgress) {
   return probe(input).then(function (meta) {
@@ -449,4 +526,7 @@ module.exports = {
   listPresets: listPresets,
   applyLut: applyLut,
   transcodeCustom: transcodeCustom,
+  makeGif: makeGif,
+  trimClip: trimClip,
+  compressTarget: compressTarget,
 };

@@ -39,6 +39,62 @@
     initTranscode(jobsEl);
     initSequence(jobsEl);
     initFrames();
+    initGif(jobsEl);
+    initTrim(jobsEl);
+    initCompress(jobsEl);
+  }
+
+  /* ---- GIF animé ---- */
+  function initGif(jobsEl) {
+    utils.$("#gif-pick-btn").addEventListener("click", function () {
+      window.motionHub.pickVideos().then(function (files) {
+        if (!files || !files.length) return;
+        var opts = {
+          start: parseFloat(utils.$("#gif-start").value) || 0,
+          duration: parseFloat(utils.$("#gif-dur").value) || 3,
+          fps: parseInt(utils.$("#gif-fps").value, 10) || 15,
+          width: parseInt(utils.$("#gif-width").value, 10) || 480,
+        };
+        files.forEach(function (file) {
+          runJob(jobsEl, fileName(file) + " → GIF", "fa-file-gif", function (jobId) {
+            return window.motionHub.media.makeGif(jobId, file, opts);
+          });
+        });
+      });
+    });
+  }
+
+  /* ---- Rogner un extrait ---- */
+  function initTrim(jobsEl) {
+    utils.$("#trim-pick-btn").addEventListener("click", function () {
+      window.motionHub.pickVideos().then(function (files) {
+        if (!files || !files.length) return;
+        var opts = {
+          start: parseFloat(utils.$("#trim-start").value) || 0,
+          duration: parseFloat(utils.$("#trim-dur").value) || 0,
+        };
+        files.forEach(function (file) {
+          runJob(jobsEl, fileName(file) + " (extrait)", "fa-scissors", function (jobId) {
+            return window.motionHub.media.trim(jobId, file, opts);
+          });
+        });
+      });
+    });
+  }
+
+  /* ---- Compresser à une taille cible ---- */
+  function initCompress(jobsEl) {
+    utils.$("#cmp-pick-btn").addEventListener("click", function () {
+      window.motionHub.pickVideos().then(function (files) {
+        if (!files || !files.length) return;
+        var opts = { targetMB: parseFloat(utils.$("#cmp-size").value) || 25 };
+        files.forEach(function (file) {
+          runJob(jobsEl, fileName(file) + " → " + opts.targetMB + " Mo", "fa-file-zipper", function (jobId) {
+            return window.motionHub.media.compress(jobId, file, opts);
+          });
+        });
+      });
+    });
   }
 
   // Lanceur de job partagé (utilisé aussi par la bibliothèque de LUTs).

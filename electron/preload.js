@@ -56,6 +56,9 @@ contextBridge.exposeInMainWorld("motionHub", {
     pickLut: () => ipcRenderer.invoke("dialog:pickLut"),
     applyLut: (jobId, input, cube) => ipcRenderer.invoke("media:applyLut", { jobId, input, cube }),
     transcodeCustom: (jobId, input, spec) => ipcRenderer.invoke("media:transcodeCustom", { jobId, input, spec }),
+    makeGif: (jobId, input, options) => ipcRenderer.invoke("media:makeGif", { jobId, input, options }),
+    trim: (jobId, input, options) => ipcRenderer.invoke("media:trim", { jobId, input, options }),
+    compress: (jobId, input, options) => ipcRenderer.invoke("media:compress", { jobId, input, options }),
     onProgress: (cb) => {
       const listener = (_evt, data) => cb(data);
       ipcRenderer.on("media:progress", listener);

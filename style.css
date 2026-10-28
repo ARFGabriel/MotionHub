@@ -604,6 +604,18 @@ summary i { color: var(--warn); margin-right: 4px; }
 .proj-filters { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 4px; }
 .filter-count { opacity: 0.6; font-size: 0.8em; }
 
+/* Barre de tri + filtres projets */
+.proj-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; margin: 10px 0 6px; padding: 12px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); border-radius: 12px; }
+.proj-ctrl { display: flex; align-items: center; gap: 8px; }
+.proj-ctrl > label { margin: 0; font-size: 0.82rem; color: var(--text-dim); white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; }
+.proj-ctrl select { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: var(--text-main); border-radius: 8px; padding: 6px 10px; font-family: inherit; font-size: 0.82rem; }
+.proj-ctrl--tags { flex: 1 1 240px; }
+.proj-tagfilter { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag-filter-chip { background: rgba(0,210,255,0.08); border: 1px solid rgba(0,210,255,0.22); color: var(--secondary); font-size: 0.74rem; padding: 4px 10px; border-radius: 20px; cursor: pointer; transition: 0.15s; font-family: inherit; }
+.tag-filter-chip:hover { background: rgba(0,210,255,0.16); }
+.tag-filter-chip.active { background: var(--secondary); border-color: transparent; color: #04141a; font-weight: 600; }
+.project-card__date { margin: 2px 0 10px; display: flex; align-items: center; gap: 6px; }
+
 /* Statut, client, deadline */
 .status-pill {
     display: inline-flex; align-items: center; gap: 7px;

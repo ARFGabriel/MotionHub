@@ -92,6 +92,29 @@
                 <p class="muted">La gestion persistante des projets multi-disques est disponible dans l'application desktop (Slate). Lance <code>npm start</code> pour l'ouvrir.</p>
             </div>
             <div class="proj-filters" id="proj-filters" hidden></div>
+            <div class="proj-controls" id="proj-controls" hidden>
+                <div class="proj-ctrl">
+                    <label for="proj-sort"><i class="fas fa-arrow-down-wide-short"></i> Trier</label>
+                    <select id="proj-sort">
+                        <option value="birthtime">Date de création (récent)</option>
+                        <option value="birthtime-asc">Date de création (ancien)</option>
+                        <option value="addedAt">Date d'ajout</option>
+                        <option value="mtime">Dernière modification</option>
+                        <option value="name">Nom (A → Z)</option>
+                        <option value="size">Poids (plus lourd)</option>
+                        <option value="deadline">Deadline (proche)</option>
+                        <option value="status">Statut</option>
+                    </select>
+                </div>
+                <div class="proj-ctrl">
+                    <label for="proj-disk"><i class="fas fa-hard-drive"></i> Disque</label>
+                    <select id="proj-disk"><option value="all">Tous</option></select>
+                </div>
+                <div class="proj-ctrl proj-ctrl--tags">
+                    <label><i class="fas fa-tags"></i> Tags</label>
+                    <div class="proj-tagfilter" id="proj-tagfilter"></div>
+                </div>
+            </div>
             <div id="projects-empty" class="card notice" hidden>
                 <h3>Aucun projet pour l'instant</h3>
                 <p class="muted">Clique sur « Ajouter un projet » et sélectionne le dossier racine d'une production, où qu'il soit sur tes disques.</p>

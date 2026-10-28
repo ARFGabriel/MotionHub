@@ -80,9 +80,21 @@ function registerIpc() {
     return res.canceled ? null : res.filePaths[0];
   });
 
-  // Liste des projets enregistrés.
+  // Liste des projets enregistrés. On complète au passage les métadonnées
+  // de date (création/modification du dossier) pour les anciens projets.
   ipcMain.handle("projects:list", () => {
-    return store.get("projects") || [];
+    const projects = store.get("projects") || [];
+    let changed = false;
+    projects.forEach((p) => {
+      if (p.birthtime != null && p.mtime != null) return;
+      try {
+        const st = fs.statSync(p.path);
+        if (p.birthtime == null) { p.birthtime = st.birthtimeMs; changed = true; }
+        if (p.mtime == null) { p.mtime = st.mtimeMs; changed = true; }
+      } catch (e) { /* dossier déplacé/supprimé : on laisse tel quel */ }
+    });
+    if (changed) store.set("projects", projects);
+    return projects;
   });
 
   // Ajoute un projet à partir d'un chemin de dossier.
@@ -102,6 +114,7 @@ function registerIpc() {
       drive: path.parse(folderPath).root,
       addedAt: Date.now(),
       mtime: stat.mtimeMs,
+      birthtime: stat.birthtimeMs,
     };
     projects.unshift(project);
     store.set("projects", projects);

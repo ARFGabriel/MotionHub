@@ -27,8 +27,19 @@
     }
 
     var filterBar = utils.$("#proj-filters");
+    var controlsBar = utils.$("#proj-controls");
     var allProjects = [];
     var statusFilter = "all";
+    var sortBy = "birthtime";
+    var diskFilter = "all";
+    var activeTags = [];
+
+    if (utils.$("#proj-sort")) {
+      utils.$("#proj-sort").addEventListener("change", function (e) { sortBy = e.target.value; render(); });
+    }
+    if (utils.$("#proj-disk")) {
+      utils.$("#proj-disk").addEventListener("change", function (e) { diskFilter = e.target.value; render(); });
+    }
 
     addBtn.addEventListener("click", onAddProject);
     refresh();
@@ -69,7 +80,79 @@
 
     function renderAll() {
       buildFilters();
+      buildControls();
       render();
+    }
+
+    function buildControls() {
+      if (!controlsBar) return;
+      controlsBar.hidden = allProjects.length === 0;
+
+      // Disques présents
+      var diskSel = utils.$("#proj-disk");
+      if (diskSel) {
+        var drives = [];
+        allProjects.forEach(function (p) {
+          var d = p.drive || "?";
+          if (drives.indexOf(d) === -1) drives.push(d);
+        });
+        drives.sort();
+        if (drives.indexOf(diskFilter) === -1 && diskFilter !== "all") diskFilter = "all";
+        diskSel.innerHTML = '<option value="all">Tous</option>' + drives.map(function (d) {
+          return '<option value="' + utils.escapeHtml(d) + '"' + (d === diskFilter ? " selected" : "") + ">" + utils.escapeHtml(d) + "</option>";
+        }).join("");
+      }
+
+      // Tags présents
+      var tagWrap = utils.$("#proj-tagfilter");
+      if (tagWrap) {
+        var tags = [];
+        allProjects.forEach(function (p) {
+          (p.tags || []).forEach(function (t) { if (t && tags.indexOf(t) === -1) tags.push(t); });
+        });
+        tags.sort(function (a, b) { return a.localeCompare(b); });
+        activeTags = activeTags.filter(function (t) { return tags.indexOf(t) !== -1; });
+        if (!tags.length) {
+          tagWrap.innerHTML = '<span class="muted mini">aucun tag</span>';
+        } else {
+          tagWrap.innerHTML = "";
+          tags.forEach(function (t) {
+            var chip = document.createElement("button");
+            chip.type = "button";
+            chip.className = "tag-filter-chip" + (activeTags.indexOf(t) !== -1 ? " active" : "");
+            chip.textContent = t;
+            chip.addEventListener("click", function () {
+              var i = activeTags.indexOf(t);
+              if (i === -1) activeTags.push(t); else activeTags.splice(i, 1);
+              chip.classList.toggle("active");
+              render();
+            });
+            tagWrap.appendChild(chip);
+          });
+        }
+      }
+    }
+
+    function sortProjects(list) {
+      var arr = list.slice();
+      var statusOrder = (MH.projectStatuses || []).map(function (s) { return s.id; });
+      arr.sort(function (a, b) {
+        switch (sortBy) {
+          case "birthtime-asc": return (a.birthtime || 0) - (b.birthtime || 0);
+          case "addedAt": return (b.addedAt || 0) - (a.addedAt || 0);
+          case "mtime": return (b.mtime || 0) - (a.mtime || 0);
+          case "name": return (a.name || "").localeCompare(b.name || "");
+          case "size": return (b.sizeBytes || 0) - (a.sizeBytes || 0);
+          case "deadline": {
+            var da = a.deadline || "9999-99-99", db = b.deadline || "9999-99-99";
+            return da.localeCompare(db);
+          }
+          case "status": return statusOrder.indexOf(a.status || "todo") - statusOrder.indexOf(b.status || "todo");
+          case "birthtime":
+          default: return (b.birthtime || 0) - (a.birthtime || 0);
+        }
+      });
+      return arr;
     }
 
     function buildFilters() {
@@ -95,8 +178,16 @@
     function render() {
       grid.innerHTML = "";
       var list = allProjects.filter(function (p) {
-        return statusFilter === "all" || (p.status || "todo") === statusFilter;
+        if (statusFilter !== "all" && (p.status || "todo") !== statusFilter) return false;
+        if (diskFilter !== "all" && (p.drive || "?") !== diskFilter) return false;
+        if (activeTags.length) {
+          var ptags = p.tags || [];
+          var hit = activeTags.some(function (t) { return ptags.indexOf(t) !== -1; });
+          if (!hit) return false;
+        }
+        return true;
       });
+      list = sortProjects(list);
       if (emptyNotice) emptyNotice.hidden = allProjects.length > 0;
 
       list.forEach(function (p) {
@@ -114,6 +205,7 @@
           (p.client ? '<span class="project-client"><i class="fas fa-user"></i> ' + utils.escapeHtml(p.client) + "</span>" : "") +
           (p.deadline ? '<span class="project-deadline"><i class="fas fa-calendar"></i> ' + utils.escapeHtml(p.deadline) + "</span>" : "") +
           '<div class="project-card__path" title="' + utils.escapeHtml(p.path) + '">' + utils.escapeHtml(p.path) + "</div>" +
+          projDate(p) +
           renderTags(p.tags) +
           '<div class="project-card__actions">' +
           '<button class="mini-btn" data-act="open"><i class="fas fa-folder-open"></i> Dossier</button>' +
@@ -153,6 +245,14 @@
         grid.appendChild(card);
         loadThumbnail(card, p.path);
       });
+    }
+
+    function projDate(p) {
+      if (p.birthtime == null) return "";
+      var d = new Date(p.birthtime);
+      if (isNaN(d.getTime())) return "";
+      return '<div class="project-card__date muted mini"><i class="fas fa-calendar-plus"></i> Créé le ' +
+        d.toLocaleDateString("fr-FR") + "</div>";
     }
 
     function renderTags(tags) {

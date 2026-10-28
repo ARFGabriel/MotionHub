@@ -492,6 +492,49 @@ function registerIpc() {
     return media.applyLut(input, cube, sendMediaProgress(evt, jobId));
   });
 
+  // Range les fichiers d'un dossier dans des sous-dossiers par type.
+  ipcMain.handle("organize:folder", (_evt, folder) => {
+    if (!folder || !fs.existsSync(folder)) throw new Error("Dossier introuvable.");
+    const CATS = {
+      _VIDEOS: ["mp4", "mov", "mkv", "avi", "mxf", "m4v", "webm", "mts", "m2ts"],
+      _IMAGES: ["png", "jpg", "jpeg", "tif", "tiff", "exr", "gif", "bmp", "webp", "psd", "ai", "svg", "heic", "raw", "cr2", "cr3", "arw", "nef", "dng", "raf", "orf"],
+      _AUDIO: ["wav", "mp3", "aif", "aiff", "flac", "m4a", "ogg", "aac"],
+      _PROJETS: ["aep", "aet", "prproj", "drp", "blend", "c4d", "fcpbundle", "veg", "ppj", "kdenlive"],
+      _DOCS: ["pdf", "txt", "md", "doc", "docx", "csv", "xlsx", "rtf", "fountain"],
+      _3D: ["obj", "fbx", "abc", "gltf", "glb", "stl", "usd", "usdz"],
+    };
+    const extToCat = {};
+    Object.keys(CATS).forEach((c) => CATS[c].forEach((e) => (extToCat[e] = c)));
+
+    let entries;
+    try { entries = fs.readdirSync(folder, { withFileTypes: true }); }
+    catch (e) { throw new Error("Lecture impossible : " + e.message); }
+
+    const byCat = {};
+    let moved = 0;
+    entries.forEach((e) => {
+      if (!e.isFile()) return;
+      if (e.name.startsWith(".")) return; // fichiers cachés
+      const ext = (e.name.split(".").pop() || "").toLowerCase();
+      const cat = extToCat[ext] || "_AUTRES";
+      const destDir = path.join(folder, cat);
+      try {
+        fs.mkdirSync(destDir, { recursive: true });
+        let dest = path.join(destDir, e.name);
+        if (fs.existsSync(dest)) {
+          const base = path.basename(e.name, path.extname(e.name));
+          const x = path.extname(e.name);
+          let i = 1;
+          while (fs.existsSync(dest)) { dest = path.join(destDir, base + "_" + i + x); i++; }
+        }
+        fs.renameSync(path.join(folder, e.name), dest);
+        byCat[cat] = (byCat[cat] || 0) + 1;
+        moved++;
+      } catch (err) { /* fichier verrouillé/ignoré */ }
+    });
+    return { moved, byCat };
+  });
+
   /* ---- Automatisation : surveillance de dossiers (persistante) ---- */
   ipcMain.handle("watch:start", (evt, cfg) => {
     if (!cfg.folder || !fs.existsSync(cfg.folder)) throw new Error("Dossier introuvable.");

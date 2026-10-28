@@ -101,4 +101,8 @@ contextBridge.exposeInMainWorld("motionHub", {
     open: (targetPath) => ipcRenderer.invoke("shell:open", targetPath),
     reveal: (targetPath) => ipcRenderer.invoke("shell:reveal", targetPath),
   },
+
+  organize: {
+    folder: (folderPath) => ipcRenderer.invoke("organize:folder", folderPath),
+  },
 });

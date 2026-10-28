@@ -24,6 +24,7 @@
     }
 
     utils.$("#watch-config").hidden = false;
+    initOrganize();
     var modeSel = utils.$("#watch-mode");
     var scaleWrap = utils.$("#watch-scale-wrap");
     var tcWrap = utils.$("#watch-tc-wrap");
@@ -74,6 +75,39 @@
           .catch(function (err) {
             utils.toast("Erreur : " + err.message, "error");
           });
+      });
+    });
+  }
+
+  function initOrganize() {
+    var card = utils.$("#organize-card");
+    if (!card) return;
+    card.hidden = false;
+    utils.$("#organize-btn").addEventListener("click", function () {
+      window.motionHub.pickFolder().then(function (folder) {
+        if (!folder) return;
+        if (!window.confirm("Ranger les fichiers de :\n" + folder + "\n\nIls seront déplacés dans des sous-dossiers par type. Continuer ?")) return;
+        var btn = utils.$("#organize-btn");
+        btn.disabled = true;
+        window.motionHub.organize.folder(folder).then(function (res) {
+          btn.disabled = false;
+          var resEl = utils.$("#organize-result");
+          resEl.hidden = false;
+          if (!res.moved) {
+            resEl.innerHTML = '<p class="muted">Aucun fichier à ranger (dossier déjà organisé ou vide).</p>';
+          } else {
+            var rows = Object.keys(res.byCat).sort().map(function (c) {
+              return '<div class="media-info__row"><span>' + utils.escapeHtml(c) + "</span><strong>" + res.byCat[c] + "</strong></div>";
+            }).join("");
+            resEl.innerHTML = '<div class="media-info__row"><span>Fichiers rangés</span><strong>' + res.moved + "</strong></div>" + rows;
+          }
+          log("done", res.moved + " fichier(s) rangé(s) dans " + folder);
+          utils.toast(res.moved + " fichier(s) rangé(s).", "success");
+          if (MH.activity) MH.activity.log({ type: "Rangement", label: res.moved + " fichiers — " + folder.split(/[\\/]/).pop(), output: folder });
+        }).catch(function (err) {
+          btn.disabled = false;
+          utils.toast("Erreur : " + err.message, "error");
+        });
       });
     });
   }

@@ -91,7 +91,7 @@
     } else if (action === "media" || action === "transcode") {
       MH.showTool("media");
     } else if (action === "watch") {
-      MH.showTool("automation");
+      MH.showTool("automation-watch");
     } else if (action === "code") {
       MH.showTool("code");
     } else if (action === "references") {

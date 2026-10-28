@@ -530,6 +530,82 @@
       ],
       code: ["z = transform.position[2];", "ref = 1000;", "s = linear(z, 0, ref, 200, 50);", "[s, s];"].join("\n"),
     },
+
+    /* ===================== AJOUTS ===================== */
+    {
+      id: "smooth_temporal",
+      title: "Lisser (smooth)",
+      category: "Mouvement",
+      desc: "Adoucit une animation trop nerveuse ou un tracking qui tremble, en moyennant la valeur dans le temps. Parfait après un wiggle ou un suivi de mouvement bruité.",
+      where: "Position, Rotation, ou toute propriété animée/trackée.",
+      how: "Colle sur une propriété déjà animée (keyframes, wiggle, tracking). Augmente la largeur pour lisser davantage.",
+      params: [
+        { name: "width (0.1)", desc: "Fenêtre de lissage en secondes. Plus grand = plus doux." },
+        { name: "samples (5)", desc: "Nombre d'échantillons moyennés. Plus grand = plus lisse (plus lourd)." },
+      ],
+      code: "smooth(0.1, 5);",
+    },
+    {
+      id: "slider_link",
+      title: "Piloter par un curseur (Slider)",
+      category: "Rigging & Liens",
+      desc: "Contrôle une propriété avec un effet « Contrôle de curseur », pour centraliser un réglage et l'animer facilement sur un calque de contrôle.",
+      where: "Toute propriété numérique. Ajoute d'abord « Contrôle de curseur » sur un calque.",
+      how: "Mets un effet « Contrôle de curseur » sur un calque, puis référence-le. Anime le curseur, tout suit.",
+      params: [
+        { name: '"Contrôle de curseur"', desc: "Nom de l'effet (en anglais : \"Slider Control\")." },
+        { name: '"Curseur"', desc: "Nom de la propriété du curseur (en anglais : \"Slider\")." },
+      ],
+      code: 'effect("Contrôle de curseur")("Curseur");',
+    },
+    {
+      id: "real_clock",
+      title: "Horloge réelle (heure système)",
+      category: "Texte",
+      desc: "Affiche l'heure réelle de l'ordinateur, mise à jour à chaque image. Pratique pour un écran à l'image ou un mockup.",
+      where: "Propriété Texte source.",
+      how: "Colle sur « Texte source ». Format HH:MM ; ajoute les secondes si besoin.",
+      params: [{ name: "getHours / getMinutes", desc: "Méthodes de l'objet Date du système." }],
+      code: [
+        "d = new Date();",
+        "h = d.getHours(); m = d.getMinutes();",
+        'z = function(n){ return (n < 10 ? "0" : "") + n; };',
+        'z(h) + ":" + z(m);',
+      ].join("\n"),
+    },
+    {
+      id: "rainbow_hue",
+      title: "Teinte arc-en-ciel cyclique",
+      category: "Couleur & Style",
+      desc: "Fait défiler la teinte d'une couleur en boucle continue, pour un effet néon/arc-en-ciel sans keyframe.",
+      where: "Une propriété de couleur (Remplissage, couleur d'un solide…).",
+      how: "Colle sur une propriété couleur. Ajuste la vitesse ; saturation et luminosité sont fixes ici.",
+      params: [
+        { name: "speed", desc: "Vitesse du défilement de teinte (tours/seconde)." },
+        { name: "hslToRgb", desc: "Convertit teinte/saturation/luminosité en couleur AE." },
+      ],
+      code: ["speed = 0.2;", "h = (time * speed) % 1;", "hslToRgb([h, 1, 0.5, 1]);"].join("\n"),
+    },
+    {
+      id: "snap_grid",
+      title: "Aimanter sur une grille",
+      category: "Maths & Utilitaires",
+      desc: "Force une position à se caler sur une grille régulière : utile pour un déplacement « par pas » net (pixel art, interface, damier).",
+      where: "Position (2D).",
+      how: "Colle sur Position. La valeur est arrondie au multiple de 'grid' le plus proche.",
+      params: [{ name: "grid", desc: "Pas de la grille en pixels." }],
+      code: ["grid = 20;", "[Math.round(value[0] / grid) * grid, Math.round(value[1] / grid) * grid];"].join("\n"),
+    },
+    {
+      id: "auto_focus",
+      title: "Mise au point auto sur un calque",
+      category: "3D & Caméra",
+      desc: "Cale automatiquement la distance de mise au point de la caméra sur un calque cible, pour garder le sujet net même s'il bouge (profondeur de champ).",
+      where: "Propriété « Distance de mise au point » d'une caméra (option profondeur de champ activée).",
+      how: "Renomme ton sujet « Sujet » (ou change le nom ci-dessous). La netteté suit sa distance à la caméra.",
+      params: [{ name: '"Sujet"', desc: "Nom du calque à garder net." }],
+      code: ['cible = thisComp.layer("Sujet");', "length(transform.position, cible.transform.position);"].join("\n"),
+    },
   ];
 
   /* --- Modèles de scripts .jsx pour After Effects ---
@@ -655,6 +731,75 @@
           '    if (confirm("Supprimer les fichiers inutilisés du projet ?")) {',
           "        app.project.reduceProject(app.project.selection);",
           "    }",
+          "    app.endUndoGroup();",
+          "}",
+        ].join("\n"),
+      };
+    },
+
+    precompose: function () {
+      return {
+        filename: "MH_Precompose.jsx",
+        content: [
+          "{",
+          '    app.beginUndoGroup("Precomposer");',
+          "    var comp = app.project.activeItem;",
+          "    if (comp && comp instanceof CompItem) {",
+          "        var sel = comp.selectedLayers;",
+          "        if (sel.length > 0) {",
+          "            var idx = [];",
+          "            for (var i = 0; i < sel.length; i++) { idx.push(sel[i].index); }",
+          '            comp.layers.precompose(idx, "Precomp", true);',
+          '            alert(sel.length + " calque(s) precompose(s).");',
+          '        } else { alert("Selectionne des calques."); }',
+          '    } else { alert("Ouvre une composition."); }',
+          "    app.endUndoGroup();",
+          "}",
+        ].join("\n"),
+      };
+    },
+
+    rename_seq: function () {
+      return {
+        filename: "MH_RenameSeq.jsx",
+        content: [
+          "{",
+          '    app.beginUndoGroup("Renommer en sequence");',
+          "    var comp = app.project.activeItem;",
+          "    if (comp && comp instanceof CompItem) {",
+          "        var sel = comp.selectedLayers;",
+          "        if (sel.length > 0) {",
+          "            for (var i = 0; i < sel.length; i++) {",
+          "                var n = i + 1; var pad = (n < 10 ? \"0\" : \"\") + n;",
+          '                sel[i].name = "PLAN_" + pad;',
+          "            }",
+          '            alert(sel.length + " calque(s) renomme(s).");',
+          '        } else { alert("Selectionne des calques."); }',
+          '    } else { alert("Ouvre une composition."); }',
+          "    app.endUndoGroup();",
+          "}",
+        ].join("\n"),
+      };
+    },
+
+    motion_blur: function () {
+      return {
+        filename: "MH_MotionBlur.jsx",
+        content: [
+          "{",
+          '    app.beginUndoGroup("Flou de mouvement");',
+          "    var comp = app.project.activeItem;",
+          "    if (comp && comp instanceof CompItem) {",
+          "        comp.motionBlur = true;",
+          "        var sel = comp.selectedLayers;",
+          "        var count = 0;",
+          "        if (sel.length > 0) {",
+          "            for (var i = 0; i < sel.length; i++) { sel[i].motionBlur = true; count++; }",
+          "        } else {",
+          "            for (var i = 1; i <= comp.numLayers; i++) { comp.layer(i).motionBlur = true; count++; }",
+          "        }",
+          '        alert("Flou de mouvement active (" + count + " calques).");',
+          '    } else { alert("Ouvre une composition."); }',
           "    app.endUndoGroup();",
           "}",
         ].join("\n"),

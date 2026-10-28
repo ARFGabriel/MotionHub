@@ -306,6 +306,55 @@
         "main()",
       ].join("\n"),
     },
+    {
+      id: "bl_export_fbx",
+      title: "Exporter la sélection en FBX",
+      category: "Blender",
+      desc: "Exporte les objets sélectionnés en FBX par script (passerelle vers Cinema 4D, Unreal, etc.).",
+      where: "Éditeur de script Blender.",
+      how: "Sélectionne les objets, ajuste le chemin, exécute. use_selection=True n'exporte que la sélection.",
+      params: [{ name: "filepath", desc: "Chemin du fichier .fbx de sortie." }],
+      code: [
+        "import bpy",
+        "bpy.ops.export_scene.fbx(",
+        "    filepath='//export/scene.fbx',",
+        "    use_selection=True,",
+        "    apply_scale_options='FBX_SCALE_ALL',",
+        ")",
+      ].join("\n"),
+    },
+    {
+      id: "dr_apply_lut",
+      title: "Appliquer une LUT à tous les clips",
+      category: "DaVinci Resolve",
+      desc: "Applique une LUT (.cube) à tous les clips de la timeline active — base rapide d'étalonnage.",
+      where: "Script Resolve (après connexion au projet).",
+      how: "La LUT doit être dans le dossier LUT de Resolve. Donne le chemin relatif attendu par SetLUT.",
+      params: [{ name: "lutPath", desc: "Chemin de la LUT (relatif au dossier LUT de Resolve)." }],
+      code: [
+        "clips = timeline.GetItemListInTrack('video', 1)",
+        "for clip in clips:",
+        "    clip.SetLUT(1, 'Sony/SLog3.cube')",
+        "print(len(clips), 'clips traités')",
+      ].join("\n"),
+    },
+    {
+      id: "pr_export_queue",
+      title: "Envoyer la séquence vers Media Encoder",
+      category: "Premiere Pro",
+      desc: "Exporte la séquence active via Adobe Media Encoder en ExtendScript (file d'attente AME).",
+      where: "Console ExtendScript / ExtendScript Toolkit ciblant Premiere Pro.",
+      how: "Renseigne le chemin d'un preset .epr et le fichier de sortie, puis lance la file AME.",
+      params: [
+        { name: "presetPath", desc: "Chemin d'un preset d'export .epr." },
+        { name: "outputPath", desc: "Fichier de sortie." },
+      ],
+      code: [
+        "var seq = app.project.activeSequence;",
+        "app.encoder.launchEncoder();",
+        'seq.exportAsMediaDirect("C:/out/export.mp4", "C:/presets/YT_1080.epr", app.encoder.ENCODE_ENTIRE);',
+      ].join("\n"),
+    },
   ];
 
   /* --- Specs de livraison & codecs --- */

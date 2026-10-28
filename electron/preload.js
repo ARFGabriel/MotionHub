@@ -20,6 +20,7 @@ contextBridge.exposeInMainWorld("motionHub", {
     update: (id, patch) => ipcRenderer.invoke("projects:update", { id, patch }),
     mainFile: (dirPath) => ipcRenderer.invoke("projects:mainFile", dirPath),
     backup: (srcPath) => ipcRenderer.invoke("projects:backup", srcPath),
+    scaffold: (parent, name, folders) => ipcRenderer.invoke("projects:scaffold", { parent, name, folders }),
   },
 
   fs: {

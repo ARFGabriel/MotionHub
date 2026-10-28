@@ -138,6 +138,29 @@ function registerIpc() {
     return p;
   });
 
+  // Crée l'arborescence d'un projet : un dossier racine + les sous-dossiers.
+  ipcMain.handle("projects:scaffold", (_evt, { parent, name, folders }) => {
+    if (!parent || !fs.existsSync(parent)) throw new Error("Dossier parent introuvable.");
+    const safeName = String(name || "").trim().replace(/[<>:"/\\|?*]+/g, "_");
+    if (!safeName) throw new Error("Nom de projet invalide.");
+    const root = path.join(parent, safeName);
+    if (fs.existsSync(root)) throw new Error("Un dossier « " + safeName + " » existe déjà ici.");
+    fs.mkdirSync(root, { recursive: true });
+    let created = 1;
+    (folders || []).forEach((rel) => {
+      // on neutralise tout remontée de chemin (..) et les séparateurs Windows
+      const clean = String(rel).replace(/\\/g, "/").split("/")
+        .map((s) => s.trim().replace(/[<>:"|?*]+/g, "_"))
+        .filter((s) => s && s !== "." && s !== "..")
+        .join(path.sep);
+      if (!clean) return;
+      const full = path.join(root, clean);
+      if (!full.startsWith(root)) return;
+      try { fs.mkdirSync(full, { recursive: true }); created++; } catch (e) {}
+    });
+    return { root, created };
+  });
+
   // Trouve le fichier-projet principal (le plus récent) d'un dossier.
   ipcMain.handle("projects:mainFile", (_evt, dirPath) => {
     let best = null;

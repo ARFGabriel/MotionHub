@@ -631,6 +631,7 @@
                 <button class="subtab" data-subtab="utils-calc"><i class="fas fa-calculator"></i> Frames / Temps</button>
                 <button class="subtab" data-subtab="utils-palette"><i class="fas fa-eye-dropper"></i> Palette</button>
                 <button class="subtab" data-subtab="utils-easing"><i class="fas fa-bezier-curve"></i> Easing</button>
+                <button class="subtab" data-subtab="utils-scaffold"><i class="fas fa-folder-tree"></i> Arborescence</button>
             </div>
 
             <div class="subpanel active" id="utils-naming">
@@ -714,6 +715,34 @@
                             <button class="mini-btn" id="ease-copy-css"><i class="fas fa-copy"></i> Copier CSS</button>
                             <div class="easing-demo-track"><div id="ease-ball" class="easing-ball"></div></div>
                             <button class="mini-btn" id="ease-play"><i class="fas fa-play"></i> Aperçu</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subpanel" id="utils-scaffold">
+                <div class="card">
+                    <h3><i class="fas fa-folder-tree"></i> Créer l'arborescence d'un projet</h3>
+                    <p class="card-hint">Choisis un modèle, nomme le projet et génère d'un coup tous les dossiers sur ton disque.</p>
+                    <div id="scaffold-web" class="sp-ai-notice" hidden>
+                        <i class="fas fa-desktop"></i> La création de dossiers est disponible dans l'application Slate installée.
+                    </div>
+                    <div id="scaffold-body">
+                        <label>Modèle</label>
+                        <div class="exp-filters" id="scaffold-templates"></div>
+
+                        <div class="field-row">
+                            <div><label for="scaffold-name">Nom du projet</label><input type="text" id="scaffold-name" placeholder="Ex : 2026_ClientX_Pub"></div>
+                            <div style="display:flex;align-items:flex-end"><button class="mini-btn" id="scaffold-parent"><i class="fas fa-folder-open"></i> Dossier parent…</button></div>
+                        </div>
+                        <div class="muted mini" id="scaffold-parent-path">Aucun dossier parent choisi.</div>
+
+                        <label for="scaffold-struct">Structure des dossiers (indentation = sous-dossier)</label>
+                        <textarea id="scaffold-struct" rows="12" spellcheck="false" class="scaffold-struct"></textarea>
+
+                        <div class="scaffold-actions">
+                            <button class="action-btn" id="scaffold-create"><i class="fas fa-wand-magic-sparkles"></i> Créer l'arborescence</button>
+                            <span class="muted mini" id="scaffold-count"></span>
                         </div>
                     </div>
                 </div>
@@ -955,6 +984,7 @@
     <script src="js/automation.js"></script>
     <script src="js/palette.js"></script>
     <script src="js/easing.js"></script>
+    <script src="js/scaffold.js"></script>
     <script src="js/commandpalette.js"></script>
     <script src="js/updater.js"></script>
     <script src="js/dashboard.js"></script>

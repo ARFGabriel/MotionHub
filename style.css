@@ -616,6 +616,10 @@ summary i { color: var(--warn); margin-right: 4px; }
 .tag-filter-chip.active { background: var(--secondary); border-color: transparent; color: #04141a; font-weight: 600; }
 .project-card__date { margin: 2px 0 10px; display: flex; align-items: center; gap: 6px; }
 
+/* Générateur d'arborescence */
+.scaffold-struct { width: 100%; font-family: "Courier New", monospace; font-size: 0.85rem; line-height: 1.5; background: rgba(0,0,0,0.18); border: 1px solid var(--glass-border); color: var(--text-main); border-radius: 10px; padding: 12px; resize: vertical; white-space: pre; }
+.scaffold-actions { display: flex; align-items: center; gap: 14px; margin-top: 12px; }
+
 /* Statut, client, deadline */
 .status-pill {
     display: inline-flex; align-items: center; gap: 7px;

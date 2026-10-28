@@ -528,6 +528,7 @@
     if (MH.luts && MH.luts.init) MH.luts.init();
     if (MH.palette && MH.palette.init) MH.palette.init();
     if (MH.easing && MH.easing.init) MH.easing.init();
+    if (MH.scaffold && MH.scaffold.init) MH.scaffold.init();
     if (MH.settings && MH.settings.init) MH.settings.init();
     if (MH.presets && MH.presets.init) MH.presets.init();
     if (MH.updater && MH.updater.init) MH.updater.init();

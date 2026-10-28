@@ -227,6 +227,26 @@
         { p: "Adoucit les ombres créées par la key, du côté opposé, à intensité plus faible. Le rapport key/fill contrôle le contraste (dramatique si fort, doux si faible)." },
         { h: "Back light (contre-jour)" },
         { p: "Placée derrière le sujet, elle dessine un liseré lumineux qui le détache de l'arrière-plan et ajoute de la profondeur." },
+        { svg: '<svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">' +
+            '<defs><marker id="l3arr" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--text-dim)"/></marker></defs>' +
+            '<circle cx="200" cy="155" r="22" fill="none" stroke="var(--text-main)" stroke-width="2"/>' +
+            '<circle cx="200" cy="155" r="8" fill="var(--text-main)"/>' +
+            '<text x="200" y="195" fill="var(--text-dim)" font-size="12" text-anchor="middle">SUJET</text>' +
+            '<rect x="186" y="258" width="28" height="18" rx="3" fill="none" stroke="var(--text-main)" stroke-width="2"/>' +
+            '<path d="M214,262 l12,-6 v24 l-12,-6 z" fill="var(--text-main)"/>' +
+            '<text x="200" y="292" fill="var(--text-dim)" font-size="11" text-anchor="middle">CAMERA</text>' +
+            '<line x1="200" y1="258" x2="200" y2="180" stroke="var(--text-dim)" stroke-dasharray="3 3"/>' +
+            '<circle cx="80" cy="80" r="13" fill="var(--primary)"/>' +
+            '<line x1="92" y1="92" x2="182" y2="142" stroke="var(--text-dim)" stroke-width="2" marker-end="url(#l3arr)"/>' +
+            '<text x="80" y="60" fill="var(--text-main)" font-size="12" text-anchor="middle" font-weight="bold">KEY 45</text>' +
+            '<circle cx="330" cy="165" r="10" fill="var(--primary)" opacity="0.45"/>' +
+            '<line x1="320" y1="163" x2="224" y2="157" stroke="var(--text-dim)" stroke-width="2" marker-end="url(#l3arr)"/>' +
+            '<text x="330" y="145" fill="var(--text-dim)" font-size="12" text-anchor="middle">FILL (faible)</text>' +
+            '<circle cx="270" cy="55" r="11" fill="var(--secondary)"/>' +
+            '<line x1="262" y1="66" x2="214" y2="140" stroke="var(--text-dim)" stroke-width="2" marker-end="url(#l3arr)"/>' +
+            '<text x="300" y="50" fill="var(--secondary)" font-size="12" text-anchor="middle">CONTRE</text>' +
+            '</svg>',
+          caption: "Vu de dessus : la key a 45 degres, le fill adouci a l oppose, le contre derriere le sujet." },
         { tip: "Tu n'as pas toujours besoin des trois : une belle key douce + un contre suffisent souvent. Ajoute le fill seulement si les ombres sont trop marquées." },
       ],
     },
@@ -1154,6 +1174,20 @@
         { h: "Dual base ISO" },
         { p: "Certains capteurs (dont la Sony FX3) ont deux ISO natifs. En basse lumière, basculer sur le second (ex. 12 800) donne une image plus propre que de pousser progressivement depuis le premier." },
         { ul: ["Garde l'ISO le plus bas raisonnable.", "Ne le mets jamais en automatique : le grain est invisible sur un petit moniteur, mauvaise surprise au montage.", "Fais des tests avant chaque tournage — ça évolue selon les boîtiers."] },
+        { svg: '<svg viewBox="0 0 400 250" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">' +
+            '<polygon points="200,40 60,210 340,210" fill="var(--primary)" opacity="0.14" stroke="var(--primary)" stroke-width="2"/>' +
+            '<text x="200" y="135" fill="var(--text-main)" font-size="15" text-anchor="middle" font-weight="bold">EXPOSITION</text>' +
+            '<circle cx="200" cy="40" r="6" fill="var(--primary)"/>' +
+            '<text x="200" y="26" fill="var(--text-main)" font-size="13" text-anchor="middle" font-weight="bold">OUVERTURE</text>' +
+            '<text x="200" y="245" fill="var(--text-dim)" font-size="11" text-anchor="middle">profondeur de champ</text>' +
+            '<circle cx="60" cy="210" r="6" fill="var(--primary)"/>' +
+            '<text x="52" y="230" fill="var(--text-main)" font-size="13" text-anchor="middle" font-weight="bold">VITESSE</text>' +
+            '<text x="36" y="150" fill="var(--text-dim)" font-size="11" text-anchor="middle" transform="rotate(-60 36 150)">flou de mouvement</text>' +
+            '<circle cx="340" cy="210" r="6" fill="var(--primary)"/>' +
+            '<text x="348" y="230" fill="var(--text-main)" font-size="13" text-anchor="middle" font-weight="bold">ISO</text>' +
+            '<text x="364" y="150" fill="var(--text-dim)" font-size="11" text-anchor="middle" transform="rotate(60 364 150)">bruit / grain</text>' +
+            '</svg>',
+          caption: "Le triangle d exposition : trois reglages a equilibrer, chacun avec son effet creatif." },
         { tip: "Monter les ISO réduit aussi la plage dynamique : sur une scène très contrastée, baisse-les au maximum sans sous-exposer." },
       ],
     },
@@ -1537,6 +1571,18 @@
           "Omnidirectionnel : capte à 360°, pour les ambiances.",
           "Bidirectionnel : avant + arrière (voix + réverbération d'une pièce).",
         ] },
+        { svg: '<svg viewBox="0 0 400 190" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">' +
+            '<circle cx="70" cy="95" r="42" fill="var(--primary)" opacity="0.28" stroke="var(--primary)" stroke-width="2"/>' +
+            '<circle cx="70" cy="95" r="5" fill="var(--text-main)"/>' +
+            '<text x="70" y="168" fill="var(--text-dim)" font-size="12" text-anchor="middle">OMNI (360)</text>' +
+            '<path d="M200,120 C155,120 150,55 200,48 C250,55 245,120 200,120 Z" fill="var(--primary)" opacity="0.32" stroke="var(--primary)" stroke-width="2"/>' +
+            '<circle cx="200" cy="112" r="5" fill="var(--text-main)"/>' +
+            '<text x="200" y="168" fill="var(--text-dim)" font-size="12" text-anchor="middle">CARDIO (avant)</text>' +
+            '<path d="M330,95 C298,95 298,52 330,48 C362,52 362,95 330,95 C298,95 298,138 330,142 C362,138 362,95 330,95 Z" fill="var(--secondary)" opacity="0.3" stroke="var(--secondary)" stroke-width="2"/>' +
+            '<circle cx="330" cy="95" r="5" fill="var(--text-main)"/>' +
+            '<text x="330" y="168" fill="var(--text-dim)" font-size="12" text-anchor="middle">FIGURE 8</text>' +
+            '</svg>',
+          caption: "Zone de captation vue de dessus : omni capte partout, cardio surtout l avant, figure-8 avant et arriere." },
         { tip: "Si tu ne dois en choisir qu'un, prends un hypercardioïde : bon équilibre entre directivité et facilité." },
       ],
     },

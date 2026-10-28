@@ -28,8 +28,9 @@
       noteEl.innerHTML = '<i class="fas fa-keyboard"></i> ' + utils.escapeHtml(MH.shortcutsNote);
     }
 
-    var apps = Object.keys(MH.shortcuts);
-    var current = apps[0];
+    var realApps = Object.keys(MH.shortcuts);
+    var apps = ["Tous"].concat(realApps);
+    var current = "Tous";
     var query = "";
 
     apps.forEach(function (app) {
@@ -52,26 +53,87 @@
       });
     }
 
-    function renderList() {
-      var items = (MH.shortcuts[current] || []).filter(function (s) {
-        return !query || s.action.toLowerCase().indexOf(query) !== -1 || s.keys.toLowerCase().indexOf(query) !== -1;
+    // Renvoie les lignes filtrées sous forme [{app, action, keys}].
+    function currentRows() {
+      var out = [];
+      var appsToShow = current === "Tous" ? realApps : [current];
+      appsToShow.forEach(function (app) {
+        (MH.shortcuts[app] || []).forEach(function (s) {
+          if (!query || s.action.toLowerCase().indexOf(query) !== -1 || s.keys.toLowerCase().indexOf(query) !== -1) {
+            out.push({ app: app, action: s.action, keys: s.keys });
+          }
+        });
       });
-      list.innerHTML = "";
-      if (!items.length) {
-        list.innerHTML = '<p class="muted">Aucun raccourci ne correspond.</p>';
-        return;
-      }
-      items.forEach(function (s) {
-        var row = document.createElement("div");
-        row.className = "shortcut-row";
-        row.innerHTML =
-          '<span class="shortcut-action">' + utils.escapeHtml(s.action) + "</span>" +
-          '<span class="shortcut-keys">' + renderKeys(s.keys) + "</span>";
-        list.appendChild(row);
-      });
+      return out;
     }
 
+    function renderList() {
+      var appsToShow = current === "Tous" ? realApps : [current];
+      list.innerHTML = "";
+      var total = 0;
+      appsToShow.forEach(function (app) {
+        var items = (MH.shortcuts[app] || []).filter(function (s) {
+          return !query || s.action.toLowerCase().indexOf(query) !== -1 || s.keys.toLowerCase().indexOf(query) !== -1;
+        });
+        if (!items.length) return;
+        total += items.length;
+        if (current === "Tous") {
+          var h = document.createElement("div");
+          h.className = "sc-group-head";
+          h.textContent = app;
+          list.appendChild(h);
+        }
+        items.forEach(function (s) {
+          var row = document.createElement("div");
+          row.className = "shortcut-row";
+          row.innerHTML =
+            '<span class="shortcut-action">' + utils.escapeHtml(s.action) + "</span>" +
+            '<span class="shortcut-keys">' + renderKeys(s.keys) + "</span>";
+          list.appendChild(row);
+        });
+      });
+      if (!total) list.innerHTML = '<p class="muted">Aucun raccourci ne correspond.</p>';
+    }
+
+    var csvBtn = utils.$("#sc-export-csv");
+    if (csvBtn) csvBtn.addEventListener("click", function () {
+      var rows = currentRows();
+      if (!rows.length) { utils.toast("Rien à exporter.", "warn"); return; }
+      function q(s) { return '"' + String(s == null ? "" : s).replace(/"/g, '""') + '"'; }
+      var lines = [["Logiciel", "Action", "Raccourci"].map(q).join(";")];
+      rows.forEach(function (r) { lines.push([r.app, r.action, r.keys].map(q).join(";")); });
+      utils.download("raccourcis_" + (current === "Tous" ? "tous" : current).replace(/[^\w-]+/g, "_") + ".csv", "﻿" + lines.join("\r\n"));
+      utils.toast("Raccourcis exportés (CSV).", "success");
+    });
+
+    var printBtn = utils.$("#sc-print");
+    if (printBtn) printBtn.addEventListener("click", function () {
+      var rows = currentRows();
+      if (!rows.length) { utils.toast("Rien à imprimer.", "warn"); return; }
+      var note = MH.shortcutsNote ? "<p style='font-size:12px;color:#555'>" + esc(MH.shortcutsNote) + "</p>" : "";
+      var body = rows.map(function (r) {
+        return "<tr><td>" + esc(r.app) + "</td><td>" + esc(r.action) + "</td><td><b>" + esc(r.keys) + "</b></td></tr>";
+      }).join("");
+      var html = "<!DOCTYPE html><html><head><meta charset='utf-8'><title>Fiche Stream Deck</title><style>" +
+        "body{font-family:Arial,sans-serif;margin:22px;color:#111}h1{font-size:18px;margin-bottom:2px}" +
+        "table{border-collapse:collapse;width:100%;font-size:12px;margin-top:10px}th,td{border:1px solid #999;padding:6px 8px;text-align:left}th{background:#eee}" +
+        "</style></head><body><h1>Fiche de programmation Stream Deck</h1>" +
+        "<p style='font-size:12px;color:#555'>Pour chaque bouton Stream Deck, ajoute une action « Raccourci / Hotkey » et saisis la combinaison ci-dessous.</p>" +
+        note +
+        "<table><thead><tr><th>Logiciel</th><th>Action</th><th>Raccourci</th></tr></thead><tbody>" + body + "</tbody></table></body></html>";
+      var w = window.open("", "_blank");
+      if (!w) { utils.toast("Autorise les pop-ups pour l'impression.", "warn"); return; }
+      w.document.write(html); w.document.close();
+      setTimeout(function () { w.print(); }, 300);
+    });
+
     renderList();
+  }
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>]/g, function (c) {
+      return c === "&" ? "&amp;" : c === "<" ? "&lt;" : "&gt;";
+    });
   }
 
   function renderKeys(keys) {

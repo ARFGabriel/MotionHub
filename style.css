@@ -622,6 +622,8 @@ summary i { color: var(--warn); margin-right: 4px; }
 
 /* Barre d'outils shot list */
 .shotlist-toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin: 14px 0 6px; }
+.sc-group-head { margin: 18px 0 8px; font-weight: 700; font-size: 0.95rem; color: var(--primary); border-bottom: 1px solid var(--glass-border); padding-bottom: 5px; }
+.sc-group-head:first-child { margin-top: 4px; }
 
 /* Statut, client, deadline */
 .status-pill {

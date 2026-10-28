@@ -485,6 +485,147 @@
     utils.toast("Découpage exporté en CSV.", "success");
   }
 
+  /* ---------- Assistant IA ---------- */
+  var aiCfg = { hasKey: false, model: "claude-sonnet-5-5" };
+  var aiOutText = "";
+  var aiBusy = false;
+
+  var AI_SYSTEM =
+    "Tu es un assistant d'écriture de scénario francophone, expert en dramaturgie. " +
+    "Tu écris au format scénario standard (type Fountain) : séquences sous la forme " +
+    "\"INT./EXT. LIEU - MOMENT\" en majuscules, noms de personnages EN MAJUSCULES au-dessus " +
+    "de leurs répliques, didascalies entre parenthèses, descriptions d'action au présent. " +
+    "Réponds UNIQUEMENT avec le contenu demandé, prêt à être collé dans le scénario, " +
+    "sans préambule, sans explication, sans texte entre guillemets de code.";
+
+  var AI_TEMPLATES = {
+    idees: "Propose 3 idées d'histoire courtes (pitch de 2-3 phrases chacune) cohérentes avec le contexte du projet.",
+    intro: "Écris une scène d'ouverture (une séquence) qui installe l'ambiance et le personnage principal.",
+    sequencier: "Propose un séquencier : une liste numérotée de 6 à 12 séquences, chacune avec son intitulé (INT./EXT. LIEU - MOMENT) suivi d'une phrase résumant ce qui s'y passe.",
+    suite: "Dans la continuité de l'extrait fourni, écris la ou les deux séquences suivantes.",
+    dialogue: "Écris un dialogue vivant et naturel pour la situation décrite.",
+    reformuler: "Reformule le passage sélectionné en gardant le sens et en améliorant le style, au format scénario.",
+    transition: "Propose une idée de transition (visuelle ou narrative) entre les séquences autour du passage fourni.",
+  };
+
+  function ctxBlock() {
+    var d = collect();
+    var p = [];
+    if (d.title) p.push("Titre : " + d.title);
+    if (d.genre) p.push("Format/genre : " + d.genre);
+    if (d.logline) p.push("Logline : " + d.logline);
+    if (d.notes) p.push("Notes : " + d.notes);
+    return p.length ? p.join("\n") : "(aucun contexte renseigné)";
+  }
+  function selectionText() {
+    var ta = utils.$("#sp-text");
+    if (ta.selectionStart != null && ta.selectionEnd > ta.selectionStart) {
+      return ta.value.slice(ta.selectionStart, ta.selectionEnd);
+    }
+    return "";
+  }
+
+  function refreshAi() {
+    if (!desktop || !window.motionHub.ai) {
+      aiToggleNotice("web");
+      return Promise.resolve();
+    }
+    return window.motionHub.ai.getConfig().then(function (c) {
+      aiCfg = c || aiCfg;
+      var ms = utils.$("#sp-ai-model");
+      if (ms) ms.textContent = "Modèle : " + aiCfg.model;
+      aiToggleNotice(aiCfg.hasKey ? "ok" : "nokey");
+      // refléter dans Réglages
+      var st = utils.$("#ai-status");
+      if (st) {
+        st.textContent = aiCfg.hasKey ? "✓ Clé configurée — assistant actif." : "Aucune clé enregistrée.";
+        st.classList.toggle("ok", aiCfg.hasKey);
+      }
+      var sel = utils.$("#ai-model");
+      if (sel) sel.value = aiCfg.model;
+    });
+  }
+  function aiToggleNotice(state) {
+    var nokey = utils.$("#sp-ai-nokey"), web = utils.$("#sp-ai-web"), body = utils.$("#sp-ai-body");
+    if (!body) return;
+    if (web) web.hidden = state !== "web";
+    if (nokey) nokey.hidden = state !== "nokey";
+    body.hidden = state !== "ok";
+  }
+
+  function runAi() {
+    if (aiBusy) return;
+    if (!desktop || !window.motionHub.ai) { utils.toast("IA disponible dans l'app installée.", "warn"); return; }
+    if (!aiCfg.hasKey) { utils.toast("Ajoute ta clé API dans les Réglages.", "warn"); return; }
+    var instruction = utils.$("#sp-ai-prompt").value.trim();
+    if (!instruction) { utils.toast("Décris ce que tu veux, ou clique une suggestion.", "warn"); return; }
+
+    var useSel = utils.$("#sp-ai-usesel").checked;
+    var sel = selectionText();
+    var base;
+    if (useSel && sel) base = "PASSAGE SÉLECTIONNÉ :\n" + sel;
+    else base = "EXTRAIT DU SCÉNARIO (pour la continuité) :\n" + (utils.$("#sp-text").value.slice(-6000) || "(vide)");
+
+    var prompt = "CONTEXTE DU PROJET :\n" + ctxBlock() + "\n\n" + base + "\n\nDEMANDE :\n" + instruction;
+
+    aiBusy = true;
+    var btn = utils.$("#sp-ai-run");
+    var old = btn.innerHTML;
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Génération…';
+
+    window.motionHub.ai.complete(AI_SYSTEM, prompt, 2500).then(function (res) {
+      aiBusy = false; btn.disabled = false; btn.innerHTML = old;
+      if (!res || res.error) { utils.toast("IA : " + ((res && res.error) || "erreur inconnue"), "error"); return; }
+      aiOutText = res.text || "";
+      utils.$("#sp-ai-out-text").textContent = aiOutText;
+      utils.$("#sp-ai-out").hidden = false;
+      utils.$("#sp-ai-out").scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }).catch(function (e) {
+      aiBusy = false; btn.disabled = false; btn.innerHTML = old;
+      utils.toast("IA : " + e.message, "error");
+    });
+  }
+
+  function aiInsert() {
+    if (!aiOutText) return;
+    var ta = utils.$("#sp-text");
+    var pos = ta.selectionStart != null ? ta.selectionStart : ta.value.length;
+    var chunk = "\n\n" + aiOutText.trim() + "\n";
+    ta.value = ta.value.slice(0, pos) + chunk + ta.value.slice(ta.selectionEnd != null ? ta.selectionEnd : pos);
+    ta.focus();
+    ta.selectionStart = ta.selectionEnd = pos + chunk.length;
+    renderPreview(); renderAnalysis(); scheduleSave();
+    utils.toast("Texte inséré.", "success");
+  }
+
+  function initAiSettings() {
+    var saveBtn = utils.$("#ai-save");
+    if (!saveBtn) return;
+    if (!desktop || !window.motionHub.ai) {
+      var st = utils.$("#ai-status");
+      if (st) st.textContent = "Disponible uniquement dans l'app Slate installée.";
+      ["#ai-key", "#ai-model", "#ai-save", "#ai-clear"].forEach(function (s) { var el = utils.$(s); if (el) el.disabled = true; });
+      return;
+    }
+    saveBtn.addEventListener("click", function () {
+      var key = utils.$("#ai-key").value;
+      var model = utils.$("#ai-model").value;
+      window.motionHub.ai.setConfig(key, model).then(function (c) {
+        aiCfg = c; utils.$("#ai-key").value = "";
+        utils.toast("Réglages IA enregistrés.", "success");
+        refreshAi();
+      });
+    });
+    utils.$("#ai-clear").addEventListener("click", function () {
+      window.motionHub.ai.setConfig("", utils.$("#ai-model").value).then(function (c) {
+        aiCfg = c; utils.$("#ai-key").value = "";
+        utils.toast("Clé effacée.", "success");
+        refreshAi();
+      });
+    });
+  }
+
   /* ---------- Init ---------- */
   function init() {
     var ta = utils.$("#sp-text");
@@ -516,6 +657,32 @@
       loadDec();
       if (!decRows.length) generateDecoupage(); else renderDecoupage();
       d.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    // Assistant IA
+    initAiSettings();
+    utils.$("#sp-ai-toggle").addEventListener("click", function () {
+      var p = utils.$("#sp-ai");
+      p.hidden = !p.hidden;
+      if (!p.hidden) refreshAi();
+    });
+    utils.$$("#sp-ai .sp-ai-quick [data-ai]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var tpl = AI_TEMPLATES[btn.dataset.ai] || "";
+        utils.$("#sp-ai-prompt").value = tpl;
+        utils.$("#sp-ai-usesel").checked = (btn.dataset.ai === "reformuler" || btn.dataset.ai === "dialogue");
+        utils.$("#sp-ai-prompt").focus();
+      });
+    });
+    utils.$("#sp-ai-run").addEventListener("click", runAi);
+    utils.$("#sp-ai-insert").addEventListener("click", aiInsert);
+    utils.$("#sp-ai-copy").addEventListener("click", function () {
+      if (!aiOutText) return;
+      navigator.clipboard.writeText(aiOutText).then(function () { utils.toast("Copié.", "success"); });
+    });
+    var goSettings = utils.$("#sp-ai-gosettings");
+    if (goSettings) goSettings.addEventListener("click", function () {
+      if (MH.showTool) MH.showTool("settings"); else location.hash = "#settings";
     });
 
     utils.$("#sp-dec-addrow").addEventListener("click", addDecRow);

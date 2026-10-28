@@ -4,6 +4,7 @@ const { app, BrowserWindow, ipcMain, dialog, shell, Notification } = require("el
 const path = require("path");
 const fs = require("fs");
 const crypto = require("crypto");
+const https = require("https");
 const { spawn } = require("child_process");
 const Store = require("./store");
 const media = require("./media");
@@ -359,6 +360,75 @@ function registerIpc() {
       win.destroy();
       try { fs.unlinkSync(tmp); } catch (e) {}
     }
+  });
+
+  /* ---- Assistant IA (API Anthropic) ---- */
+  // La clé est stockée côté processus principal (userData), jamais exposée
+  // au renderer : ai:getConfig ne renvoie QUE hasKey + model.
+  ipcMain.handle("ai:getConfig", () => {
+    const cfg = store.get("ai") || {};
+    return { hasKey: !!cfg.key, model: cfg.model || "claude-sonnet-5-5" };
+  });
+
+  ipcMain.handle("ai:setConfig", (_evt, { key, model }) => {
+    const cfg = store.get("ai") || {};
+    if (typeof key === "string") cfg.key = key.trim(); // chaîne vide = effacer
+    if (typeof model === "string" && model) cfg.model = model;
+    store.set("ai", cfg);
+    return { hasKey: !!cfg.key, model: cfg.model || "claude-sonnet-5-5" };
+  });
+
+  ipcMain.handle("ai:complete", (_evt, { system, prompt, maxTokens }) => {
+    const cfg = store.get("ai") || {};
+    if (!cfg.key) return Promise.resolve({ error: "Aucune clé API configurée. Ajoute-la dans les Réglages." });
+    const model = cfg.model || "claude-sonnet-5-5";
+    const payload = JSON.stringify({
+      model: model,
+      max_tokens: Math.min(Math.max(parseInt(maxTokens, 10) || 1024, 64), 8192),
+      // Effort faible : l'écriture créative n'a pas besoin de raisonnement
+      // profond → latence et coût (facturés à l'utilisateur) réduits.
+      output_config: { effort: "low" },
+      system: system || "",
+      messages: [{ role: "user", content: String(prompt || "") }],
+    });
+    return new Promise((resolve) => {
+      const req = https.request(
+        {
+          hostname: "api.anthropic.com",
+          path: "/v1/messages",
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            "x-api-key": cfg.key,
+            "anthropic-version": "2023-06-01",
+            "content-length": Buffer.byteLength(payload),
+          },
+        },
+        (res) => {
+          let body = "";
+          res.on("data", (c) => (body += c));
+          res.on("end", () => {
+            try {
+              const j = JSON.parse(body);
+              if (res.statusCode >= 400) {
+                resolve({ error: (j.error && j.error.message) || "Erreur API " + res.statusCode });
+                return;
+              }
+              var text = (j.content || [])
+                .filter(function (b) { return b.type === "text"; })
+                .map(function (b) { return b.text; })
+                .join("\n");
+              resolve({ text: text, usage: j.usage || null });
+            } catch (e) {
+              resolve({ error: "Réponse illisible de l'API (" + res.statusCode + ")." });
+            }
+          });
+        }
+      );
+      req.on("error", (e) => resolve({ error: e.message }));
+      req.write(payload);
+      req.end();
+    });
   });
 
   ipcMain.handle("dialog:pickLut", async () => {

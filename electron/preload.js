@@ -76,6 +76,12 @@ contextBridge.exposeInMainWorld("motionHub", {
     exportPdf: (html, name) => ipcRenderer.invoke("screenplay:exportPdf", { html, name }),
   },
 
+  ai: {
+    getConfig: () => ipcRenderer.invoke("ai:getConfig"),
+    setConfig: (key, model) => ipcRenderer.invoke("ai:setConfig", { key, model }),
+    complete: (system, prompt, maxTokens) => ipcRenderer.invoke("ai:complete", { system, prompt, maxTokens }),
+  },
+
   watch: {
     start: (id, folder, mode, options) => ipcRenderer.invoke("watch:start", { id, folder, mode, options }),
     stop: (id) => ipcRenderer.invoke("watch:stop", id),

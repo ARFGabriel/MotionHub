@@ -106,6 +106,7 @@
                 <div class="sp-toolbar-top">
                     <button class="mini-btn" id="sp-context-toggle"><i class="fas fa-circle-info"></i> Contexte</button>
                     <button class="mini-btn" id="sp-analysis-toggle"><i class="fas fa-chart-pie"></i> Analyse</button>
+                    <button class="mini-btn" id="sp-ai-toggle"><i class="fas fa-wand-magic-sparkles"></i> Assistant IA</button>
                     <button class="mini-btn" id="sp-import"><i class="fas fa-file-import"></i> Importer</button>
                     <input type="file" id="sp-file" accept=".fountain,.txt,.spmd,.fdx" hidden>
                     <button class="mini-btn" id="sp-exp-fountain"><i class="fas fa-code"></i> .fountain</button>
@@ -125,6 +126,43 @@
                 <textarea id="sp-logline" rows="2" placeholder="Le pitch en une à deux phrases."></textarea>
                 <label for="sp-notes">Notes de contexte</label>
                 <textarea id="sp-notes" rows="3" placeholder="Ton, références, intentions, personnages…"></textarea>
+            </div>
+
+            <div class="card sp-ai" id="sp-ai" hidden>
+                <div class="sp-analysis-head">
+                    <h3><i class="fas fa-wand-magic-sparkles"></i> Assistant IA</h3>
+                    <span class="muted mini" id="sp-ai-model">—</span>
+                </div>
+                <div id="sp-ai-nokey" class="sp-ai-notice" hidden>
+                    <i class="fas fa-circle-info"></i> Pour activer l'IA, ajoute ta clé API Anthropic dans <strong>Réglages → Assistant IA</strong>.
+                    <button class="mini-btn" id="sp-ai-gosettings">Ouvrir les Réglages</button>
+                </div>
+                <div id="sp-ai-web" class="sp-ai-notice" hidden>
+                    <i class="fas fa-desktop"></i> L'assistant IA fonctionne dans l'application Slate installée (pas dans l'aperçu navigateur).
+                </div>
+                <div id="sp-ai-body">
+                    <div class="sp-ai-quick">
+                        <button class="chip-btn" data-ai="idees">💡 Idées d'histoire</button>
+                        <button class="chip-btn" data-ai="intro">🎬 Scène d'ouverture</button>
+                        <button class="chip-btn" data-ai="sequencier">🗂️ Séquencier depuis la logline</button>
+                        <button class="chip-btn" data-ai="suite">➡️ Proposer la suite</button>
+                        <button class="chip-btn" data-ai="dialogue">💬 Écrire un dialogue</button>
+                        <button class="chip-btn" data-ai="reformuler">✍️ Reformuler la sélection</button>
+                        <button class="chip-btn" data-ai="transition">🎞️ Idée de transition</button>
+                    </div>
+                    <textarea id="sp-ai-prompt" rows="3" placeholder="Décris ce que tu veux : « une scène de dispute entre Léa et Marc dans l'atelier », « un dialogue plus tendu », etc."></textarea>
+                    <div class="sp-ai-controls">
+                        <label class="sp-ai-check"><input type="checkbox" id="sp-ai-usesel"> Utiliser la sélection comme base</label>
+                        <button class="action-btn" id="sp-ai-run"><i class="fas fa-wand-magic-sparkles"></i> Générer</button>
+                    </div>
+                    <div id="sp-ai-out" class="sp-ai-out" hidden>
+                        <div class="sp-ai-out-text" id="sp-ai-out-text"></div>
+                        <div class="sp-ai-out-actions">
+                            <button class="mini-btn" id="sp-ai-insert"><i class="fas fa-plus"></i> Insérer dans le scénario</button>
+                            <button class="mini-btn" id="sp-ai-copy"><i class="fas fa-copy"></i> Copier</button>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="sp-toolbar">
@@ -791,6 +829,25 @@
                     <div><button class="action-btn" id="update-check-btn">Vérifier les mises à jour</button></div>
                     <div><button class="action-btn" id="update-install-btn" hidden><i class="fas fa-power-off"></i> Redémarrer &amp; installer</button></div>
                 </div>
+            </div>
+
+            <div class="card settings-card" id="ai-card">
+                <h3><i class="fas fa-wand-magic-sparkles"></i> Assistant IA (rédaction de scénario)</h3>
+                <p class="card-hint">Branche ton propre compte Anthropic pour activer l'aide à l'écriture dans la page Scénario. La clé reste stockée en local sur ton ordinateur et n'est jamais envoyée ailleurs qu'à l'API Anthropic.</p>
+                <div id="ai-status" class="update-status muted">—</div>
+                <label for="ai-key">Clé API Anthropic</label>
+                <input type="password" id="ai-key" placeholder="sk-ant-..." autocomplete="off" spellcheck="false">
+                <label for="ai-model">Modèle</label>
+                <select id="ai-model">
+                    <option value="claude-sonnet-5-5">Claude Sonnet 5.5 (recommandé — rapide & économique)</option>
+                    <option value="claude-opus-5-5">Claude Opus 5.5 (le plus créatif, plus cher)</option>
+                    <option value="claude-haiku-5-5">Claude Haiku 5.5 (le plus rapide & le moins cher)</option>
+                </select>
+                <div class="field-row" style="margin-top:12px">
+                    <div><button class="action-btn" id="ai-save"><i class="fas fa-floppy-disk"></i> Enregistrer</button></div>
+                    <div><button class="action-btn" id="ai-clear"><i class="fas fa-trash"></i> Effacer la clé</button></div>
+                </div>
+                <p class="muted mini">Obtiens une clé sur <code>console.anthropic.com</code> → API Keys. La facturation se fait au token, séparément de ton abonnement Claude.</p>
             </div>
 
             <div class="card settings-card">

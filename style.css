@@ -620,6 +620,9 @@ summary i { color: var(--warn); margin-right: 4px; }
 .scaffold-struct { width: 100%; font-family: "Courier New", monospace; font-size: 0.85rem; line-height: 1.5; background: rgba(0,0,0,0.18); border: 1px solid var(--glass-border); color: var(--text-main); border-radius: 10px; padding: 12px; resize: vertical; white-space: pre; }
 .scaffold-actions { display: flex; align-items: center; gap: 14px; margin-top: 12px; }
 
+/* Barre d'outils shot list */
+.shotlist-toolbar { display: flex; gap: 8px; flex-wrap: wrap; margin: 14px 0 6px; }
+
 /* Statut, client, deadline */
 .status-pill {
     display: inline-flex; align-items: center; gap: 7px;

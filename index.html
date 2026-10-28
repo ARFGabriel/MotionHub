@@ -278,6 +278,11 @@
                         <div style="display:flex;align-items:flex-end"><button class="action-btn" id="shot-add"><i class="fas fa-plus"></i> Ajouter</button></div>
                     </div>
                 </div>
+                <div class="shotlist-toolbar">
+                    <button class="mini-btn" id="shot-export-csv"><i class="fas fa-file-csv"></i> Exporter CSV</button>
+                    <button class="mini-btn" id="shot-print"><i class="fas fa-print"></i> Imprimer / PDF</button>
+                    <button class="mini-btn mini-btn--danger" id="shot-clear"><i class="fas fa-trash"></i> Tout effacer</button>
+                </div>
                 <div id="shotlist-items" class="shotlist"></div>
             </div>
 
@@ -429,6 +434,17 @@
                             <option value="0.5625">Vertical 9/16</option>
                         </select>
                         <div id="rt-result" class="media-info"></div>
+                    </div>
+
+                    <div class="card">
+                        <h3><i class="fas fa-hourglass-half"></i> Timelapse</h3>
+                        <p class="card-hint">Intervalle + durée réelle → clichés et durée du clip.</p>
+                        <div class="field-row">
+                            <div><label for="tl-interval">Intervalle (s)</label><input type="number" id="tl-interval" value="3" step="0.5" min="0.1"></div>
+                            <div><label for="tl-duration">Durée réelle (min)</label><input type="number" id="tl-duration" value="30" step="1" min="1"></div>
+                            <div><label for="tl-fps">FPS de sortie</label><select id="tl-fps"><option>24</option><option selected>25</option><option>30</option><option>50</option><option>60</option></select></div>
+                        </div>
+                        <div id="tl-result" class="media-info"></div>
                     </div>
                 </div>
             </div>

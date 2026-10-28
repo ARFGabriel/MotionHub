@@ -80,6 +80,53 @@
       });
     }
     renderShots();
+
+    // --- Exports ---
+    var csvBtn = utils.$("#shot-export-csv");
+    if (csvBtn) csvBtn.addEventListener("click", function () {
+      if (!shots.length) { utils.toast("Shot list vide.", "warn"); return; }
+      function q(s) { return '"' + String(s == null ? "" : s).replace(/"/g, '""') + '"'; }
+      var head = ["#", "Fait", "Description", "Cadre", "Angle", "Mouvement", "Focale"];
+      var lines = [head.map(q).join(";")];
+      shots.forEach(function (s, i) {
+        lines.push([i + 1, s.done ? "oui" : "non", s.desc, s.frame, s.angle || "", s.move, s.lens || ""].map(q).join(";"));
+      });
+      utils.download("shotlist.csv", "﻿" + lines.join("\r\n"));
+      utils.toast("Shot list exportée (CSV).", "success");
+    });
+
+    var printBtn = utils.$("#shot-print");
+    if (printBtn) printBtn.addEventListener("click", function () {
+      if (!shots.length) { utils.toast("Shot list vide.", "warn"); return; }
+      var rows = shots.map(function (s, i) {
+        return "<tr><td>" + (i + 1) + "</td><td>" + (s.done ? "✓" : "") + "</td><td>" + esc(s.desc) +
+          "</td><td>" + esc(s.frame) + "</td><td>" + esc(s.angle || "") + "</td><td>" + esc(s.move) + "</td><td>" + esc(s.lens || "") + "</td></tr>";
+      }).join("");
+      var html = "<!DOCTYPE html><html><head><meta charset='utf-8'><title>Shot list</title><style>" +
+        "body{font-family:Arial,sans-serif;margin:24px;color:#111}h1{font-size:18px}" +
+        "table{border-collapse:collapse;width:100%;font-size:12px}th,td{border:1px solid #999;padding:6px 8px;text-align:left}th{background:#eee}" +
+        "</style></head><body><h1>Shot list</h1><table><thead><tr><th>#</th><th>Fait</th><th>Description</th><th>Cadre</th><th>Angle</th><th>Mouvement</th><th>Focale</th></tr></thead><tbody>" +
+        rows + "</tbody></table></body></html>";
+      var w = window.open("", "_blank");
+      if (!w) { utils.toast("Autorise les pop-ups pour l'impression.", "warn"); return; }
+      w.document.write(html); w.document.close();
+      setTimeout(function () { w.print(); }, 300);
+    });
+
+    var clearBtn = utils.$("#shot-clear");
+    if (clearBtn) clearBtn.addEventListener("click", function () {
+      if (!shots.length) return;
+      if (!window.confirm("Effacer toute la shot list ?")) return;
+      shots.length = 0;
+      lsSet("mh:shotlist", shots);
+      renderShots();
+    });
+  }
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>]/g, function (c) {
+      return c === "&" ? "&amp;" : c === "<" ? "&lt;" : "&gt;";
+    });
   }
 
   /* ---------------- MATÉRIEL ---------------- */
@@ -307,6 +354,24 @@
     utils.$("#rt-h").addEventListener("input", ratioCalc);
     utils.$("#rt-ratio").addEventListener("change", ratioCalc);
     ratioCalc();
+
+    // --- Timelapse ---
+    function timelapse() {
+      var interval = parseFloat(utils.$("#tl-interval").value) || 3;
+      var durMin = parseFloat(utils.$("#tl-duration").value) || 30;
+      var fps = parseFloat(utils.$("#tl-fps").value) || 25;
+      var shotsN = Math.floor((durMin * 60) / interval);
+      var clipSec = shotsN / fps;
+      var mm = Math.floor(clipSec / 60);
+      var ss = Math.round(clipSec % 60);
+      utils.$("#tl-result").innerHTML =
+        row("Nombre de clichés", shotsN.toLocaleString("fr-FR")) +
+        row("Durée du clip final", (mm > 0 ? mm + " min " : "") + ss + " s") +
+        row("Compression du temps", "×" + Math.round((durMin * 60) / Math.max(0.01, clipSec)));
+    }
+    bind(["#tl-interval", "#tl-duration"], timelapse);
+    utils.$("#tl-fps").addEventListener("change", timelapse);
+    timelapse();
 
     utils.$("#sun-calc").addEventListener("click", function () {
       var lat = parseFloat(utils.$("#sun-lat").value);

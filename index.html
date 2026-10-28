@@ -105,6 +105,7 @@
                 <h2>Scénario</h2>
                 <div class="sp-toolbar-top">
                     <button class="mini-btn" id="sp-context-toggle"><i class="fas fa-circle-info"></i> Contexte</button>
+                    <button class="mini-btn" id="sp-analysis-toggle"><i class="fas fa-chart-pie"></i> Analyse</button>
                     <button class="mini-btn" id="sp-import"><i class="fas fa-file-import"></i> Importer</button>
                     <input type="file" id="sp-file" accept=".fountain,.txt,.spmd,.fdx" hidden>
                     <button class="mini-btn" id="sp-exp-fountain"><i class="fas fa-code"></i> .fountain</button>
@@ -142,6 +143,38 @@
                 <div id="sp-preview" class="sp-preview screenplay"></div>
             </div>
             <div class="sp-stats muted" id="sp-stats"></div>
+
+            <div class="card sp-analysis" id="sp-analysis" hidden>
+                <div class="sp-analysis-head">
+                    <h3><i class="fas fa-chart-pie"></i> Analyse du scénario</h3>
+                    <button class="mini-btn" id="sp-analysis-decoupage"><i class="fas fa-clapperboard"></i> Générer le découpage technique</button>
+                </div>
+                <div class="sp-ana-cards" id="sp-ana-cards"></div>
+                <div class="sp-ana-cols">
+                    <div class="sp-ana-block">
+                        <h4>Personnages</h4>
+                        <div id="sp-ana-chars" class="sp-ana-table-wrap"></div>
+                    </div>
+                    <div class="sp-ana-block">
+                        <h4>Décors</h4>
+                        <div id="sp-ana-locs" class="sp-ana-table-wrap"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card sp-decoupage" id="sp-decoupage" hidden>
+                <div class="sp-analysis-head">
+                    <h3><i class="fas fa-clapperboard"></i> Découpage technique</h3>
+                    <div class="sp-toolbar-top">
+                        <button class="mini-btn" id="sp-dec-addrow"><i class="fas fa-plus"></i> Ligne</button>
+                        <button class="mini-btn" id="sp-dec-tolist"><i class="fas fa-arrow-right-to-bracket"></i> Vers shot list</button>
+                        <button class="mini-btn" id="sp-dec-csv"><i class="fas fa-file-csv"></i> CSV</button>
+                        <button class="mini-btn" id="sp-dec-regen" title="Régénère à partir des séquences (efface les lignes actuelles)"><i class="fas fa-rotate"></i> Régénérer</button>
+                    </div>
+                </div>
+                <p class="muted sp-hint">Un plan par ligne. Édite librement puis envoie vers la shot list du Tournage ou exporte en CSV. Les modifications sont sauvegardées automatiquement.</p>
+                <div id="sp-dec-table" class="sp-dec-table-wrap"></div>
+            </div>
         </section>
 
         <!-- ======================= TOURNAGE ======================= -->

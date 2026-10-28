@@ -10,9 +10,15 @@
   var utils = MH.utils;
   var desktop = typeof window.motionHub !== "undefined" && window.motionHub.isDesktop;
   var KEY = "mh:screenplay";
+  var KEY_DEC = "mh:decoupage";
   var saveTimer = null;
+  var decRows = null; // lignes du découpage technique (chargées à l'init)
 
-  MH.screenplay = { init: init, parse: parse };
+  var FRAMES = ["Très large", "Large", "Plan moyen", "Rapproché", "Gros plan", "Très gros plan", "Insert"];
+  var ANGLES = ["Hauteur des yeux", "Plongée", "Contre-plongée", "Topshot", "Dutch angle"];
+  var MOVES = ["Fixe", "Panoramique", "Tilt", "Travelling", "Zoom", "Gimbal / Steadicam", "Épaule"];
+
+  MH.screenplay = { init: init, parse: parse, analyze: analyze };
 
   /* ---------- Parseur type Fountain ---------- */
   function isScene(l) {
@@ -243,6 +249,242 @@
     scheduleSave();
   }
 
+  /* ---------- Analyse du scénario ---------- */
+  function countWords(s) {
+    var t = (s || "").trim();
+    if (!t) return 0;
+    return t.split(/\s+/).length;
+  }
+  function cleanName(n) {
+    return (n || "").replace(/\s*\([^)]*\)\s*$/, "").replace(/\s{2,}/g, " ").trim();
+  }
+  function parseHeading(h) {
+    var s = (h || "").replace(/^\s*\d+[.)]?\s*/, "");
+    var m = s.match(/^(INT\.?\/EXT\.?|EXT\.?\/INT\.?|I\/E|INT\.?|EXT\.?)\s*[.\-\s]\s*/i);
+    var prefix = "", rest = s;
+    if (m) {
+      prefix = m[1].toUpperCase().replace(/\./g, "");
+      rest = s.slice(m[0].length);
+    }
+    var loc = rest, time = "";
+    var parts = rest.split(/\s[-–—]\s/);
+    if (parts.length > 1) { time = parts[parts.length - 1].trim(); loc = parts.slice(0, -1).join(" - ").trim(); }
+    return { type: prefix || "—", loc: (loc || "—").toUpperCase().trim(), time: time.toUpperCase().trim() };
+  }
+  function timeBucket(t) {
+    if (/NUIT|SOIR|NIGHT|AUBE|CRÉPUSCULE|CREPUSCULE/.test(t)) return "nuit";
+    if (/JOUR|MATIN|APRÈS|APRES|MIDI|DAY/.test(t)) return "jour";
+    return "autre";
+  }
+
+  function analyze(parsed) {
+    var scenes = [];
+    var chars = {};
+    var locs = {};
+    var cur = null, curIdx = -1, curChar = null;
+    var totalWords = 0, dialogueWords = 0, actionWords = 0;
+    var intCount = 0, extCount = 0, dayCount = 0, nightCount = 0, otherTime = 0;
+
+    parsed.forEach(function (b) {
+      if (b.type === "scene") {
+        var h = parseHeading(b.text);
+        cur = { heading: b.text, type: h.type, loc: h.loc, time: h.time, chars: {}, firstAction: "" };
+        scenes.push(cur); curIdx = scenes.length - 1; curChar = null;
+        if (/EXT/.test(h.type)) extCount++;
+        if (/INT/.test(h.type)) intCount++;
+        var tb = timeBucket(h.time);
+        if (tb === "jour") dayCount++; else if (tb === "nuit") nightCount++; else otherTime++;
+        if (!locs[h.loc]) locs[h.loc] = { name: h.loc, scenes: 0, type: h.type };
+        locs[h.loc].scenes++;
+      } else if (b.type === "character") {
+        curChar = cleanName(b.text);
+        if (!curChar) return;
+        if (!chars[curChar]) chars[curChar] = { name: curChar, cues: 0, words: 0, scenes: {} };
+        chars[curChar].cues++;
+        if (cur) { cur.chars[curChar] = true; chars[curChar].scenes[curIdx] = true; }
+      } else if (b.type === "dialogue") {
+        var w = countWords(b.text);
+        dialogueWords += w; totalWords += w;
+        if (curChar && chars[curChar]) chars[curChar].words += w;
+      } else if (b.type === "action") {
+        var wa = countWords(b.text);
+        actionWords += wa; totalWords += wa;
+        if (cur && !cur.firstAction) cur.firstAction = b.text;
+      }
+    });
+
+    var charList = Object.keys(chars).map(function (k) {
+      var c = chars[k];
+      return {
+        name: c.name, cues: c.cues, words: c.words,
+        scenes: Object.keys(c.scenes).length,
+        share: dialogueWords ? c.words / dialogueWords : 0,
+      };
+    }).sort(function (a, b) { return b.words - a.words || b.cues - a.cues; });
+
+    var locList = Object.keys(locs).map(function (k) { return locs[k]; })
+      .sort(function (a, b) { return b.scenes - a.scenes; });
+
+    return {
+      scenes: scenes, sceneCount: scenes.length,
+      intCount: intCount, extCount: extCount,
+      dayCount: dayCount, nightCount: nightCount, otherTime: otherTime,
+      totalWords: totalWords, dialogueWords: dialogueWords, actionWords: actionWords,
+      characters: charList, locations: locList,
+    };
+  }
+
+  function renderAnalysis() {
+    var panel = utils.$("#sp-analysis");
+    if (!panel || panel.hidden) return;
+    var a = analyze(parse(utils.$("#sp-text").value));
+    var pages = Math.round((utils.$("#sp-text").value.replace(/\s+/g, " ").trim().length / 1500) * 10) / 10;
+
+    function card(label, value, sub) {
+      return '<div class="sp-ana-card"><div class="sp-ana-val">' + value + "</div>" +
+        '<div class="sp-ana-lab">' + label + "</div>" +
+        (sub ? '<div class="sp-ana-sub">' + sub + "</div>" : "") + "</div>";
+    }
+    utils.$("#sp-ana-cards").innerHTML =
+      card("Séquences", a.sceneCount, a.intCount + " INT · " + a.extCount + " EXT") +
+      card("Décors", a.locations.length, "lieux distincts") +
+      card("Personnages", a.characters.length, "avec répliques") +
+      card("Jour / Nuit", a.dayCount + " / " + a.nightCount, (a.otherTime ? a.otherTime + " autre" : "&nbsp;")) +
+      card("Mots", a.totalWords, a.dialogueWords + " en dialogue") +
+      card("Durée est.", "≈ " + Math.round(pages) + " min", "≈ " + pages + " pages");
+
+    if (!a.characters.length) {
+      utils.$("#sp-ana-chars").innerHTML = '<p class="muted">Aucun personnage détecté. Écris un nom EN MAJUSCULES au-dessus d\'une réplique.</p>';
+    } else {
+      var rows = a.characters.map(function (c) {
+        var pct = Math.round(c.share * 100);
+        return "<tr><td class='sp-ana-name'>" + utils.escapeHtml(c.name) + "</td>" +
+          "<td>" + c.cues + "</td><td>" + c.words + "</td><td>" + c.scenes + "</td>" +
+          "<td class='sp-ana-share'><span class='sp-ana-bar' style='width:" + pct + "%'></span><em>" + pct + "%</em></td></tr>";
+      }).join("");
+      utils.$("#sp-ana-chars").innerHTML =
+        "<table class='sp-ana-table'><thead><tr><th>Personnage</th><th>Répl.</th><th>Mots</th><th>Scènes</th><th>Temps de parole</th></tr></thead><tbody>" +
+        rows + "</tbody></table>";
+    }
+
+    if (!a.locations.length) {
+      utils.$("#sp-ana-locs").innerHTML = '<p class="muted">Aucun décor détecté.</p>';
+    } else {
+      var lrows = a.locations.map(function (l) {
+        return "<tr><td>" + utils.escapeHtml(l.type) + "</td><td class='sp-ana-name'>" + utils.escapeHtml(l.name) + "</td><td>" + l.scenes + "</td></tr>";
+      }).join("");
+      utils.$("#sp-ana-locs").innerHTML =
+        "<table class='sp-ana-table'><thead><tr><th>Type</th><th>Décor</th><th>Scènes</th></tr></thead><tbody>" +
+        lrows + "</tbody></table>";
+    }
+  }
+
+  /* ---------- Découpage technique ---------- */
+  function loadDec() {
+    if (decRows) return decRows;
+    try { decRows = JSON.parse(localStorage.getItem(KEY_DEC) || "null"); } catch (e) {}
+    if (!decRows) decRows = [];
+    return decRows;
+  }
+  function saveDec() {
+    try { localStorage.setItem(KEY_DEC, JSON.stringify(decRows || [])); } catch (e) {}
+  }
+  function generateDecoupage() {
+    var a = analyze(parse(utils.$("#sp-text").value));
+    var rows = [];
+    a.scenes.forEach(function (sc, i) {
+      var label = (i + 1) + ". " + sc.type + " " + sc.loc + (sc.time ? " - " + sc.time : "");
+      rows.push({
+        id: "d" + Date.now() + "_" + i,
+        scene: label,
+        shot: "1",
+        value: "Plan moyen",
+        angle: "Hauteur des yeux",
+        move: "Fixe",
+        desc: sc.firstAction ? sc.firstAction.slice(0, 120) : "",
+      });
+    });
+    decRows = rows;
+    saveDec();
+    renderDecoupage();
+  }
+  function sel(id, options, value) {
+    var o = options.map(function (op) {
+      return "<option" + (op === value ? " selected" : "") + ">" + utils.escapeHtml(op) + "</option>";
+    }).join("");
+    return "<select data-dec='" + id + "'>" + o + "</select>";
+  }
+  function renderDecoupage() {
+    var wrap = utils.$("#sp-dec-table");
+    if (!wrap) return;
+    loadDec();
+    if (!decRows.length) {
+      wrap.innerHTML = '<p class="muted">Aucune ligne. Clique « Régénérer » pour créer une ligne par séquence, ou « Ligne » pour partir de zéro.</p>';
+      return;
+    }
+    var body = decRows.map(function (r) {
+      return "<tr data-id='" + r.id + "'>" +
+        "<td><input data-dec='scene' value='" + utils.escapeHtml(r.scene) + "'></td>" +
+        "<td class='sp-dec-shot'><input data-dec='shot' value='" + utils.escapeHtml(r.shot) + "'></td>" +
+        "<td>" + sel("value", FRAMES, r.value) + "</td>" +
+        "<td>" + sel("angle", ANGLES, r.angle) + "</td>" +
+        "<td>" + sel("move", MOVES, r.move) + "</td>" +
+        "<td><input data-dec='desc' value='" + utils.escapeHtml(r.desc) + "'></td>" +
+        "<td><button class='sp-dec-del' title='Supprimer'><i class='fas fa-xmark'></i></button></td></tr>";
+    }).join("");
+    wrap.innerHTML =
+      "<table class='sp-dec-table'><thead><tr><th>Séquence</th><th>Plan</th><th>Cadre</th><th>Angle</th><th>Mouvement</th><th>Description / action</th><th></th></tr></thead><tbody>" +
+      body + "</tbody></table>";
+
+    wrap.querySelectorAll("tr[data-id]").forEach(function (tr) {
+      var id = tr.getAttribute("data-id");
+      var row = decRows.filter(function (x) { return x.id === id; })[0];
+      if (!row) return;
+      tr.querySelectorAll("[data-dec]").forEach(function (f) {
+        f.addEventListener("change", function () { row[f.getAttribute("data-dec")] = f.value; saveDec(); });
+        if (f.tagName === "INPUT") f.addEventListener("input", function () { row[f.getAttribute("data-dec")] = f.value; scheduleDecSave(); });
+      });
+      tr.querySelector(".sp-dec-del").addEventListener("click", function () {
+        decRows = decRows.filter(function (x) { return x.id !== id; });
+        saveDec(); renderDecoupage();
+      });
+    });
+  }
+  var decSaveTimer = null;
+  function scheduleDecSave() { clearTimeout(decSaveTimer); decSaveTimer = setTimeout(saveDec, 400); }
+  function addDecRow() {
+    loadDec();
+    decRows.push({ id: "d" + Date.now(), scene: "", shot: "1", value: "Plan moyen", angle: "Hauteur des yeux", move: "Fixe", desc: "" });
+    saveDec(); renderDecoupage();
+  }
+  function decToShotlist() {
+    loadDec();
+    if (!decRows.length) { utils.toast("Rien à envoyer.", "warn"); return; }
+    var shots = [];
+    try { shots = JSON.parse(localStorage.getItem("mh:shotlist") || "[]"); } catch (e) {}
+    decRows.forEach(function (r, i) {
+      shots.push({
+        id: "s" + Date.now() + "_" + i,
+        desc: (r.scene ? "[" + r.scene + "] " : "") + (r.desc || "Plan " + r.shot),
+        frame: r.value, angle: r.angle, move: r.move, lens: "", done: false,
+      });
+    });
+    try { localStorage.setItem("mh:shotlist", JSON.stringify(shots)); } catch (e) {}
+    utils.toast(decRows.length + " plan(s) ajouté(s) à la shot list du Tournage.", "success");
+  }
+  function decToCSV() {
+    loadDec();
+    if (!decRows.length) { utils.toast("Rien à exporter.", "warn"); return; }
+    function q(s) { return '"' + String(s == null ? "" : s).replace(/"/g, '""') + '"'; }
+    var head = ["Séquence", "Plan", "Cadre", "Angle", "Mouvement", "Description"];
+    var lines = [head.map(q).join(";")];
+    decRows.forEach(function (r) {
+      lines.push([r.scene, r.shot, r.value, r.angle, r.move, r.desc].map(q).join(";"));
+    });
+    utils.download(safeName() + "_decoupage.csv", "﻿" + lines.join("\r\n"));
+    utils.toast("Découpage exporté en CSV.", "success");
+  }
+
   /* ---------- Init ---------- */
   function init() {
     var ta = utils.$("#sp-text");
@@ -252,14 +494,36 @@
     try { saved = JSON.parse(localStorage.getItem(KEY) || "null"); } catch (e) {}
     if (saved) load(saved);
 
-    ta.addEventListener("input", function () { renderPreview(); scheduleSave(); });
-    ["#sp-title", "#sp-author", "#sp-genre", "#sp-logline", "#sp-notes"].forEach(function (sel) {
-      utils.$(sel).addEventListener("input", scheduleSave);
+    ta.addEventListener("input", function () { renderPreview(); renderAnalysis(); scheduleSave(); });
+    ["#sp-title", "#sp-author", "#sp-genre", "#sp-logline", "#sp-notes"].forEach(function (s) {
+      utils.$(s).addEventListener("input", scheduleSave);
     });
 
     utils.$("#sp-context-toggle").addEventListener("click", function () {
       var c = utils.$("#sp-context");
       c.hidden = !c.hidden;
+    });
+
+    utils.$("#sp-analysis-toggle").addEventListener("click", function () {
+      var p = utils.$("#sp-analysis");
+      p.hidden = !p.hidden;
+      if (!p.hidden) renderAnalysis();
+    });
+
+    utils.$("#sp-analysis-decoupage").addEventListener("click", function () {
+      var d = utils.$("#sp-decoupage");
+      d.hidden = false;
+      loadDec();
+      if (!decRows.length) generateDecoupage(); else renderDecoupage();
+      d.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    utils.$("#sp-dec-addrow").addEventListener("click", addDecRow);
+    utils.$("#sp-dec-tolist").addEventListener("click", decToShotlist);
+    utils.$("#sp-dec-csv").addEventListener("click", decToCSV);
+    utils.$("#sp-dec-regen").addEventListener("click", function () {
+      if (decRows && decRows.length && !window.confirm("Régénérer effacera les lignes actuelles du découpage. Continuer ?")) return;
+      generateDecoupage();
     });
 
     utils.$$(".sp-inserts [data-ins]").forEach(function (btn) {

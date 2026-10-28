@@ -1096,7 +1096,36 @@ td:first-child { color: var(--text-main); font-weight: 600; }
 .sp-transition { text-align: right; text-transform: uppercase; margin: 9px 0; }
 .sp-stats { margin-top: 12px; font-size: 0.85rem; }
 
-@media (max-width: 820px) { .sp-editor { grid-template-columns: 1fr; } }
+/* Analyse du scénario */
+.sp-analysis, .sp-decoupage { margin-top: 16px; }
+.sp-analysis-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.sp-analysis-head h3 { margin: 0; font-size: 1.05rem; }
+.sp-ana-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 18px; }
+.sp-ana-card { background: rgba(255,255,255,0.04); border: 1px solid var(--glass-border); border-radius: 12px; padding: 12px; text-align: center; }
+.sp-ana-val { font-size: 1.4rem; font-weight: 700; color: var(--primary); line-height: 1.1; }
+.sp-ana-lab { font-size: 0.8rem; margin-top: 4px; }
+.sp-ana-sub { font-size: 0.72rem; color: var(--text-dim); margin-top: 2px; }
+.sp-ana-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.sp-ana-block h4 { margin: 0 0 8px; font-size: 0.95rem; }
+.sp-ana-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+.sp-ana-table th { text-align: left; color: var(--text-dim); font-weight: 600; padding: 4px 8px; border-bottom: 1px solid var(--glass-border); }
+.sp-ana-table td { padding: 5px 8px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: middle; }
+.sp-ana-name { font-weight: 600; }
+.sp-ana-share { position: relative; min-width: 110px; }
+.sp-ana-share .sp-ana-bar { display: inline-block; height: 8px; border-radius: 4px; background: var(--primary); vertical-align: middle; margin-right: 6px; min-width: 2px; }
+.sp-ana-share em { font-style: normal; color: var(--text-dim); font-size: 0.78rem; }
+
+/* Découpage technique */
+.sp-dec-table-wrap { overflow-x: auto; }
+.sp-dec-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+.sp-dec-table th { text-align: left; color: var(--text-dim); font-weight: 600; padding: 5px 6px; border-bottom: 1px solid var(--glass-border); white-space: nowrap; }
+.sp-dec-table td { padding: 4px 6px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.sp-dec-table input, .sp-dec-table select { width: 100%; background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); color: var(--text-main); border-radius: 7px; padding: 5px 7px; font-family: inherit; font-size: 0.82rem; }
+.sp-dec-table .sp-dec-shot { width: 56px; }
+.sp-dec-del { background: none; border: none; color: var(--text-dim); cursor: pointer; padding: 4px 6px; border-radius: 6px; }
+.sp-dec-del:hover { color: #ff5a5a; background: rgba(255,90,90,0.1); }
+
+@media (max-width: 820px) { .sp-editor { grid-template-columns: 1fr; } .sp-ana-cols { grid-template-columns: 1fr; } }
 
 /* --- 17. THÈME CLAIR --- */
 :root[data-theme="light"] {

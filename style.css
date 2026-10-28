@@ -827,6 +827,14 @@ td:first-child { color: var(--text-main); font-weight: 600; }
 .subpanel.active { display: block; animation: cardEntrance 0.4s var(--ease-out-expo); }
 
 /* --- 15. TABLEAU DE BORD --- */
+.dash-kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-top: 20px; }
+.kpi-tile { padding: 20px 22px; border-radius: 16px; background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 16%, transparent), rgba(255,255,255,0.03)); border: 1px solid var(--glass-border); }
+.kpi-val { font-size: 2.1rem; font-weight: 700; line-height: 1; letter-spacing: -1px; color: var(--text-main); }
+.kpi-lab { margin-top: 8px; font-size: 0.82rem; color: var(--text-dim); display: flex; align-items: center; gap: 7px; }
+.status-bar { display: flex; height: 10px; border-radius: 6px; overflow: hidden; margin-bottom: 14px; background: rgba(255,255,255,0.06); }
+.status-seg { height: 100%; }
+.status-seg:not(:last-child) { border-right: 1px solid rgba(0,0,0,0.25); }
+
 .dash-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

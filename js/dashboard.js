@@ -82,10 +82,16 @@
       MH.showTool("projects");
       var b = utils.$("#add-project-btn");
       if (b && !b.disabled) b.click();
+    } else if (action === "scenario") {
+      MH.showTool("screenplay");
+    } else if (action === "scaffold") {
+      MH.showTool("utils");
+      var sb = utils.$('[data-subtab="utils-scaffold"]');
+      if (sb) sb.click();
     } else if (action === "media" || action === "transcode") {
       MH.showTool("media");
     } else if (action === "watch") {
-      MH.showTool("automation-watch");
+      MH.showTool("automation");
     } else if (action === "code") {
       MH.showTool("code");
     } else if (action === "references") {
@@ -95,6 +101,7 @@
 
   function refresh() {
     if (!desktop) {
+      setKpi("kpi-active", "—"); setKpi("kpi-week", "—"); setKpi("kpi-tasks", "—"); setKpi("kpi-disk", "—");
       setBody("#dash-projects", '<p class="muted">Disponible dans l\'app desktop.</p>');
       setBody("#dash-deadlines", '<p class="muted">—</p>');
       setBody("#dash-storage", '<p class="muted">—</p>');
@@ -102,13 +109,45 @@
       return;
     }
     window.motionHub.projects.list().then(function (projects) {
-      renderProjects(projects || []);
-      renderDeadlines(projects || []);
-      renderStorage(projects || []);
+      projects = projects || [];
+      renderProjects(projects);
+      renderDeadlines(projects);
+      var paths = projects.map(function (p) { return p.path; });
+      window.motionHub.system.diskSpace(paths).then(function (disks) {
+        renderStorage(projects, disks || []);
+        renderKpis(projects, disks || []);
+      });
     });
     if (window.motionHub.watch && window.motionHub.watch.list) {
       window.motionHub.watch.list().then(renderWatch);
     }
+  }
+
+  function setKpi(id, val) {
+    var el = utils.$("#" + id);
+    if (el) el.textContent = val;
+  }
+
+  /* ---- Bande de KPI ---- */
+  function renderKpis(projects, disks) {
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var active = projects.filter(function (p) { return (p.status || "todo") !== "done"; }).length;
+    var week = projects.filter(function (p) {
+      if (!p.deadline || (p.status || "todo") === "done") return false;
+      var d = new Date(p.deadline + "T00:00:00");
+      var days = Math.round((d - today) / 86400000);
+      return days >= 0 && days <= 7;
+    }).length;
+    var tasks = projects.reduce(function (a, p) {
+      return a + ((p.tasks || []).filter(function (t) { return !t.done; }).length);
+    }, 0);
+    var minFree = null;
+    (disks || []).forEach(function (d) { if (minFree === null || d.free < minFree) minFree = d.free; });
+
+    setKpi("kpi-active", active);
+    setKpi("kpi-week", week);
+    setKpi("kpi-tasks", tasks);
+    setKpi("kpi-disk", minFree === null ? "—" : utils.formatSize(minFree));
   }
 
   function setBody(sel, html) {
@@ -125,8 +164,19 @@
         return '<button class="kanban-chip" data-status="' + s.id + '" style="--st:' + s.color + '"><span class="kanban-n">' + n + "</span> " + utils.escapeHtml(s.label) + "</button>";
       })
       .join("");
+    // Barre de répartition par statut
+    var total = projects.length;
+    var segs = statuses.map(function (s) {
+      var n = projects.filter(function (p) { return (p.status || "todo") === s.id; }).length;
+      if (!n) return "";
+      var pct = total ? (n / total) * 100 : 0;
+      return '<span class="status-seg" style="width:' + pct + '%;background:' + s.color + '" title="' + utils.escapeHtml(s.label) + " : " + n + '"></span>';
+    }).join("");
+    var bar = total ? '<div class="status-bar">' + segs + "</div>" : "";
+
     setBody("#dash-projects",
       '<div class="dash-big">' + projects.length + '<span class="dash-big__unit"> projet' + (projects.length > 1 ? "s" : "") + "</span></div>" +
+      bar +
       '<div class="kanban-chips">' + chips + "</div>");
 
     utils.$$("#dash-projects .kanban-chip").forEach(function (chip) {
@@ -169,31 +219,25 @@
   }
 
   /* ---- Widget Stockage ---- */
-  function renderStorage(projects) {
+  function renderStorage(projects, disks) {
     var withSize = projects.filter(function (p) { return typeof p.sizeBytes === "number"; });
     var totalTracked = withSize.reduce(function (a, p) { return a + p.sizeBytes; }, 0);
     var header =
       '<div class="dash-big">' + utils.formatSize(totalTracked) + '<span class="dash-big__unit"> suivis</span></div>' +
       (withSize.length < projects.length ? '<p class="muted mini">' + withSize.length + "/" + projects.length + " projets mesurés (calcule leur taille dans l'onglet Projets)</p>" : "");
 
-    setBody("#dash-storage", header + '<div id="dash-disks"></div>');
-
-    var paths = projects.map(function (p) { return p.path; });
-    window.motionHub.system.diskSpace(paths).then(function (disks) {
-      var el = utils.$("#dash-disks");
-      if (!el) return;
-      el.innerHTML = (disks || [])
-        .map(function (d) {
-          var used = d.total - d.free;
-          var pct = d.total ? Math.round((used / d.total) * 100) : 0;
-          return (
-            '<div class="disk-row"><div class="disk-row__head"><span>' + utils.escapeHtml(d.drive) + "</span><span>" +
-            utils.formatSize(d.free) + " libres / " + utils.formatSize(d.total) + "</span></div>" +
-            '<div class="disk-bar"><div class="disk-bar__fill" style="width:' + pct + '%"></div></div></div>'
-          );
-        })
-        .join("");
-    });
+    var disksHtml = (disks || [])
+      .map(function (d) {
+        var used = d.total - d.free;
+        var pct = d.total ? Math.round((used / d.total) * 100) : 0;
+        return (
+          '<div class="disk-row"><div class="disk-row__head"><span>' + utils.escapeHtml(d.drive) + "</span><span>" +
+          utils.formatSize(d.free) + " libres / " + utils.formatSize(d.total) + "</span></div>" +
+          '<div class="disk-bar"><div class="disk-bar__fill" style="width:' + pct + '%"></div></div></div>'
+        );
+      })
+      .join("");
+    setBody("#dash-storage", header + disksHtml);
   }
 
   /* ---- Widget Surveillances ---- */

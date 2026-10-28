@@ -42,6 +42,12 @@
                 <h2>Tableau de bord</h2>
                 <span class="muted" id="dash-greeting"></span>
             </div>
+            <div class="dash-kpis" id="dash-kpis">
+                <div class="kpi-tile"><div class="kpi-val" id="kpi-active">—</div><div class="kpi-lab"><i class="fas fa-clapperboard"></i> Projets actifs</div></div>
+                <div class="kpi-tile"><div class="kpi-val" id="kpi-week">—</div><div class="kpi-lab"><i class="fas fa-calendar-week"></i> À rendre ≤ 7 j</div></div>
+                <div class="kpi-tile"><div class="kpi-val" id="kpi-tasks">—</div><div class="kpi-lab"><i class="fas fa-list-check"></i> Tâches à faire</div></div>
+                <div class="kpi-tile"><div class="kpi-val" id="kpi-disk">—</div><div class="kpi-lab"><i class="fas fa-hard-drive"></i> Espace libre</div></div>
+            </div>
             <div class="dash-grid">
                 <div class="card dash-card" id="dash-projects">
                     <h3><i class="fas fa-clapperboard"></i> Projets</h3>
@@ -67,6 +73,8 @@
                     <h3><i class="fas fa-bolt"></i> Accès rapides</h3>
                     <div class="dash-quick-grid">
                         <button class="quick-btn" data-quick="add-project"><i class="fas fa-folder-plus"></i> Ajouter un projet</button>
+                        <button class="quick-btn" data-quick="scenario"><i class="fas fa-feather-pointed"></i> Nouveau scénario</button>
+                        <button class="quick-btn" data-quick="scaffold"><i class="fas fa-folder-tree"></i> Arborescence</button>
                         <button class="quick-btn" data-quick="media"><i class="fas fa-compress"></i> Générer un proxy</button>
                         <button class="quick-btn" data-quick="transcode"><i class="fas fa-right-left"></i> Transcoder</button>
                         <button class="quick-btn" data-quick="watch"><i class="fas fa-eye"></i> Surveiller un dossier</button>

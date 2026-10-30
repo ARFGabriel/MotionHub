@@ -113,6 +113,26 @@
       setTimeout(function () { w.print(); }, 300);
     });
 
+    var dialogBtn = utils.$("#shot-dialogue");
+    if (dialogBtn) dialogBtn.addEventListener("click", function () {
+      var a = (window.prompt("Nom du personnage A ?", "A") || "A").trim() || "A";
+      var b = (window.prompt("Nom du personnage B ?", "B") || "B").trim() || "B";
+      // Couverture standard d'un dialogue : établissement + 2 valeurs par axe.
+      var preset = [
+        { desc: "Établissement (" + a + " + " + b + ")", frame: "Plan moyen", angle: "Hauteur des yeux", move: "Fixe" },
+        { desc: "Champ " + a + " — moyen", frame: "Plan moyen", angle: "Hauteur des yeux", move: "Fixe" },
+        { desc: "Champ " + a + " — serré", frame: "Rapproché", angle: "Hauteur des yeux", move: "Fixe" },
+        { desc: "Contrechamp " + b + " — moyen", frame: "Plan moyen", angle: "Hauteur des yeux", move: "Fixe" },
+        { desc: "Contrechamp " + b + " — serré", frame: "Rapproché", angle: "Hauteur des yeux", move: "Fixe" },
+      ];
+      preset.forEach(function (p, i) {
+        shots.push({ id: "s" + Date.now() + "_" + i, desc: p.desc, frame: p.frame, angle: p.angle, move: p.move, lens: "", done: false });
+      });
+      lsSet("mh:shotlist", shots);
+      renderShots();
+      utils.toast("Découpage dialogue ajouté (5 plans).", "success");
+    });
+
     var clearBtn = utils.$("#shot-clear");
     if (clearBtn) clearBtn.addEventListener("click", function () {
       if (!shots.length) return;

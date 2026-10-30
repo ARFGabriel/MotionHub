@@ -2199,5 +2199,155 @@
         { tip: "Un viseur de champ (ou l'appli Artemis sur smartphone) permet de prévisualiser un cadre selon la focale et le capteur, sans trimballer la caméra." },
       ],
     },
+
+    /* ============ CHAPITRE 7 — DIALOGUE & RÈGLE DES 180° ============ */
+    {
+      id: "real-dialogue-tournage",
+      category: "realisation",
+      title: "Bien tourner un dialogue",
+      summary: "Master, deux valeurs, répétitions et son propre.",
+      body: [
+        { p: "Un dialogue se filme comme un petit découpage classique : on pose le lieu en plan moyen (qui sert de fil rouge), puis on se rapproche en champ-contrechamp quand l'émotion monte." },
+        { h: "Tourne des masters" },
+        { p: "Joue le dialogue en entier sur chaque axe — c'est le « master » de la scène — au lieu de retourner la caméra à chaque réplique. Tu remonteras l'ordre au montage et tu auras toujours de la matière pour chaque personnage." },
+        { h: "Deux valeurs par axe" },
+        { p: "Pour chaque champ, tourne un plan moyen ET un plan serré. Tu pourras resserrer progressivement pour accroître l'intimité ou la tension (la fameuse scène de Heat entre Pacino et De Niro)." },
+        { ul: [
+          "Répète avec les comédiens : un acteur inspiré qui change sa réplique sur le contrechamp devient impossible à raccorder avec le champ déjà tourné.",
+          "Surveille le son : les comédiens ne doivent pas se chevaucher. Un petit temps entre les répliques permet de couper proprement au montage.",
+        ] },
+        { tip: "Priorité n°1 sur un dialogue : un son propre. Un léger blanc entre deux répliques vaut mieux qu'un chevauchement qui t'empêche de couper." },
+      ],
+    },
+    {
+      id: "real-180",
+      category: "realisation",
+      title: "La règle des 180°",
+      summary: "Rester du même côté de la ligne pour que les regards se croisent.",
+      body: [
+        { p: "Trace une ligne imaginaire entre tes deux personnages : la caméra doit toujours rester du même côté. La franchir fait « sauter » les personnages de place d'un plan à l'autre et casse le croisement des regards." },
+        { svg: '<svg viewBox="0 0 360 205" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">' +
+            '<rect x="10" y="92" width="340" height="105" fill="var(--primary)" opacity="0.07"/>' +
+            '<text x="180" y="112" fill="var(--text-dim)" font-size="10" text-anchor="middle">cote autorise</text>' +
+            '<line x1="20" y1="90" x2="340" y2="90" stroke="var(--secondary)" stroke-width="2" stroke-dasharray="6 4"/>' +
+            '<text x="22" y="82" fill="var(--secondary)" font-size="11">LIGNE DES 180</text>' +
+            '<circle cx="140" cy="90" r="15" fill="var(--glass-panel)" stroke="var(--text-main)" stroke-width="2"/><text x="140" y="94" text-anchor="middle" font-size="12" fill="var(--text-main)">A</text>' +
+            '<circle cx="230" cy="90" r="15" fill="var(--glass-panel)" stroke="var(--text-main)" stroke-width="2"/><text x="230" y="94" text-anchor="middle" font-size="12" fill="var(--text-main)">B</text>' +
+            '<rect x="80" y="158" width="22" height="14" rx="2" fill="var(--primary)"/><line x1="100" y1="160" x2="220" y2="100" stroke="var(--primary)" stroke-width="1.5"/><text x="80" y="188" font-size="10" fill="var(--text-dim)" text-anchor="middle">champ</text>' +
+            '<rect x="268" y="158" width="22" height="14" rx="2" fill="var(--primary)"/><line x1="268" y1="160" x2="150" y2="100" stroke="var(--primary)" stroke-width="1.5"/><text x="279" y="188" font-size="10" fill="var(--text-dim)" text-anchor="middle">contrechamp</text>' +
+            '<rect x="174" y="16" width="22" height="14" rx="2" fill="none" stroke="#ff5a5a" stroke-width="2"/><line x1="185" y1="30" x2="185" y2="76" stroke="#ff5a5a" stroke-width="1.5" stroke-dasharray="3 3"/><text x="238" y="27" font-size="10" fill="#ff5a5a">INTERDIT (franchit)</text>' +
+            "</svg>",
+          caption: "Les caméras du champ et du contrechamp restent sous la ligne. Passer au-dessus (en rouge) casse les reperes." },
+        { h: "Croiser les regards" },
+        { p: "Du bon côté, A regarde vers B et B vers A : leurs regards se répondent. Du mauvais côté, ils semblent regarder dans la même direction, comme s'ils parlaient à un tiers hors champ." },
+        { h: "La franchir volontairement" },
+        { p: "On peut traverser la ligne pour marquer une bascule (une séduction, une trahison, un autre visage d'un personnage), à condition de montrer le passage — le plus souvent par un travelling qui emmène la caméra d'un côté à l'autre." },
+        { ul: [
+          "Un personnage qui fixe un objet, une télé, un téléphone : on croise les regards comme s'ils se faisaient face.",
+          "Une scène au téléphone ou en split-screen : les regards restent face à face, pour « se répondre » à distance.",
+        ] },
+        { tip: "Trompé au tournage ? Tu peux inverser l'image horizontalement au montage — mais vérifie d'abord qu'aucun détail ne trahit le miroir (barrette, cicatrice, texte, horloge en fond)." },
+      ],
+    },
+    {
+      id: "real-30",
+      category: "realisation",
+      title: "La règle des 30°",
+      summary: "Bouger la caméra d'au moins 30° entre deux plans du même sujet.",
+      body: [
+        { p: "Entre deux plans successifs du même sujet, déplace la caméra d'au moins 30° (et change si possible de valeur). En dessous, la coupe ressemble à une « saute » : un petit sursaut gênant qui désoriente le spectateur." },
+        { svg: '<svg viewBox="0 0 340 200" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">' +
+            '<circle cx="180" cy="38" r="15" fill="var(--glass-panel)" stroke="var(--text-main)" stroke-width="2"/><text x="180" y="42" text-anchor="middle" font-size="10" fill="var(--text-main)">sujet</text>' +
+            '<line x1="90" y1="163" x2="172" y2="50" stroke="var(--primary)" stroke-width="1.5"/><rect x="79" y="163" width="22" height="14" rx="2" fill="var(--primary)"/><text x="90" y="191" text-anchor="middle" font-size="10" fill="var(--text-dim)">A</text>' +
+            '<line x1="122" y1="166" x2="176" y2="52" stroke="#ff5a5a" stroke-width="1.5" stroke-dasharray="4 3"/><rect x="111" y="166" width="22" height="14" rx="2" fill="none" stroke="#ff5a5a" stroke-width="2"/><text x="122" y="194" text-anchor="middle" font-size="9" fill="#ff5a5a">trop proche</text>' +
+            '<line x1="252" y1="163" x2="188" y2="50" stroke="var(--secondary)" stroke-width="1.5"/><rect x="241" y="163" width="22" height="14" rx="2" fill="var(--secondary)"/><text x="252" y="191" text-anchor="middle" font-size="10" fill="var(--text-dim)">30 ok</text>' +
+            '<text x="210" y="78" font-size="11" fill="var(--text-dim)">30 min</text>' +
+            "</svg>",
+          caption: "Depuis la cam A, un axe trop proche fait une saute (rouge) ; un axe a 30 degres ou plus raccorde bien." },
+        { p: "En revanche, entre le champ et le contrechamp d'un dialogue, garde le même objectif et la même distance au sujet : les deux axes doivent s'équilibrer, pas se déséquilibrer." },
+        { tip: "30°, c'est un minimum. Combine déplacement ET changement de valeur (du moyen au serré) pour que deux plans se raccordent le plus naturellement." },
+      ],
+    },
+    {
+      id: "real-dialogue-groupe",
+      category: "realisation",
+      title: "Filmer un dialogue de groupe",
+      summary: "Gérer plusieurs lignes de 180° sans se perdre.",
+      body: [
+        { p: "À plus de deux personnages, les lignes des 180° se multiplient. Un petit plan au sol (vue de dessus) où tu notes les positions et les lignes t'évite de t'emmêler." },
+        { h: "Quatre méthodes" },
+        { ul: [
+          "Une ligne dominante : n'en trace qu'une (la relation principale) et compose autour (la rencontre dans Seven).",
+          "Alterner les lignes : plan large d'abord pour situer tout le monde, puis champ-contrechamp en respectant la ligne entre chaque intervenant (Pulp Fiction).",
+          "Se placer au centre : si le groupe est en cercle, mets-toi au milieu et pivote pour cadrer chacun (Breakfast Club).",
+          "Jouer la symétrie : des personnages qui se font face, cadrés de façon symétrique pour croiser les regards (Matrix Reloaded).",
+        ] },
+        { tip: "Le but ne change pas : où qu'ils soient placés, cadre pour que les regards se croisent d'un plan à l'autre." },
+      ],
+    },
+    {
+      id: "real-continuite",
+      category: "realisation",
+      title: "Continuité de direction (mouvement)",
+      summary: "Garder le même sens de déplacement d'un plan à l'autre.",
+      body: [
+        { p: "La règle des 180° vaut aussi pour un sujet qui bouge. Si une voiture roule de gauche à droite, elle doit garder ce sens au plan suivant — sinon elle semble faire marche arrière (les poursuites de Baby Driver ne franchissent jamais la ligne)." },
+        { ul: [
+          "Marche et course : même direction d'un plan à l'autre (le jeune Forrest Gump court toujours vers la droite).",
+          "Sens narratif : aller vers la droite = avancer vers son objectif ; vers la gauche = reculer, hésiter (Snowpiercer), car on lit de gauche à droite.",
+        ] },
+        { tip: "Pour inverser le sens sans perdre le spectateur, glisse un plan de coupe neutre entre les deux : un piéton qui regarde, le conducteur qui tourne la tête, les mains sur le volant." },
+      ],
+    },
+    {
+      id: "real-french-over",
+      category: "realisation",
+      title: "Le french over",
+      summary: "Filmer par-dessus l'épaule, depuis l'arrière des personnages.",
+      body: [
+        { p: "Le « french over » désigne les plans filmés derrière les comédiens. Le nom vient des scènes en voiture d'À bout de souffle (Godard), tournées depuis la banquette arrière faute de place à l'avant." },
+        { p: "On place le spectateur dans le dos des personnages, comme s'il les espionnait, sans lire leurs visages — parfait pour une tension ou un secret (Millenium : Ce qui ne me tue pas)." },
+        { tip: "Utile quand on ne peut pas mettre la caméra devant (voiture, espace exigu), et expressif quand on veut justement cacher les émotions." },
+      ],
+    },
+    {
+      id: "cad-amorce",
+      category: "cadrage",
+      title: "Le plan avec (et sans) amorce",
+      summary: "L'épaule au premier plan : proximité ou distance.",
+      body: [
+        { p: "Une amorce, c'est un élément de premier plan — souvent l'épaule d'un personnage de dos. Elle situe l'interlocuteur et crée de la proximité : la relation paraît plus intime (Titanic) ou appuie un rapport de force (Mon beau-père et moi)." },
+        { h: "Sans amorce" },
+        { p: "À l'inverse, un plan sans amorce isole le personnage filmé et met de la distance entre les comédiens." },
+        { p: "Équilibre tes axes : si le champ est en amorce, fais le contrechamp aussi en amorce (et inversement) pour éviter les sautes à l'image." },
+        { tip: "Cadre ton amorce de trois-quarts ou de dos, bouche hors champ : tu seras libre, au montage, de lui faire dire — ou non — sa réplique sans voir ses lèvres bouger." },
+      ],
+    },
+    {
+      id: "cad-dialogue-cadrage",
+      category: "cadrage",
+      title: "Cadrer un dialogue : l'air et le décadrage",
+      summary: "Laisser de l'espace au regard, ou décadrer pour un effet.",
+      body: [
+        { p: "Pour un cadre neutre, applique la règle des tiers : les yeux sur la ligne du haut, et de l'« air » dans le sens du regard (de l'espace à droite s'il regarde à droite, à gauche s'il regarde à gauche)." },
+        { h: "Jouer le décadrage" },
+        { p: "Décadrer volontairement change le sens. Un cadre parfaitement symétrique donne de la rigueur, un côté strict (Le Discours d'un roi). Pousser les têtes vers le bord crée un malaise, un enfermement (Mr. Robot)." },
+        { tip: "Le cadre raconte le rapport de force : contre-plongée + symétrie = puissance ; plongée + personnage décadré = vulnérabilité (l'interrogatoire du Silence des agneaux)." },
+      ],
+    },
+    {
+      id: "real-long-dialogue",
+      category: "realisation",
+      title: "Cadrer un long dialogue",
+      summary: "Relancer le rythme au-delà d'une à deux minutes.",
+      body: [
+        { p: "Au-delà d'une à deux minutes, un simple champ-contrechamp finit par lasser, même si la scène est bien écrite. Deux solutions pour relancer le rythme." },
+        { ul: [
+          "Déplacer la caméra : multiplie les angles — commence neutre à hauteur des yeux, ajoute plongée/contre-plongée si le rapport de force évolue, glisse un travelling circulaire pour casser la lenteur.",
+          "Déplacer les acteurs : fais lever un personnage qui part dans la cuisine tout en parlant — nouveau fond, nouveaux angles, plus de profondeur.",
+        ] },
+        { tip: "Fais évoluer le découpage avec l'émotion de la scène, jamais au hasard : chaque changement d'angle doit raconter quelque chose." },
+      ],
+    },
   ];
 })(window.MH = window.MH || {});

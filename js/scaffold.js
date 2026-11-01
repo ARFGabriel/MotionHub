@@ -27,6 +27,10 @@
     "Photo":
       "01_IMPORT\n  RAW\n  JPEG\n02_SELECTION\n03_RETOUCHE\n  PSD\n  LIGHTROOM\n" +
       "04_EXPORTS\n  WEB\n  PRINT\n05_LIVRAISON",
+    "Post-production":
+      "01_PROJET\n02_RUSHES\n  VIDEO\n  SON\n  PROXY\n03_RESSOURCES\n  MUSIQUES\n  IMAGES\n" +
+      "04_FXS\n  IN\n  OUT\n05_SOUND_FX\n  AMBIANCES\n  BRUITAGES\n  SOUND_DESIGN\n" +
+      "06_EXPORT\n  PREVIEW\n  POUR_ETALO\n  POUR_MIX\n  MASTER",
     "Vierge": "01_\n02_\n03_",
   };
 

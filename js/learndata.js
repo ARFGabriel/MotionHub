@@ -13,6 +13,7 @@
     { id: "materiel", label: "Matériel", icon: "fa-screwdriver-wrench" },
     { id: "son", label: "Son", icon: "fa-microphone" },
     { id: "lumiere", label: "Lumière", icon: "fa-lightbulb" },
+    { id: "preprod", label: "Préparation & plateau", icon: "fa-clipboard-list" },
     { id: "realisation", label: "Réalisation", icon: "fa-clapperboard" },
     { id: "cadrage", label: "Cadrage", icon: "fa-crop-simple" },
     { id: "montage", label: "Montage", icon: "fa-scissors" },
@@ -2578,6 +2579,409 @@
           "Cloner un comédien : caméra fixe (expo/point/balance verrouillés), deux passes, chacun d'un côté sans se chevaucher (Friends).",
         ] },
         { tip: "Pour cloner un personnage, ne bouge ni la caméra ni la lumière entre les deux passes, et soigne la séparation (sinon il faut détourer image par image)." },
+      ],
+    },
+
+    /* ============ CHAPITRE 9 — LES ÉQUIPES & LA PRÉPARATION ============ */
+    {
+      id: "prep-equipes",
+      category: "preprod",
+      title: "Les corps de métier d'un tournage",
+      summary: "Qui fait quoi dans une équipe de film.",
+      body: [
+        { p: "Les départements d'un tournage ne changent pas, seul leur effectif varie avec le budget. Connaître chaque poste t'aide à t'entourer et à déléguer." },
+        { ul: [
+          "Mise en scène : réalisateur (le chef d'orchestre, sa vision), assistant réalisateur (son bras droit, tient le plateau et anticipe les galères), scripte (continuité, raccords, note les prises validées).",
+          "Production : producteur (trouve les financements), directeur de production (budget précis), chargé/assistant de production (logistique, devis, documents).",
+          "Image : chef opérateur / directeur photo (cadre + lumière, choisit caméra et optiques), assistant caméra (point, optiques, backup des rushes), chef électro + électros.",
+          "Machinerie : chef machino (tout ce qui est sous la caméra — travelling, grue —, la sécurité, le clap ; il assure le cadreur en steadicam/épaule).",
+          "Son : ingénieur du son (micros, enregistreur ; peut refaire une prise pour un bruit), perchman (dirige la perche vers le son).",
+          "Décoration : chef déco (crée/trouve les décors), accessoiriste (accessoires, petits effets, lien avec la scripte).",
+          "HMC : chef costumier, maquillage/coiffure (jusqu'aux prothèses en latex).",
+          "Régie : régisseur général (décors, logistique, repas, transports) — les premiers arrivés, les derniers partis.",
+        ] },
+        { tip: "En autoproduction, même ambitieuse, prends au moins un régisseur : ce poste sous-estimé est capital pour que la journée se déroule bien." },
+      ],
+    },
+    {
+      id: "prep-depouillement",
+      category: "preprod",
+      title: "Dépouiller le scénario",
+      summary: "Lister, séquence par séquence, tout ce qu'il faudra.",
+      body: [
+        { p: "Dépouiller, c'est lire le script scène par scène et lister tout ce dont tu auras besoin : décors, accessoires, costumes, casting, effets. C'est la première étape de la préparation." },
+        { p: "Note aussi les éléments implicites : « il sort une arme et tire » implique un faux revolver, du faux sang (maquillage/SFX) et des vêtements de rechange si tu ne tournes pas dans l'ordre." },
+        { ul: [
+          "Pour débuter : surligne ton script avec un code couleur par secteur (déco, costumes, SFX…).",
+          "Au cinéma : une feuille de dépouillement par séquence (une case par secteur), qui sert aussi à la production pour chiffrer chaque séquence.",
+        ] },
+        { tip: "Le dépouillement est la base du plan de travail et des feuilles de service : fais-le sérieusement, il évite les oublis le jour J." },
+      ],
+    },
+    {
+      id: "prep-reperage",
+      category: "preprod",
+      title: "Repérer les décors",
+      summary: "Visiter les lieux pour éviter les mauvaises surprises.",
+      body: [
+        { p: "Le repérage, c'est trouver et visiter les lieux de tournage. Étape clé : un décor parfait à 17 h peut être un enfer à 10 h (trafic, bruit, soleil caché)." },
+        { ul: [
+          "Commence sur internet (Google Street View) mais ne t'y fie jamais entièrement (photos pas à jour).",
+          "Repère à l'heure prévue du tournage (apps Sun Surveyor / Sun Seeker pour la position du soleil).",
+          "Prends des photos (ou une 360°) pour penser ton découpage chez toi ; une app type Artemis prévisualise les cadres selon la focale.",
+        ] },
+        { h: "Les questions à se poser" },
+        { ul: [
+          "Accès facile (transports, ascenseur pour le matériel) ? Stationnement proche ?",
+          "Accès à une salle de bains / WC ? Électricité suffisante (sinon groupe électrogène) ?",
+          "Événements prévus (travaux, manif) ? Lieu autorisé (même la rue ; attention aux jardins et rues privés) ?",
+        ] },
+        { tip: "Ne repère jamais avant d'avoir finalisé ton scénario, sinon tu découvriras un manque une fois sur place." },
+      ],
+    },
+    {
+      id: "prep-plan-travail",
+      category: "preprod",
+      title: "Organiser son tournage",
+      summary: "Plan de travail, regroupement des décors, feuille de service.",
+      body: [
+        { p: "Organiser ses journées fait gagner du temps, de l'argent et de la sérénité. L'outil central est le plan de travail (shooting schedule), bâti à partir du dépouillement et du découpage." },
+        { ul: [
+          "Réunis les décors : regroupe les scènes d'un même lieu, sans suivre la chronologie du script.",
+          "Puis, si possible, filme dans l'ordre chronologique (ça aide les comédiens et le HMC).",
+          "Garde le rythme : alterne scènes faciles et difficiles pour ne pas épuiser l'équipe.",
+          "Devance la météo : mets les extérieurs en début de journée (app Raintoday pour les averses).",
+          "Anticipe : prépare la déco et la lumière de la scène suivante pendant que tu tournes.",
+        ] },
+        { tip: "La feuille de service (call sheet) est distribuée la veille : horaires, adresse, programme, séquences. En vidéo, un simple récap par e-mail la veille suffit." },
+      ],
+    },
+    {
+      id: "prep-plateau",
+      category: "preprod",
+      title: "Sur le plateau : les annonces",
+      summary: "La procédure avant chaque prise, et les backups.",
+      body: [
+        { p: "Sur un tournage, la hiérarchie est stricte : le réalisateur dirige via l'assistant réalisateur, en contact avec les chefs de poste. Avant chaque prise, une procédure d'annonces prépare tout le monde." },
+        { ul: [
+          "« Silence ! » — l'assistant réal demande le silence, chacun à son poste.",
+          "« Moteur ! » — le réalisateur lance ; caméra et son démarrent.",
+          "« Ça tourne ! » — l'ingénieur du son confirme (il répond en premier, vieux rituel).",
+          "« 23 sur 3, première ! » puis « Clap ! » — le machiniste clape (séquence 23, plan 3, prise 1) dans le cadre.",
+          "« Cadré ! » — le cadreur confirme.",
+          "« Action ! » … « Coupez ! » — le réalisateur lance puis arrête la prise.",
+        ] },
+        { tip: "À chaque demi-journée et en fin de journée, fais des backups de tes cartes sur disque dur et vérifie le transfert. Une carte corrompue sans sauvegarde, c'est le film perdu." },
+      ],
+    },
+    {
+      id: "prep-reussir-tournage",
+      category: "preprod",
+      title: "Réussir son tournage",
+      summary: "Les réflexes qui sauvent une journée de tournage.",
+      body: [
+        { ul: [
+          "Sois clair, sois prêt : tu es le capitaine ; si tu es perdu, l'équipe panique. Un découpage (voire plan au sol + storyboard) partage ta vision.",
+          "Adapte-toi : il y aura toujours des imprévus (météo, retard, plan trop long). Reste souple, écoute les idées — la décision finale reste la tienne.",
+          "Implique ton équipe : partage tes idées et ton enthousiasme dès le début, et donne à chacun un poste précis (sinon tout le monde donne son avis et ça ralentit).",
+          "Laisse tourner : ne coupe pas trop vite ; quelques secondes de plus (une impro, un regard, un silence) sont précieuses au montage.",
+          "Double tes prises : même parfaite, une prise peut cacher un bruit ou une ombre. C'est quelques minutes de bonus dans la même config.",
+          "Évite le « on verra en postprod » : déplacer un objet sur le plateau prend moins de temps que l'effacer image par image au montage.",
+        ] },
+      ],
+    },
+    {
+      id: "prep-direction-acteur",
+      category: "preprod",
+      title: "Diriger ses comédiens",
+      summary: "Le casting et la direction d'acteur, le cœur du film.",
+      body: [
+        { p: "Ce sont les acteurs que le spectateur regarde. Un bon casting magnifie un film, un mauvais le dessert — Scorsese dit que le casting, c'est 90 % de la direction d'acteur. Beaucoup de comédiens acceptent les courts-métrages non rémunérés pour montrer leur jeu." },
+        { ul: [
+          "Répète en amont (lectures) : tu n'auras pas le temps le jour J, et ça révèle les dialogues qui ne fonctionnent pas.",
+          "Maîtrise tes personnages : d'où vient-il, quel est son but ? Sinon tu désorientes le comédien. Rappelle-lui le contexte (on tourne dans le désordre).",
+          "Ne donne pas trop d'indications : laisse-lui de la liberté, un comédien n'est pas une machine.",
+          "Respecte sa méthode : regarde-le jouer une fois, puis affine avec des questions (« et si tu testais… ? ») plutôt que des ordres.",
+          "Laisse improviser : une prise fidèle au scénario, une autre plus folle — ça donne souvent les meilleures scènes.",
+          "Chouchoute-les : mets-les dans les meilleures conditions, ne les embête pas avec tes soucis techniques.",
+        ] },
+      ],
+    },
+
+    /* ============ CHAPITRE 10 — LA POSTPRODUCTION ============ */
+    {
+      id: "postprod-pipeline",
+      category: "montage",
+      title: "Le pipeline de postproduction",
+      summary: "De la synchro à la diffusion : l'ordre des étapes.",
+      body: [
+        { p: "La postproduction, c'est tout ce qui suit le tournage. Un bon montage peut rattraper des erreurs de tournage ; de belles images mal montées ne valent rien. L'enchaînement classique :" },
+        { svg: '<svg viewBox="0 0 360 130" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">' +
+            '<defs><marker id="pp9" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--text-dim)"/></marker></defs>' +
+            '<rect x="8" y="18" width="100" height="28" rx="6" fill="var(--primary)" opacity="0.18" stroke="var(--primary)"/><text x="58" y="36" text-anchor="middle" font-size="11" fill="var(--text-main)">Montage</text>' +
+            '<line x1="110" y1="32" x2="126" y2="32" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#pp9)"/>' +
+            '<rect x="128" y="18" width="100" height="28" rx="6" fill="var(--primary)" opacity="0.18" stroke="var(--primary)"/><text x="178" y="36" text-anchor="middle" font-size="11" fill="var(--text-main)">VFX</text>' +
+            '<line x1="230" y1="32" x2="246" y2="32" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#pp9)"/>' +
+            '<rect x="248" y="18" width="104" height="28" rx="6" fill="var(--primary)" opacity="0.18" stroke="var(--primary)"/><text x="300" y="36" text-anchor="middle" font-size="10" fill="var(--text-main)">Montage son</text>' +
+            '<line x1="300" y1="48" x2="300" y2="74" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#pp9)"/>' +
+            '<rect x="248" y="78" width="104" height="28" rx="6" fill="var(--secondary)" opacity="0.18" stroke="var(--secondary)"/><text x="300" y="96" text-anchor="middle" font-size="11" fill="var(--text-main)">Étalonnage</text>' +
+            '<line x1="246" y1="92" x2="230" y2="92" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#pp9)"/>' +
+            '<rect x="128" y="78" width="100" height="28" rx="6" fill="var(--secondary)" opacity="0.18" stroke="var(--secondary)"/><text x="178" y="96" text-anchor="middle" font-size="11" fill="var(--text-main)">Mixage</text>' +
+            '<line x1="126" y1="92" x2="110" y2="92" stroke="var(--text-dim)" stroke-width="1.5" marker-end="url(#pp9)"/>' +
+            '<rect x="8" y="78" width="100" height="28" rx="6" fill="var(--secondary)" opacity="0.18" stroke="var(--secondary)"/><text x="58" y="96" text-anchor="middle" font-size="11" fill="var(--text-main)">Diffusion</text>' +
+            "</svg>",
+          caption: "Montage, VFX, montage son, etalonnage, mixage, puis diffusion." },
+        { tip: "Apprends à monter ce que tu réalises : savoir monter t'aide à décider, dès le tournage, quel plan peut être sacrifié ou remplacé." },
+      ],
+    },
+    {
+      id: "mont-organiser-projet",
+      category: "montage",
+      title: "Organiser son projet de montage",
+      summary: "Une arborescence claire = des heures gagnées.",
+      body: [
+        { p: "Avant de monter, structure ton dossier. C'est frustrant au début mais un vrai gain de temps — surtout pour rouvrir un projet des mois plus tard, ou le déplacer sans « fichiers hors ligne »." },
+        { ul: [
+          "01_PROJET : tes sauvegardes de montage (duplique chaque jour avec la date).",
+          "02_RUSHES : vidéo + son (triés par jour et par caméra), plus un dossier Proxy.",
+          "03_RESSOURCES : musiques, script, archives, textures.",
+          "04_FXS : projets d'effets (In = plans à retoucher, Out = rendus).",
+          "05_SOUND_FX : ambiances, bruitages, sound design.",
+          "06_EXPORT : Preview, Pour étalo, Pour mix, Master.",
+        ] },
+        { p: "Dans le logiciel, reproduis cette logique en chutiers, et duplique ta séquence à chaque gros changement (V1, V2, V3…) pour revenir en arrière facilement." },
+        { tip: "L'outil Arborescence de Slate (Utilitaires) propose justement un modèle « Post-production » prêt à créer en un clic." },
+      ],
+    },
+    {
+      id: "mont-5-etapes",
+      category: "montage",
+      title: "Le montage en 5 étapes",
+      summary: "Importer, synchroniser, dérusher, l'ours, monter.",
+      body: [
+        { ul: [
+          "1. Importer : ranger les rushes (vidéo / son, par jour et par caméra).",
+          "2. Synchroniser (« la synchro ») : lier son et image. Trois méthodes — au clap (repérer la pointe audio de la fermeture), au timecode (même code sur caméra et enregistreur), ou à la courbe audio (PluralEyes / « Fusionner les éléments » qui compare les courbes).",
+          "3. Dérusher : regrouper par scène, placer la meilleure prise au-dessus.",
+          "4. L'ours : un simple bout-à-bout des plans sélectionnés pour avoir une vision globale.",
+          "5. Monter : affiner raccords, rythme, poser musiques et bruitages (duplique en « Montage V1 »).",
+        ] },
+        { tip: "Technique In & Out : ouvre le rush dans le moniteur source, pose un point d'entrée (I) et de sortie (O), puis glisse l'extrait sur la timeline — plus propre que de déposer le rush entier." },
+      ],
+    },
+    {
+      id: "mont-definition",
+      category: "montage",
+      title: "Définition et résolution",
+      summary: "SD, HD, Full HD, 4K, 8K — ne pas confondre.",
+      body: [
+        { p: "La définition, c'est le nombre de pixels d'une image (largeur × hauteur). La résolution, c'est leur densité une fois affichée ou imprimée (pixels par pouce, dpi). Les Anglo-Saxons disent « resolution » pour la définition, d'où la confusion." },
+        { ul: [
+          "SD 480p : 640 × 480",
+          "HD Ready 720p : 1280 × 720",
+          "Full HD 1080p : 1920 × 1080 (16/9)",
+          "4K UHD 2160p : 3840 × 2160",
+          "4K DCI (cinéma) : 4096 × 2160 (17/9)",
+          "8K 4320p : 7680 × 4320",
+        ] },
+        { tip: "On nomme une définition par sa hauteur (1080p = 1920 × 1080). 4K et 1080p sont les plus courantes aujourd'hui." },
+      ],
+    },
+    {
+      id: "mont-optimiser",
+      category: "montage",
+      title: "Optimiser son PC de montage",
+      summary: "Proxies, RAM, SSD, carte graphique.",
+      body: [
+        { p: "Les rushes 4K récents sont lourds et saccadent au montage. Quelques leviers pour fluidifier." },
+        { ul: [
+          "Les proxies : des copies légères (basse définition, codec léger) pour monter fluide ; à l'export, le logiciel rebascule sur les rushes natifs. (Slate génère des proxys dans l'onglet Média.)",
+          "Réduis la résolution d'aperçu (1/2, 1/4) dans le moniteur programme.",
+          "Un 2e moniteur dédié à la preview libère de l'espace de travail.",
+          "La RAM : le levier le plus simple et abordable (vérifie le type supporté par ta carte mère).",
+          "Un SSD externe pour les rushes et le cache accélère lecture et rendu.",
+          "La carte graphique (GPU) : suis la liste recommandée par ton logiciel.",
+        ] },
+      ],
+    },
+    {
+      id: "mont-rythme-web",
+      category: "montage",
+      title: "Rythmer une vidéo pour le web",
+      summary: "La règle des 15 secondes et les montagnes russes.",
+      body: [
+        { p: "En ligne, le spectateur est ultra-distrait (notifications, autres vidéos) : les premières secondes décident s'il reste. Évite un générique d'intro et présente vite la situation, les personnages, l'enjeu." },
+        { ul: [
+          "Pense « montagnes russes » : un début dynamique qui accroche, un passage plus lent pour installer, puis on relance — pour garder le spectateur en haleine.",
+          "Alterne les valeurs : un large/exposition en début de scène pour aérer, puis resserre pour l'émotion ; un plan déjà vu peut durer moins longtemps (l'œil sait où regarder).",
+          "La musique crée du rythme sans forcément accélérer le montage.",
+        ] },
+        { tip: "Un bon montage ne se voit pas : il doit être transparent pour que le spectateur reste dans l'histoire. Facilite sa lecture dès le tournage (compo, lumière, point, son non saturé)." },
+      ],
+    },
+    {
+      id: "vfx-types",
+      category: "vfx",
+      title: "SFX, VFX et CGI",
+      summary: "Effets mécaniques, numériques, images générées.",
+      body: [
+        { ul: [
+          "SFX (Special Effects) : effets mécaniques réalisés sur le plateau — pluie, neige, pyrotechnie, animatronique, maquillage/prothèses. Plus réalistes (Nolan privilégie les vraies explosions).",
+          "VFX (Visual Effects) : effets numériques ajoutés après le tournage — flashs de tir, remplacement de fond vert, éléments impossibles à filmer.",
+          "CGI (images générées par ordinateur) : un élément entièrement créé en 3D (dinosaure, logo 3D, feu numérique). On intègre souvent un CGI dans un plan filmé (VFX) ; un Pixar est 100 % CGI.",
+        ] },
+        { tip: "Attention : « SFX » désigne parfois les effets sonores — pour le son, on dit plutôt « Sound FX » ou « Sound Design »." },
+      ],
+    },
+    {
+      id: "vfx-detourage",
+      category: "vfx",
+      title: "Détourage : keying, roto, matte, cleaning",
+      summary: "Isoler un sujet et étendre le décor.",
+      body: [
+        { ul: [
+          "Chroma keying : supprimer un fond d'une couleur unie (vert le jour, bleu la nuit — les plus éloignées de la peau) pour incruster un autre décor.",
+          "Rotoscopie : détourer un sujet image par image (quand il dépasse du fond vert), souvent au pinceau sur tablette.",
+          "Matte painting : un décor imaginaire (photos composées ou 3D) posé en arrière-plan comme extension de décor.",
+          "Cleaning : effacer les éléments indésirables après détourage (câbles de cascadeur, perche dans le cadre, reflet de la caméra).",
+        ] },
+        { tip: "Bien éclairer son fond vert (uniforme, sans ombre) est décisif pour un keying propre." },
+      ],
+    },
+    {
+      id: "vfx-tracking-compositing",
+      category: "vfx",
+      title: "Tracking & compositing",
+      summary: "Suivre le mouvement et assembler les couches.",
+      body: [
+        { p: "Le tracking suit la position d'un élément image par image pour en déduire une trajectoire, qu'on applique ensuite à un autre élément (un costume Iron Man, un rajeunissement de visage, des flammes en fond). Sans tracking, les ajouts « flottent »." },
+        { ul: [
+          "Si la caméra bouge et que tu ajouteras des effets, place des points de tracking : petites croix contrastées sur le décor, les comédiens ou les accessoires.",
+          "Garde des points visibles du début à la fin du mouvement (ajoute-en au besoin).",
+          "Pour incruster une vidéo dans un écran/téléphone, mets du vert dedans + au moins 2 points de chaque côté.",
+        ] },
+        { p: "Le compositing est la dernière étape : on superpose et harmonise toutes les couches (détourage, matte, 3D, flares) en uniformisant lumière, ombres et aberrations pour un rendu réaliste." },
+      ],
+    },
+    {
+      id: "son-bruitages",
+      category: "son",
+      title: "Les bruitages et les banques de sons",
+      summary: "Recréer l'environnement sonore en postproduction.",
+      body: [
+        { p: "Dans un film, presque tout le son (ambiances, klaxons, portes…) est ajouté en postproduction ; seuls les dialogues sont enregistrés au tournage. Trois familles, en plus de la musique et des voix :" },
+        { ul: [
+          "Bruitages : sons réels qui recréent l'environnement (pas, frigo, robinet).",
+          "Sons FX / sound design : sons créés qui n'existent pas (whoosh, riser ; le sabre laser de Star Wars).",
+          "Ambiances : nappes qui installent un lieu (forêt, métro, restaurant).",
+        ] },
+        { ul: [
+          "Préfère le WAV au MP3 (sans perte, mieux pour l'édition).",
+          "Enregistre des « sons seuls » au tournage (silence sur le plateau) : ils collent à l'acoustique du lieu, contrairement à un son d'internet.",
+          "Copie chaque son utilisé dans le dossier Sound FX du projet (évite les fichiers hors ligne).",
+        ] },
+        { tip: "Banques utiles : FreeSound, SoundSnap, Universal-Soundbank, LaSonotheque, BBC Sound Effects. Cherche en anglais pour plus de résultats." },
+      ],
+    },
+    {
+      id: "son-voix-off",
+      category: "son",
+      title: "Enregistrer une voix off chez soi",
+      summary: "Un son sec et propre avec peu de matériel.",
+      body: [
+        { p: "Une voix off doit être sèche, propre, sans réverb. Teste la résonance de ta pièce en claquant des mains. Trois éléments :" },
+        { ul: [
+          "Un micro de studio (large membrane, USB ou XLR — Rode, Blue, Neumann), pas un micro-cravate.",
+          "Un écran acoustique autour du micro (mur en mousse en demi-cercle) ; à défaut, sous une couette, dans un dressing, ou dans une voiture garée au calme.",
+          "Un filtre anti-pop (à ~10 cm de la bouche) pour atténuer les plosives (« p », « b »).",
+        ] },
+        { tip: "Tu peux fabriquer les deux : mousse alvéolaire + papier alu pour l'écran ; un cintre en cercle + un collant nylon pour l'anti-pop." },
+      ],
+    },
+    {
+      id: "son-mixage",
+      category: "son",
+      title: "Le mixage en 5 étapes",
+      summary: "Équilibrer les sons pour une écoute claire partout.",
+      body: [
+        { p: "Le mixage mélange toutes les pistes (voix, ambiances, musiques, bruitages) en une bande-son équilibrée. Mieux vaut une image iPhone au son parfait qu'une caméra ciné au son inaudible." },
+        { ul: [
+          "1. Nettoyer : couper respirations et bruits parasites des voix, ajouter des fades, combler les vides avec un son seul / une ambiance.",
+          "2. Améliorer les voix (EQ) : couper sous ~80-100 Hz, réduire l'effet « bocal » (250-500 Hz) et nasillard (1-2 kHz), remonter la clarté (8-10 kHz).",
+          "3. Compresser les voix : réduire la dynamique (sans exagérer, sinon effet « radio »).",
+          "4. Spatialiser : pan (gauche/droite), niveau (proche/loin), reverb (plus de reverb = plus lointain).",
+          "5. Faire les niveaux : les voix d'abord et prioritaires, puis ambiances, musiques, bruitages ; ne jamais toucher 0 dBFS (saturation).",
+        ] },
+        { tip: "Pour mettre un son en avant, baisse les autres plutôt que de le monter (sinon tout finit par saturer). Écoute le résultat sur plusieurs enceintes, pas seulement au casque." },
+      ],
+    },
+    {
+      id: "etal-2-etapes",
+      category: "etalonnage",
+      title: "Étalonner en 2 étapes",
+      summary: "Équilibrer les plans, puis styliser l'image.",
+      body: [
+        { p: "L'étalonnage arrive une fois le montage verrouillé. Deux temps :" },
+        { ul: [
+          "1. Équilibrer (technique) : rendre chaque plan neutre et homogène. La luminance (effet « Niveaux » : l'histogramme des tons de 0 à 255) pour l'expo, et la balance des couleurs (effet « Courbes », couche par couche RVB) pour les teintes.",
+          "2. Styliser (créatif) : donner une patte, une ambiance (dominantes, contraste). Trois moyens pour débuter : les LUTs (looks à glisser-déposer), Magic Bullet Looks (plugin, 200+ looks), ou les outils natifs (Lumetri sur Premiere).",
+        ] },
+        { tip: "Une image froide dit la tristesse/mélancolie, des teintes chaudes la joie. L'étalonnage donne le ton du film. (Slate a une bibliothèque de LUTs dans l'onglet Média.)" },
+      ],
+    },
+    {
+      id: "etal-conseils",
+      category: "etalonnage",
+      title: "Réussir son étalonnage",
+      summary: "Log, écran calibré, vérification en plein jour.",
+      body: [
+        { ul: [
+          "Tourne en Log si ta caméra le permet : plage dynamique maximale = plus de latitude pour étalonner, corriger la balance et débruiter.",
+          "Calibre ton écran : tous les moniteurs rendent les couleurs différemment. L'idéal est une sonde de calibrage (100-300 €) ; sinon, les outils intégrés Windows/Mac.",
+          "Vérifie en plein jour : beaucoup regarderont sur un téléphone en pleine lumière. N'étalonne pas que dans le noir — une image trop sombre devient illisible dehors.",
+        ] },
+      ],
+    },
+    {
+      id: "liv-generique",
+      category: "livraison",
+      title: "Le générique",
+      summary: "L'ordre des métiers, et pas d'intro sur le web.",
+      body: [
+        { p: "Le générique liste l'équipe et le casting. Sur internet, évite un générique d'intro (il crée une longueur qui fait fuir) ; garde-le pour la fin." },
+        { ul: [
+          "Ordre d'ouverture habituel : société de distribution « présente », production, « un film de… », auteur, acteurs, titre.",
+          "Le générique de fin déroule tous les postes : réal, production, image, son, montage, étalonneur, mixeur, compositeur…",
+        ] },
+        { tip: "Des modèles de génériques animés existent (Videohive, ~5-100 €) pour un rendu pro clé en main ; Artofthetitle.com pour l'inspiration." },
+      ],
+    },
+    {
+      id: "liv-vignette",
+      category: "livraison",
+      title: "Réussir sa vignette (miniature)",
+      summary: "La vitrine de ta vidéo — souvent plus décisive que le titre.",
+      body: [
+        { p: "La miniature est généralement la première chose que voit l'internaute — soigne-la autant que le montage. Ne te contente pas d'une capture d'écran." },
+        { ul: [
+          "Compose l'image (plusieurs photos si besoin, sans surcharger), privilégie un visage en gros plan (lisible en tout petit) et une attitude dynamique (qui court, crie, se bat).",
+          "Affiche le titre : police lisible (pas de manuscrite fine), grande taille, texte qui ressort (ombre portée, fond assombri) ; sur deux lignes et une couleur par ligne si long.",
+          "Respecte les dimensions (YouTube : 1920 × 1080, 16/9) pour éviter recadrage et bandes noires.",
+        ] },
+        { tip: "Ne place jamais le titre en bas à droite : c'est là qu'apparaît la durée de la vidéo." },
+      ],
+    },
+    {
+      id: "liv-diffusion",
+      category: "livraison",
+      title: "Diffuser sa vidéo",
+      summary: "Carton de fin, droits d'auteur, titre accrocheur.",
+      body: [
+        { ul: [
+          "Ne néglige pas le carton de fin : ajoute un « call to action » (abonnement, lien vers une autre vidéo). À défaut, signe au moins ta vidéo (nom + réseaux).",
+          "Respecte les droits d'auteur : pas de plans ni de musiques protégés — utilise du libre de droits / des stock-shots. Les robots des plateformes finissent par repérer et supprimer la vidéo.",
+          "Trouve un titre accrocheur mais pas « putaclic » : court et cohérent avec le contenu. Un titre racoleur fait fuir vite, et la plateforme en conclut que la vidéo n'intéresse pas.",
+        ] },
       ],
     },
   ];

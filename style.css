@@ -79,6 +79,7 @@ p { line-height: 1.5; }
     letter-spacing: -0.5px;
 }
 .logo i { -webkit-text-fill-color: var(--primary); }
+.logo-mark { width: 1.5em; height: 1.5em; flex: 0 0 auto; display: block; }
 
 .nav-category {
     font-size: 0.75rem;

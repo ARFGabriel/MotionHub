@@ -29,6 +29,7 @@
     "files": [
       "electron/**/*",
       "js/**/*",
+      "assets/**/*",
       "index.html",
       "style.css",
       "!**/*.map"
@@ -45,6 +46,7 @@
       }
     ],
     "win": {
+      "icon": "assets/icon.png",
       "target": [
         {
           "target": "nsis",

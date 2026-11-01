@@ -2349,5 +2349,236 @@
         { tip: "Fais évoluer le découpage avec l'émotion de la scène, jamais au hasard : chaque changement d'angle doit raconter quelque chose." },
       ],
     },
+
+    /* ============ CHAPITRE 8 — MACHINERIE, MOUVEMENT & MONTAGE ============ */
+    {
+      id: "mat-machinerie-travelling",
+      category: "materiel",
+      title: "Le travelling et ses alternatives",
+      summary: "Déplacer la caméra sans se ruiner : slider, fauteuil, voiture.",
+      body: [
+        { p: "Le travelling, c'est un déplacement de la caméra pendant la prise, pour un mouvement fluide et stable. Au cinéma, elle roule sur des rails (un chariot = dolly), une grue ou un stabilisateur. De vrais rails sont longs et techniques à poser — pour débuter, des alternatives suffisent largement." },
+        { ul: [
+          "Le slider : un rail court (50 cm à 2 m) posé au sol, sur une table ou sur le trépied. Certains sont motorisés (idéal pour des timelapses en mouvement).",
+          "Le fauteuil roulant : stable et confortable, demande juste que quelqu'un te pousse. Évite le modèle motorisé : le bruit du moteur pollue le son.",
+          "La voiture : depuis le coffre = travelling arrière, par la fenêtre = latéral. Roule lentement, attache-toi, et compense les secousses avec un gimbal. Pour un son propre, fais carrément pousser la voiture.",
+        ] },
+        { tip: "Plus la caméra est proche du sol, plus la sensation de vitesse est forte." },
+      ],
+    },
+    {
+      id: "mat-machinerie-diy",
+      category: "materiel",
+      title: "Fabriquer son travelling (PVC + skate)",
+      summary: "Un dolly maison pour quelques euros.",
+      body: [
+        { p: "Un travelling maison tient en trois éléments : une planche, des roues de skate et des tubes PVC." },
+        { ul: [
+          "Le chariot : une planche de contreplaqué solide (~70 × 120 cm) avec des tasseaux sur les bords pour que le trépied ne glisse pas.",
+          "Les roues : 8 roues de skate (16 pour plus de stabilité) fixées sur 4 équerres métal, vissées avec le même écartement.",
+          "Les rails : 4 tubes PVC gris de 2 m (Ø 32 mm), solides à l'écrasement. Emboîte-les avec un manchon fendu pour passer les raccords sans à-coups.",
+        ] },
+        { tip: "Le chariot maintient lui-même l'écartement ; ajoute des traverses (tasseaux + demi-tubes PVC vissés) seulement si tu veux figer l'espacement des rails." },
+      ],
+    },
+    {
+      id: "mat-stabilisateurs",
+      category: "materiel",
+      title: "Steadicam ou gimbal ?",
+      summary: "Deux familles de stabilisateurs, deux usages.",
+      body: [
+        { h: "Le steadicam" },
+        { p: "Stabilisateur mécanique : la caméra flotte grâce à l'inertie (contrepoids et moniteur en bas, harnais qui répartit le poids). C'est un métier à part — l'équilibrage est long et délicat, on fait appel à un steadicameur. Idéal pour une caméra lourde, de longs plans-séquences ou des mouvements nerveux (poursuite)." },
+        { h: "La gimbal" },
+        { p: "Stabilisateur électronique : un gyroscope et des moteurs corrigent la caméra sur 3 axes (tilt, pan, roll). Plus simple, moins chère (DJI, Zhiyun, Feiyu), souvent avec suivi de sujet. Parfaite pour une caméra légère et des plans courts à préparer vite. En revanche, elle « lisse » les mouvements rapides." },
+        { tip: "Caméra lourde / longs plans / action nerveuse → steadicam (ou glidecam). Caméra légère / plans courts / petit budget → gimbal, que tu apprends à manier toi-même." },
+      ],
+    },
+    {
+      id: "mat-grue",
+      category: "materiel",
+      title: "La grue (et filmer haut sans grue)",
+      summary: "Des plans en hauteur, du vrai matériel à la bidouille.",
+      body: [
+        { p: "La grue déplace la caméra dans toutes les directions et offre des plans en hauteur sans point haut réel. Au cinéma : grue à plateforme (lourde, limitée à ~6 m), tête télécommandée (la Louma, légère, un seul machiniste, mais trajectoire en arc), Technocrane (bras télescopique = trajectoire libre). Des mini-grues portables (parallélogramme qui garde la caméra droite) se louent pour moins de 100 €." },
+        { h: "La bidouille hauteur" },
+        { p: "Accroche un mini-stabilisateur (DJI Osmo Pocket, Feiyu) en haut d'une perche de micro ou d'une rallonge de rouleau de peinture (jusqu'à ~7 m) et pilote la caméra en wifi : tu obtiens un faux plan grue pour presque rien." },
+        { tip: "Sur une perche, n'utilise que des gimbals légères, au risque de la casser et de faire tomber ta caméra." },
+      ],
+    },
+    {
+      id: "real-mouvement-sens",
+      category: "realisation",
+      title: "Le mouvement au service du sens",
+      summary: "Bouger la caméra pour déplacer l'attention, pas pour le style.",
+      body: [
+        { p: "Un plan se décrit en trois points : valeur, angle, mouvement. Le mouvement ne sert pas qu'à suivre ou présenter — il raconte. Un simple travelling avant sur un acteur qui lève la tête dit « il vient d'avoir une idée », impossible à exprimer sur un plan fixe." },
+        { p: "Règle d'or : la réalisation s'adapte à la narration, pas l'inverse. Au découpage, ne te demande pas « comment bouger ma caméra » mais « où déplacer l'attention du spectateur ». Le choix de la machinerie vient ensuite." },
+        { svg: '<svg viewBox="0 0 360 150" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">' +
+            '<defs><marker id="mv8" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--secondary)"/></marker></defs>' +
+            '<line x1="180" y1="12" x2="180" y2="138" stroke="var(--glass-border)" stroke-width="1"/>' +
+            '<text x="90" y="24" text-anchor="middle" font-size="12" fill="var(--text-main)" font-weight="bold">PANORAMIQUE</text>' +
+            '<text x="90" y="38" text-anchor="middle" font-size="10" fill="var(--text-dim)">pivote sur place</text>' +
+            '<line x1="90" y1="108" x2="48" y2="66" stroke="var(--text-dim)" stroke-width="1" stroke-dasharray="3 3"/>' +
+            '<line x1="90" y1="108" x2="132" y2="66" stroke="var(--text-dim)" stroke-width="1" stroke-dasharray="3 3"/>' +
+            '<path d="M58,74 A44,44 0 0,1 122,74" fill="none" stroke="var(--secondary)" stroke-width="2" marker-end="url(#mv8)"/>' +
+            '<rect x="78" y="106" width="24" height="16" rx="2" fill="var(--primary)"/>' +
+            '<text x="270" y="24" text-anchor="middle" font-size="12" fill="var(--text-main)" font-weight="bold">TRAVELLING</text>' +
+            '<text x="270" y="38" text-anchor="middle" font-size="10" fill="var(--text-dim)">se deplace</text>' +
+            '<line x1="208" y1="116" x2="332" y2="116" stroke="var(--text-dim)" stroke-width="1.5"/>' +
+            '<line x1="208" y1="122" x2="332" y2="122" stroke="var(--text-dim)" stroke-width="1.5"/>' +
+            '<rect x="224" y="96" width="24" height="16" rx="2" fill="var(--primary)"/>' +
+            '<line x1="252" y1="104" x2="320" y2="104" stroke="var(--secondary)" stroke-width="2" marker-end="url(#mv8)"/>' +
+            "</svg>",
+          caption: "Deux familles : le panoramique (la camera pivote) et le travelling (la camera se deplace)." },
+        { tip: "Pour un panoramique propre, une tête fluide sur le trépied est indispensable. Un pano lent fait vivre la scène en temps réel ; un pano rapide (whip pan) donne du dynamisme." },
+      ],
+    },
+    {
+      id: "real-travellings",
+      category: "realisation",
+      title: "Les travellings et leur sens",
+      summary: "Chaque direction raconte quelque chose de différent.",
+      body: [
+        { ul: [
+          "Avant : attire l'attention (« regarde plus attentivement »), révèle une émotion ou une prise de conscience, fait entrer dans la tête du personnage (surtout avec une voix off).",
+          "Arrière : crée une distance émotionnelle — on s'éloigne de la souffrance (Joker) — ou révèle le décor en élargissant le cadre.",
+          "Latéral : suit un sujet à son rythme. De gauche à droite = progression positive ; de droite à gauche = recul ou antagoniste (sens de lecture occidental — Old Boy).",
+          "Circulaire (360°) : dynamise (l'effervescence du Loup de Wall Street) ou installe un malaise, une perte de repères.",
+          "Vertical : révèle progressivement un lieu ou un personnage de bas en haut (Léon).",
+        ] },
+        { tip: "Sur un travelling circulaire, plus la focale est longue, plus l'arrière-plan défile vite — l'effet est accentué." },
+      ],
+    },
+    {
+      id: "real-zoom-transtrav",
+      category: "realisation",
+      title: "Zoom, travelling et dolly zoom",
+      summary: "Deux intentions à ne pas confondre — et l'effet Vertigo.",
+      body: [
+        { p: "Ne confonds pas zoom et travelling : le travelling déplace vraiment la caméra (la perspective change, c'est naturel, comme nos yeux). Le zoom reste au même endroit et grossit un détail (la perspective ne bouge pas, c'est moins naturel)." },
+        { h: "Le trans-trav (dolly zoom / effet Vertigo)" },
+        { p: "Combine les deux : tu zoomes en avant pendant un travelling arrière (ou l'inverse). Le sujet garde la même taille au premier plan, mais l'arrière-plan semble se compresser ou s'étirer." },
+        { svg: '<svg viewBox="0 0 340 160" xmlns="http://www.w3.org/2000/svg" font-family="sans-serif">' +
+            '<defs><marker id="dz8" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="var(--secondary)"/></marker></defs>' +
+            '<circle cx="52" cy="85" r="14" fill="var(--glass-panel)" stroke="var(--text-main)" stroke-width="2"/><text x="52" y="115" text-anchor="middle" font-size="10" fill="var(--text-dim)">sujet</text>' +
+            '<rect x="150" y="77" width="22" height="16" rx="2" fill="var(--primary)"/><line x1="150" y1="80" x2="64" y2="74" stroke="var(--primary)" stroke-width="1"/><line x1="150" y1="90" x2="64" y2="96" stroke="var(--primary)" stroke-width="1"/><text x="161" y="112" text-anchor="middle" font-size="9" fill="var(--text-dim)">1 proche</text>' +
+            '<rect x="286" y="77" width="22" height="16" rx="2" fill="var(--secondary)"/><line x1="286" y1="82" x2="66" y2="78" stroke="var(--secondary)" stroke-width="1"/><line x1="286" y1="88" x2="66" y2="92" stroke="var(--secondary)" stroke-width="1"/><text x="297" y="112" text-anchor="middle" font-size="9" fill="var(--text-dim)">2 loin + zoom</text>' +
+            '<line x1="176" y1="60" x2="282" y2="60" stroke="var(--text-dim)" stroke-width="1.5" stroke-dasharray="4 3" marker-end="url(#dz8)"/><text x="228" y="52" text-anchor="middle" font-size="10" fill="var(--text-dim)">recule</text>' +
+            "</svg>",
+          caption: "La camera recule ET zoome : le sujet garde sa taille, mais le champ se resserre et le fond s etire." },
+        { p: "L'effet traduit le malaise, le vertige, l'angoisse ou la surprise (Hitchcock dans Vertigo, Spielberg dans Les Dents de la mer)." },
+        { tip: "C'est un effet fort et voyant : réserve-le à un vrai moment de bascule." },
+      ],
+    },
+    {
+      id: "real-camera-portee",
+      category: "realisation",
+      title: "La caméra portée (épaule)",
+      summary: "Le même mouvement, mais un sens plus nerveux et incarné.",
+      body: [
+        { p: "La plupart des mouvements se font aussi à l'épaule — mais le sens change. La caméra stable (rails, grue, steadicam) donne un rendu classe, maîtrisé, qui fait oublier la caméra. La caméra portée donne du nerveux, de l'incarné, de l'urgence : plus elle tremble, plus elle dit l'incertitude." },
+        { ul: [
+          "Quand l'utiliser : combat/action (obturateur élevé pour un rendu brut), vue subjective, horreur (malaise, instabilité). Le choix doit être intentionnel, jamais par flemme.",
+          "Combiner : dans Seven, Fincher alterne caméra portée (les héros paniqués) et plans fixes (le tueur serein) ; dans Casino Royale, Bond empoisonné fait basculer des plans grue stables vers une caméra tremblante et surexposée.",
+        ] },
+        { tip: "Ne secoue jamais la caméra volontairement : le tremblement naturel de l'épaule suffit. Une image trop tremblante distrait, voire rend malade. Une épaulière aide à stabiliser." },
+      ],
+    },
+    {
+      id: "mont-raccords-plans",
+      category: "montage",
+      title: "Bien raccorder deux plans",
+      summary: "Cut dans l'action, dans l'axe, de regard, de direction.",
+      body: [
+        { p: "Chaque coupe relie la fin d'un plan au début du suivant. Un bon raccord répond à un besoin (montrer autre chose, ou ne pas prolonger inutilement) et propose une différence intéressante." },
+        { ul: [
+          "Cut dans l'action (raccord dans le mouvement) : couper pendant un geste (ouvrir une porte) pour fluidifier le changement d'angle.",
+          "Cut dans l'axe : rester dans le même axe seulement si la valeur change nettement (large → serré), sinon c'est une saute (règle des 30°).",
+          "Cut de regard : le regard du comédien introduit le plan suivant — ce qu'il voit.",
+          "Cut de direction : il sort à droite, il entre par la gauche au plan suivant (ne le laisse pas sortir complètement avant de raccorder).",
+        ] },
+        { tip: "Le champ-contrechamp est une succession de cuts d'axe autour d'une scène, sans jamais franchir la ligne des 180°." },
+      ],
+    },
+    {
+      id: "mont-jump-cut",
+      category: "montage",
+      title: "Le jump cut",
+      summary: "Coller deux plans au même cadrage : une saute dans le temps.",
+      body: [
+        { p: "Le jump cut colle deux plans au cadrage quasi identique : ça « saute » dans le temps. Volontaire, c'est un outil efficace." },
+        { ul: [
+          "Répéter une action : plusieurs essais de tenue, d'entraînement (27 Robes).",
+          "Accélérer / montrer le temps qui passe : on ne garde que les moments clés.",
+          "Dynamiser un vlog face caméra : on efface hésitations et respirations pour accélérer le débit.",
+          "Illustrer l'attente : des comédiens prennent des poses à différents endroits, on supprime leurs déplacements.",
+        ] },
+        { tip: "À l'inverse, des jump cuts montés en fondu enchaîné accentuent une sensation de lenteur." },
+      ],
+    },
+    {
+      id: "mont-fondus",
+      category: "montage",
+      title: "Les fondus",
+      summary: "Enchaîné, au noir, au blanc : transitions progressives.",
+      body: [
+        { p: "Le fondu superpose deux plans en baissant l'opacité de l'un pendant que l'autre monte. Trois types." },
+        { ul: [
+          "Fondu enchaîné : fluide, contemplatif. Introduit un flashback (lent, souvent depuis un plan serré du visage — Kill Bill) ou condense le temps qui passe (voyage, création — Misery).",
+          "Fondu au noir : ellipse temporelle, clôt ou ouvre une scène (parfois suivi d'un titrage de temps/lieu).",
+          "Fondu au blanc : plus ambigu — un flash, la mort, un nouveau départ, la fin d'un rêve ; laisse le spectateur interpréter.",
+        ] },
+        { tip: "N'abuse pas du fondu enchaîné : sans motivation, il casse le rythme. Garde-le pour un vrai sens (temps, souvenir, douceur)." },
+      ],
+    },
+    {
+      id: "mont-match-cut",
+      category: "montage",
+      title: "Le match cut",
+      summary: "Relier deux scènes par une forme, un son ou un mouvement.",
+      body: [
+        { p: "Le match cut relie deux scènes par une action ou une composition similaire. Trois formes." },
+        { ul: [
+          "Raccord de composition (visuel) : même valeur/forme d'un plan à l'autre (le chapeau d'Indiana Jones reliant jeune et vieux Indiana) — pour un contraste, une métaphore, ou une bidouille d'économie (une explosion → du pop-corn qui éclate).",
+          "Raccord sonore : le son d'une scène se confond avec celui de la suivante (l'hélico → le ventilateur d'Apocalypse Now).",
+          "Raccord de mouvement : le même geste continue dans un autre décor (l'intro de Fight Club).",
+        ] },
+        { tip: "Puissant mais voyant : à bon escient. N'en fais pas à chaque coupe, tu sortirais le spectateur de l'histoire." },
+      ],
+    },
+    {
+      id: "mont-transitions-dynamiques",
+      category: "montage",
+      title: "Transitions dynamiques & coupes invisibles",
+      summary: "Cut filaire, crash-zoom, volet, snatch.",
+      body: [
+        { p: "Au-delà du simple cut, certaines transitions apportent de l'énergie ou cachent carrément la coupe." },
+        { ul: [
+          "Cut filaire (whip pan) : un pano très rapide dont le flou de mouvement masque la coupe (raccord « invisible » — Birdman). Garde le même sens de filée sur les deux plans.",
+          "Crash-zoom : même principe mais dans le même axe, avec un zoom rapide (la bataille de 300).",
+          "Volet (wipe) : une animation « efface » un plan par l'autre (la signature de Star Wars). Une amorce au premier plan (un poteau) peut servir de volet invisible (Scott Pilgrim).",
+          "Snatch : un enchaînement de très gros plans ultra-rapides pour changer de décor, montrer une préparation ou accélérer une scène ennuyeuse (Guy Ritchie, Edgar Wright).",
+        ] },
+        { tip: "Cut filaire sur un lancer (flèche, couteau) : synchronise le geste avec le pano, puis démarre le 2e plan (objet déjà planté) par une filée dans le même sens — l'impact paraîtra réel." },
+      ],
+    },
+    {
+      id: "mont-split-screen",
+      category: "montage",
+      title: "Le split screen",
+      summary: "Diviser l'écran : parallèle, téléphone, pensée, clonage.",
+      body: [
+        { p: "L'écran divisé montre plusieurs images à la fois : des scènes en parallèle ou plusieurs perspectives d'une même scène." },
+        { ul: [
+          "Scènes en parallèle : suspense, tension (Kill Bill ; la série 24h Chrono).",
+          "Téléphone : deux moitiés qui « se regardent » (respecte la règle des 180° — Scott Pilgrim).",
+          "Pensée : contours adoucis ou surimpression pour ce qu'imagine un personnage (Amélie Poulain).",
+          "Scène clippée : du rythme sur une musique (Ocean's Eleven, L'Affaire Thomas Crown).",
+          "Cloner un comédien : caméra fixe (expo/point/balance verrouillés), deux passes, chacun d'un côté sans se chevaucher (Friends).",
+        ] },
+        { tip: "Pour cloner un personnage, ne bouge ni la caméra ni la lumière entre les deux passes, et soigne la séparation (sinon il faut détourer image par image)." },
+      ],
+    },
   ];
 })(window.MH = window.MH || {});

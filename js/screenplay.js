@@ -16,7 +16,7 @@
 
   var FRAMES = ["Très large", "Large", "Plan moyen", "Rapproché", "Gros plan", "Très gros plan", "Insert"];
   var ANGLES = ["Hauteur des yeux", "Plongée", "Contre-plongée", "Topshot", "Dutch angle"];
-  var MOVES = ["Fixe", "Panoramique", "Tilt", "Travelling", "Zoom", "Gimbal / Steadicam", "Épaule"];
+  var MOVES = ["Fixe", "Panoramique", "Tilt", "Travelling avant", "Travelling arrière", "Travelling latéral", "Travelling circulaire", "Travelling vertical", "Dolly zoom", "Zoom", "Gimbal / Steadicam", "Épaule"];
 
   MH.screenplay = { init: init, parse: parse, analyze: analyze };
 

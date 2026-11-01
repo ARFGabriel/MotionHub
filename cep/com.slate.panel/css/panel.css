@@ -1,0 +1,80 @@
+/* =========================================================
+   Panneau Slate pour Adobe (CEP) — thème sombre, compact.
+   ========================================================= */
+:root {
+  --bg: #13131c;
+  --panel: #1b1b26;
+  --border: rgba(255,255,255,0.08);
+  --text: #e8e8f0;
+  --dim: #9a9ab0;
+  --primary: #9d4bff;
+  --secondary: #00d2ff;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", system-ui, sans-serif;
+  font-size: 13px;
+  padding: 10px;
+}
+
+.phead { display: flex; align-items: center; gap: 9px; margin-bottom: 12px; }
+.plogo { width: 26px; height: 26px; flex: 0 0 auto; }
+.ptitle { font-size: 17px; font-weight: 700; letter-spacing: -0.3px; }
+.phost {
+  font-size: 11px; font-weight: 600; color: var(--secondary);
+  background: rgba(0,210,255,0.1); border: 1px solid rgba(0,210,255,0.25);
+  padding: 2px 8px; border-radius: 10px; margin-left: 4px; vertical-align: middle;
+}
+
+.pcard {
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: 10px; padding: 12px; margin-bottom: 10px;
+}
+.pcard h3 { margin: 0 0 8px; font-size: 13px; font-weight: 600; }
+.pcard-head { display: flex; align-items: center; justify-content: space-between; }
+.pcard-head h3 { margin: 0 0 8px; }
+
+label { display: block; font-size: 11px; color: var(--dim); margin: 6px 0 4px; }
+select {
+  width: 100%; background: rgba(255,255,255,0.05); color: var(--text);
+  border: 1px solid var(--border); border-radius: 7px; padding: 7px 8px; font-size: 13px;
+}
+.ptree {
+  background: rgba(0,0,0,0.25); border: 1px solid var(--border); border-radius: 7px;
+  padding: 8px 10px; margin: 8px 0; font-family: Consolas, monospace; font-size: 11px;
+  color: var(--dim); max-height: 110px; overflow: auto; white-space: pre;
+}
+
+.pbtn {
+  display: block; width: 100%; margin-top: 8px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  color: #fff; border: none; border-radius: 8px; padding: 9px 12px;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+}
+.pbtn:hover { filter: brightness(1.08); }
+.pbtn:disabled { opacity: 0.5; cursor: default; }
+.pbtn--ghost { background: rgba(255,255,255,0.06); border: 1px solid var(--border); color: var(--text); }
+
+.pmini { background: none; border: none; color: var(--dim); cursor: pointer; font-size: 15px; }
+.pmini:hover { color: var(--text); }
+
+.pstats { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; }
+.pstat { display: flex; flex-direction: column; }
+.pstat b { font-size: 16px; color: var(--primary); line-height: 1.1; }
+.pstat span { font-size: 10px; color: var(--dim); }
+.pproj { width: 100%; font-size: 11px; color: var(--dim); margin-bottom: 8px; word-break: break-all; }
+
+.muted { color: var(--dim); }
+.mini { font-size: 11px; margin: 4px 0; }
+
+#missing-list { margin-top: 8px; }
+.miss-item { font-size: 11px; color: #ff8080; padding: 2px 0; }
+.miss-ok { font-size: 11px; color: #46d39a; }
+
+.plog { font-size: 11px; color: var(--dim); margin-top: 6px; min-height: 16px; }
+.plog .ok { color: #46d39a; }
+.plog .err { color: #ff6b6b; }

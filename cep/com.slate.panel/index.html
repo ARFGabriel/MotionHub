@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Slate</title>
+    <link rel="stylesheet" href="css/panel.css">
+</head>
+<body>
+    <header class="phead">
+        <svg class="plogo" viewBox="0 0 64 64" aria-hidden="true">
+            <defs><linearGradient id="slateP" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9d4bff"/><stop offset="1" stop-color="#00d2ff"/></linearGradient></defs>
+            <rect x="8" y="31" width="48" height="25" rx="6" fill="url(#slateP)"/>
+            <path d="M8,27 L16,27 L21,12 L13,12 Z" fill="url(#slateP)"/>
+            <path d="M20,27 L28,27 L33,12 L25,12 Z" fill="url(#slateP)"/>
+            <path d="M32,27 L40,27 L45,12 L37,12 Z" fill="url(#slateP)"/>
+            <path d="M44,27 L52,27 L57,12 L49,12 Z" fill="url(#slateP)"/>
+        </svg>
+        <div class="ptitle">Slate <span class="phost" id="host-badge">—</span></div>
+    </header>
+
+    <section class="pcard" id="info-card">
+        <div class="pcard-head"><h3>Projet</h3><button class="pmini" id="btn-refresh" title="Rafraîchir">⟳</button></div>
+        <div class="pstats" id="proj-stats"><span class="muted">Chargement…</span></div>
+    </section>
+
+    <section class="pcard">
+        <h3>Organiser le projet</h3>
+        <label for="tpl">Modèle de dossiers</label>
+        <select id="tpl"></select>
+        <pre class="ptree" id="tpl-preview"></pre>
+        <button class="pbtn" id="btn-bins">Créer les bins / dossiers</button>
+    </section>
+
+    <section class="pcard">
+        <h3>Rushes</h3>
+        <p class="muted mini">Importe tous les médias d'un dossier dans le bin des rushes.</p>
+        <button class="pbtn" id="btn-import">Importer un dossier de rushes…</button>
+    </section>
+
+    <section class="pcard">
+        <h3>Proxys & médias</h3>
+        <p class="muted mini">Attache des proxys (appariés par nom de fichier) et repère les médias hors-ligne.</p>
+        <button class="pbtn" id="btn-proxy">Attacher des proxys…</button>
+        <button class="pbtn pbtn--ghost" id="btn-missing">Vérifier les médias manquants</button>
+        <div id="missing-list"></div>
+    </section>
+
+    <div class="plog" id="log"></div>
+
+    <script src="js/CSInterface.js"></script>
+    <script src="js/panel.js"></script>
+</body>
+</html>
